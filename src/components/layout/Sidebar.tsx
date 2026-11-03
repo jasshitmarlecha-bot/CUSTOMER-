@@ -7,12 +7,11 @@ import {
   BarChart3,
   Settings,
   UserPlus,
-  ShieldCheck,
+  Shield,
   Lock,
   Upload,
   CopyCheck,
-  X,
-  ChevronRight
+  X
 } from 'lucide-react';
 import { StaffUser } from '../../types/index.ts';
 
@@ -56,10 +55,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         {
           id: 'dashboard',
-          label: 'Store Dashboard',
+          label: 'Overview',
           icon: LayoutDashboard,
-          badge: 'Home',
-          badgeType: 'home',
+          badge: null,
           isPermitted: true
         },
         {
@@ -67,57 +65,51 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Customer Directory',
           icon: Users,
           badge: customerCount > 0 ? customerCount : null,
-          badgeType: 'count',
           isPermitted: permissions.canViewCustomers
         },
         {
           id: 'import',
-          label: 'Import Customer Data',
+          label: 'Import Records',
           icon: Upload,
-          badge: 'Excel/CSV',
-          badgeType: 'import',
+          badge: null,
           isPermitted: permissions.canImportData
         },
         {
           id: 'duplicates',
-          label: 'Duplicate Manager',
+          label: 'Deduplication',
           icon: CopyCheck,
-          badge: 'Clean',
-          badgeType: 'clean',
+          badge: null,
           isPermitted: permissions.canRunCleaning
         },
         {
           id: 'qr_common',
-          label: 'Showroom QR Center',
+          label: 'Showroom QR Intake',
           icon: QrCode,
-          badge: 'Live',
-          badgeType: 'live',
+          badge: null,
           isPermitted: permissions.canViewCommonQR
         }
       ]
     },
     {
-      title: 'Store Analytics',
+      title: 'Store Intelligence',
       items: [
         {
           id: 'analytics',
-          label: 'Performance & Footfall Hub',
+          label: 'Footfall Analytics',
           icon: BarChart3,
           badge: null,
-          badgeType: 'default',
           isPermitted: permissions.canViewAnalytics
         }
       ]
     },
     {
-      title: 'Showroom Setup',
+      title: 'Configuration',
       items: [
         {
           id: 'categories',
           label: 'Jewellery Categories',
           icon: Tags,
           badge: null,
-          badgeType: 'default',
           isPermitted: permissions.canManageCategories
         },
         {
@@ -125,7 +117,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Settings & Backups',
           icon: Settings,
           badge: null,
-          badgeType: 'default',
           isPermitted: currentUser.role === 'admin'
         }
       ]
@@ -146,64 +137,61 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
-  // Reusable Sidebar Inner Content
   const renderSidebarContent = (isMobileView = false) => (
-    <div className="flex flex-col h-full overflow-y-auto">
+    <div className="flex flex-col h-full bg-[#12141a]">
       {/* Mobile Drawer Header */}
       {isMobileView && (
-        <div className="p-4 border-b border-[#2d1b28] flex items-center justify-between bg-[#150a17]">
+        <div className="p-4 border-b border-[#21242d] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="shrink-0">
-              <img
-                src="/assets/aistudio/giri_jewellers_logo_transparent.png"
-                alt="Giri Jewellers Crest"
-                className="w-7 h-7 object-contain drop-shadow-[0_0_8px_rgba(245,215,127,0.4)]"
-              />
-            </div>
+            <img
+              src="/assets/aistudio/giri_jewellers_logo_transparent.png"
+              alt="Giri Jewellers Crest"
+              className="w-7 h-7 object-contain"
+            />
             <div>
-              <span className="font-cinzel text-sm font-bold tracking-widest text-[#faeed4] uppercase">
+              <span className="font-cinzel text-xs font-semibold tracking-wider text-[#e8c86d] uppercase">
                 GIRI JEWELLERS
               </span>
-              <p className="text-[10px] text-[#dfb76c]">Showroom Operations</p>
+              <p className="text-[10px] text-[#8a919e]">Showroom Operations</p>
             </div>
           </div>
 
           <button
             type="button"
             onClick={onCloseMobile}
-            className="p-1.5 text-[#cfb7c8] hover:text-white hover:bg-[#261327] rounded-xl transition-colors cursor-pointer"
-            aria-label="Close menu"
+            className="p-1.5 text-[#8a919e] hover:text-white hover:bg-[#1a1d26] rounded-lg transition-colors cursor-pointer"
+            aria-label="Close navigation"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Quick Add Walk-In Button */}
+      {/* Primary Action Button */}
       {permissions.canAddEditCustomers && (
-        <div className="p-4 pb-2">
+        <div className="p-3.5 pb-2">
           <button
             type="button"
             onClick={handleQuickAddClick}
-            className="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-[0.98] text-[#1c1206] font-bold text-xs sm:text-[12.5px] shadow-[0_4px_16px_rgba(250,226,171,0.22)] transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg bg-[#d4af37] hover:bg-[#e0bc45] text-[#14161d] font-semibold text-xs transition-colors cursor-pointer"
           >
-            <UserPlus className="w-4 h-4 text-[#1c1206] stroke-[2.5]" />
-            <span>Quick Walk-In Entry</span>
+            <UserPlus className="w-3.5 h-3.5 text-[#14161d] stroke-[2.5]" />
+            <span>New Walk-In Entry</span>
           </button>
         </div>
       )}
 
-      {/* Menu List */}
-      <div className="p-3 space-y-5 overflow-y-auto flex-1 z-10">
+      {/* Navigation Menu */}
+      <div className="p-3 space-y-5 overflow-y-auto flex-1">
         {menuSections.map((section, sIdx) => (
-          <div key={sIdx} className="space-y-1.5">
-            <div className="px-3">
-              <p className="text-[10.5px] font-bold text-[#dfb76c] uppercase tracking-wider">
+          <div key={sIdx} className="space-y-1">
+            <div className="px-3 py-1">
+              <p className="text-[10px] font-semibold text-[#646a78] uppercase tracking-wider">
                 {section.title}
               </p>
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const isActive =
@@ -218,44 +206,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     disabled={!isPermitted}
                     type="button"
                     onClick={() => handleItemClick(item.id)}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
                       !isPermitted
-                        ? 'opacity-40 cursor-not-allowed text-[#6d5267]'
+                        ? 'opacity-40 cursor-not-allowed text-[#4b5260]'
                         : isActive
-                        ? 'bg-gradient-to-r from-[#b3854d] via-[#dfb76c] to-[#b3854d] text-[#180f03] font-bold shadow-[0_4px_14px_rgba(223,183,108,0.25)] border-none'
-                        : 'text-[#cfb7c8] hover:text-white hover:bg-[#1a0f1b]'
+                        ? 'bg-[#1e222b] text-[#e8c86d] font-semibold'
+                        : 'text-[#9aa0a6] hover:text-[#f4f5f7] hover:bg-[#171922]'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       <Icon
                         className={`w-4 h-4 shrink-0 ${
                           isActive
-                            ? 'text-[#180f03] stroke-[2.5]'
+                            ? 'text-[#d4af37]'
                             : isPermitted
-                            ? 'text-[#dfb76c]'
-                            : 'text-[#6d5267]'
+                            ? 'text-[#8a919e]'
+                            : 'text-[#4b5260]'
                         }`}
                       />
                       <span className="truncate">{item.label}</span>
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                      {!isPermitted && <Lock className="w-3 h-3 text-[#6d5267]" />}
+                      {!isPermitted && <Lock className="w-3 h-3 text-[#4b5260]" />}
 
                       {item.badge !== null && isPermitted && (
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
-                            isActive
-                              ? 'bg-[#180f03]/20 text-[#180f03]'
-                              : item.badgeType === 'home'
-                              ? 'bg-[#261327] text-[#faeed4] border border-[#482c40]'
-                              : item.badgeType === 'live'
-                              ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'
-                              : item.badgeType === 'clean'
-                              ? 'bg-purple-950/80 text-purple-300 border border-purple-800'
-                              : 'bg-[#1e1320] text-[#dfb76c] border border-[#392233]'
-                          }`}
-                        >
+                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-[#1e222b] text-[#c0c6d2] border border-[#272b36]">
                           {item.badge}
                         </span>
                       )}
@@ -266,93 +242,49 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
         ))}
-
-        {/* Staff Access Control shortcut */}
-        {currentUser.role === 'admin' && onOpenStaffAccessModal && (
-          <div className="pt-2 border-t border-[#2d1b28]">
-            <button
-              type="button"
-              onClick={() => {
-                onOpenStaffAccessModal();
-                if (onCloseMobile) onCloseMobile();
-              }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#faeed4] bg-[#1a0f1b] hover:bg-[#261327] border border-[#482c40] transition-colors cursor-pointer"
-            >
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="w-4 h-4 text-[#dfb76c]" />
-                <span>Staff Access Control</span>
-              </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-900/80 text-purple-200">
-                Manage
-              </span>
-            </button>
-          </div>
-        )}
       </div>
 
-      {/* Classical Architectural Facade Sketch Watermark */}
-      <div className="mt-auto p-4 relative overflow-hidden pointer-events-none opacity-20 select-none">
-        <svg
-          className="w-full h-20 text-[#dfb76c]"
-          viewBox="0 0 200 100"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.8"
-        >
-          <polygon points="10 40 100 15 190 40" />
-          <line x1="5" y1="40" x2="195" y2="40" strokeWidth="1.2" />
-          <line x1="10" y1="44" x2="190" y2="44" />
-          <line x1="25" y1="44" x2="25" y2="95" strokeWidth="1" />
-          <line x1="30" y1="44" x2="30" y2="95" />
-          <line x1="55" y1="44" x2="55" y2="95" strokeWidth="1" />
-          <line x1="60" y1="44" x2="60" y2="95" />
-          <line x1="85" y1="44" x2="85" y2="95" strokeWidth="1" />
-          <line x1="90" y1="44" x2="90" y2="95" />
-          <line x1="110" y1="44" x2="110" y2="95" strokeWidth="1" />
-          <line x1="115" y1="44" x2="115" y2="95" />
-          <line x1="140" y1="44" x2="140" y2="95" strokeWidth="1" />
-          <line x1="145" y1="44" x2="145" y2="95" />
-          <line x1="170" y1="44" x2="170" y2="95" strokeWidth="1" />
-          <line x1="175" y1="44" x2="175" y2="95" />
-          <line x1="15" y1="95" x2="185" y2="95" strokeWidth="1.2" />
-          <line x1="10" y1="99" x2="190" y2="99" strokeWidth="1.5" />
-          <circle cx="100" cy="30" r="6" />
-        </svg>
-      </div>
+      {/* Staff Access Administration (Admin only) */}
+      {currentUser.role === 'admin' && onOpenStaffAccessModal && (
+        <div className="p-3 border-t border-[#21242d]">
+          <button
+            type="button"
+            onClick={onOpenStaffAccessModal}
+            className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-[#9aa0a6] hover:text-white hover:bg-[#1a1d26] rounded-lg transition-colors cursor-pointer"
+          >
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-[#8a919e]" />
+              <span>Staff Access Control</span>
+            </div>
+            <span className="text-[10px] text-[#d4af37] font-semibold">Admin</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 
   return (
     <>
-      {/* 1. Desktop Persistent Sidebar (Only visible on lg: and above) */}
-      <aside className="hidden lg:flex w-64 bg-[#110913] border-r border-[#2d1b28] flex-col shrink-0 font-sans relative">
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden lg:block w-64 shrink-0 border-r border-[#21242d] bg-[#12141a]">
         {renderSidebarContent(false)}
       </aside>
 
-      {/* 2. Mobile & Tablet Left-to-Right Slide-Over Drawer */}
-      <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${
-          isMobileOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
-        }`}
-      >
-        {/* Backdrop Overlay */}
-        <div
-          onClick={onCloseMobile}
-          className={`fixed inset-0 bg-black/80 backdrop-blur-xs transition-opacity duration-300 ${
-            isMobileOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          aria-hidden="true"
-        />
+      {/* Mobile Slide-Out Drawer */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            onClick={onCloseMobile}
+            className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
+          />
 
-        {/* Sliding Panel: Slides from Left to Right */}
-        <aside
-          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-[#110913] border-r border-[#392233] shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
-            isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-        >
-          {renderSidebarContent(true)}
-        </aside>
-      </div>
+          {/* Drawer Sheet */}
+          <div className="fixed inset-y-0 left-0 w-72 max-w-[85vw] shadow-2xl z-50">
+            {renderSidebarContent(true)}
+          </div>
+        </div>
+      )}
     </>
   );
 };
