@@ -206,23 +206,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     disabled={!isPermitted}
                     type="button"
                     onClick={() => handleItemClick(item.id)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
-                      !isPermitted
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${!isPermitted
                         ? 'opacity-40 cursor-not-allowed text-[#4b5260]'
                         : isActive
-                        ? 'bg-[#1e222b] text-[#e8c86d] font-semibold'
-                        : 'text-[#9aa0a6] hover:text-[#f4f5f7] hover:bg-[#171922]'
-                    }`}
+                          ? 'bg-[#1e222b] text-[#e8c86d] font-semibold'
+                          : 'text-[#9aa0a6] hover:text-[#f4f5f7] hover:bg-[#171922]'
+                      }`}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon
-                        className={`w-4 h-4 shrink-0 ${
-                          isActive
+                        className={`w-4 h-4 shrink-0 ${isActive
                             ? 'text-[#d4af37]'
                             : isPermitted
-                            ? 'text-[#8a919e]'
-                            : 'text-[#4b5260]'
-                        }`}
+                              ? 'text-[#8a919e]'
+                              : 'text-[#4b5260]'
+                          }`}
                       />
                       <span className="truncate">{item.label}</span>
                     </div>

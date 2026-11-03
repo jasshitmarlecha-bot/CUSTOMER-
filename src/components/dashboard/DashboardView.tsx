@@ -353,41 +353,37 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
               <button
                 onClick={() => setSourceFilter('all')}
-                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${
-                  sourceFilter === 'all'
+                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${sourceFilter === 'all'
                     ? 'bg-[#1e222b] text-white font-medium'
                     : 'text-[#8a919e] hover:text-white'
-                }`}
+                  }`}
               >
                 All
               </button>
               <button
                 onClick={() => setSourceFilter('today')}
-                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${
-                  sourceFilter === 'today'
+                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${sourceFilter === 'today'
                     ? 'bg-[#1e222b] text-white font-medium'
                     : 'text-[#8a919e] hover:text-white'
-                }`}
+                  }`}
               >
                 Today
               </button>
               <button
                 onClick={() => setSourceFilter('walkin_qr')}
-                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${
-                  sourceFilter === 'walkin_qr'
+                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${sourceFilter === 'walkin_qr'
                     ? 'bg-[#1e222b] text-white font-medium'
                     : 'text-[#8a919e] hover:text-white'
-                }`}
+                  }`}
               >
                 QR Intake
               </button>
               <button
                 onClick={() => setSourceFilter('manual')}
-                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${
-                  sourceFilter === 'manual'
+                className={`px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer ${sourceFilter === 'manual'
                     ? 'bg-[#1e222b] text-white font-medium'
                     : 'text-[#8a919e] hover:text-white'
-                }`}
+                  }`}
               >
                 Staff Entry
               </button>
@@ -461,13 +457,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                           </span>
                         </td>
                         <td className="py-2.5 px-3 text-right">
-                          <span className={`text-[10px] font-medium ${
-                            c.source === 'walkin_qr'
+                          <span className={`text-[10px] font-medium ${c.source === 'walkin_qr'
                               ? 'text-[#d4af37]'
                               : c.source === 'import'
-                              ? 'text-[#8a919e]'
-                              : 'text-[#4ade80]'
-                          }`}>
+                                ? 'text-[#8a919e]'
+                                : 'text-[#4ade80]'
+                            }`}>
                             {c.source === 'walkin_qr' ? 'QR Standee' : c.source === 'import' ? 'Imported' : 'Counter'}
                           </span>
                         </td>

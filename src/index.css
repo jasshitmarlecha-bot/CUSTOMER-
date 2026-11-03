@@ -47,13 +47,16 @@
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: #0c0d10;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #232730;
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #363b47;
 }
@@ -68,13 +71,18 @@
     background-color: #ffffff !important;
     color: #000000 !important;
   }
+
   .no-print {
     display: none !important;
   }
-  #printable-customer-data, #printable-customer-data * {
+
+  #printable-customer-data,
+  #printable-customer-data * {
     visibility: visible;
   }
-  #printable-display-sign, #printable-display-sign * {
+
+  #printable-display-sign,
+  #printable-display-sign * {
     visibility: visible;
   }
 }
