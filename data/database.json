@@ -52,7 +52,28 @@
       "role": "admin",
       "avatar": "👨‍💼",
       "token": "token-admin-1",
-      "password": "admin123",
+      "password": "any",
+      "permissions": {
+        "canViewCustomers": true,
+        "canAddEditCustomers": true,
+        "canDeleteCustomers": true,
+        "canExportData": true,
+        "canImportData": true,
+        "canPrintData": true,
+        "canManageCategories": true,
+        "canRunCleaning": true,
+        "canViewAnalytics": true,
+        "canViewCommonQR": true
+      }
+    },
+    {
+      "id": "user-admin-owner",
+      "name": "Jasshit (Store Admin)",
+      "email": "admin@girijewels.com",
+      "role": "admin",
+      "avatar": "👑",
+      "token": "token-admin-owner",
+      "password": "admin",
       "permissions": {
         "canViewCustomers": true,
         "canAddEditCustomers": true,
