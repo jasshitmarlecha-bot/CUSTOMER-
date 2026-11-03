@@ -1,0 +1,6 @@
+{
+  "name": " Customer Data Management System",
+  "description": "Enterprise customer data management system featuring phone list health diagnostics, referral and place tracking, multi-sheet backup/restore, showroom QR counter intake, and deduplication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

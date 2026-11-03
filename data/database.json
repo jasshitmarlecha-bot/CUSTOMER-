@@ -1,0 +1,121 @@
+{
+  "customers": [
+    {
+      "name": "Meera Iyer",
+      "email": "",
+      "phone": "9840198401",
+      "city": "T. Nagar, Chennai",
+      "place": "T. Nagar, Chennai",
+      "referredBy": "Sundar Rajan",
+      "tags": [],
+      "status": "active",
+      "source": "manual",
+      "createdBy": "Store Manager",
+      "id": "cust-1793645105536-uty2",
+      "categoryName": "Unassigned",
+      "createdAt": "2026-11-02T18:45:05.536Z",
+      "updatedAt": "2026-11-02T18:45:05.536Z",
+      "qualityScore": 90
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Retail Walk-in",
+      "color": "#3b82f6",
+      "description": "Counter & in-store customers",
+      "isDefault": true,
+      "createdAt": "2026-10-23T17:44:47.695Z"
+    },
+    {
+      "id": "cat-2",
+      "name": "VIP Customer",
+      "color": "#eab308",
+      "description": "High-value and recurring buyers",
+      "isDefault": false,
+      "createdAt": "2026-10-23T17:44:47.696Z"
+    },
+    {
+      "id": "cat-3",
+      "name": "Wholesale / B2B",
+      "color": "#8b5cf6",
+      "description": "Bulk order and trade inquiries",
+      "isDefault": false,
+      "createdAt": "2026-10-23T17:44:47.696Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user-admin-1",
+      "name": "Store Manager",
+      "email": "admin@girijewels.com",
+      "role": "admin",
+      "avatar": "👨‍💼",
+      "token": "token-admin-1",
+      "password": "admin123",
+      "permissions": {
+        "canViewCustomers": true,
+        "canAddEditCustomers": true,
+        "canDeleteCustomers": true,
+        "canExportData": true,
+        "canImportData": true,
+        "canPrintData": true,
+        "canManageCategories": true,
+        "canRunCleaning": true,
+        "canViewAnalytics": true,
+        "canViewCommonQR": true
+      }
+    },
+    {
+      "id": "user-staff-1",
+      "name": "Counter Staff",
+      "email": "staff@girijewels.com",
+      "role": "staff",
+      "avatar": "👩‍💼",
+      "token": "token-staff-1",
+      "password": "staff123",
+      "permissions": {
+        "canViewCustomers": true,
+        "canAddEditCustomers": true,
+        "canDeleteCustomers": false,
+        "canExportData": true,
+        "canImportData": false,
+        "canPrintData": true,
+        "canManageCategories": false,
+        "canRunCleaning": false,
+        "canViewAnalytics": true,
+        "canViewCommonQR": true
+      }
+    }
+  ],
+  "qrScans": [],
+  "settings": {
+    "businessName": "GIRI JEWELLERS",
+    "tagline": "Fine Gold, Diamond & Heritage Bridal Jewellery",
+    "branchName": "Trivandrum Flagship Showroom",
+    "address": "MG Road, Overbridge Junction, East Fort",
+    "city": "Thiruvananthapuram",
+    "state": "Kerala",
+    "pincode": "695001",
+    "phone": "+91 98470 54321",
+    "whatsappPhone": "+91 98470 54321",
+    "email": "girijewelstvm@gmail.com",
+    "gstin": "32AABCG1234F1Z9",
+    "bisHallmarkNumber": "HM/C-7849201",
+    "currency": "₹",
+    "enableDuplicateGuard": true,
+    "minPhoneDigits": 10,
+    "defaultCategoryId": "cat-1",
+    "autoFormatNames": true,
+    "requireCityOnWalkin": true,
+    "standeeTagline": "Scan to join VIP rewards & fast showroom customer intake",
+    "qrIntakeActive": true,
+    "qrWelcomeHeading": "Welcome to GIRI JEWELLERS",
+    "qrSubtitle": "Register your counter visit for bespoke assistance, hallmark warranty & exclusive festive previews",
+    "qrSuccessMessage": "Thank you for visiting GIRI JEWELLERS! Your showroom visit details have been registered. Our jewellery specialist will assist you shortly.",
+    "collectAnniversaryDate": true,
+    "masterSecurityPin": "GIRI-7788",
+    "allowStaffExports": true,
+    "sessionTimeoutMinutes": 60
+  }
+}
