@@ -80,7 +80,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
     isOpen: false,
     title: '',
     description: '',
-    onConfirm: () => {}
+    onConfirm: () => { }
   });
 
   const loadDuplicateData = async () => {
@@ -300,11 +300,10 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
 
       {/* Status Notice */}
       {statusMessage && (
-        <div className={`p-4 rounded-2xl border text-xs flex items-center gap-2.5 shadow-xs ${
-          statusMessage.type === 'success'
+        <div className={`p-4 rounded-2xl border text-xs flex items-center gap-2.5 shadow-xs ${statusMessage.type === 'success'
             ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
             : 'bg-rose-50 border-rose-300 text-rose-800'
-        }`}>
+          }`}>
           {statusMessage.type === 'success' ? (
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           ) : (
@@ -365,31 +364,28 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
           </span>
           <button
             onClick={() => setFilterReason('all')}
-            className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
-              filterReason === 'all'
+            className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${filterReason === 'all'
                 ? 'bg-[#0b241c] text-[#f7eedf]'
                 : 'bg-[#faf7f0] text-[#4b5a54] hover:bg-[#ede3d3] border border-[#ded7ca]'
-            }`}
+              }`}
           >
             All Clusters ({duplicateGroups.length})
           </button>
           <button
             onClick={() => setFilterReason('conflicts')}
-            className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
-              filterReason === 'conflicts'
+            className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${filterReason === 'conflicts'
                 ? 'bg-[#0b241c] text-[#f7eedf]'
                 : 'bg-[#faf7f0] text-[#4b5a54] hover:bg-[#ede3d3] border border-[#ded7ca]'
-            }`}
+              }`}
           >
             Differing Data Only
           </button>
           <button
             onClick={() => setFilterReason('phone')}
-            className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
-              filterReason === 'phone'
+            className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${filterReason === 'phone'
                 ? 'bg-[#0b241c] text-[#f7eedf]'
                 : 'bg-[#faf7f0] text-[#4b5a54] hover:bg-[#ede3d3] border border-[#ded7ca]'
-            }`}
+              }`}
           >
             Phone Matches
           </button>
@@ -475,11 +471,10 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                     return (
                       <div
                         key={cust.id}
-                        className={`p-4 rounded-2xl border transition-all ${
-                          isPrimary
+                        className={`p-4 rounded-2xl border transition-all ${isPrimary
                             ? 'bg-[#faf7f0] border-[#dfb76c]/60 shadow-xs'
                             : 'bg-[#ffffff] border-[#ede3d3]'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
@@ -621,11 +616,10 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                         key={c.id}
                         type="button"
                         onClick={() => setResolvedFields(prev => ({ ...prev, name: c.name }))}
-                        className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${
-                          resolvedFields.name === c.name
+                        className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${resolvedFields.name === c.name
                             ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf] font-bold'
                             : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#ede3d3]'
-                        }`}
+                          }`}
                       >
                         Option {i + 1}: "{c.name}"
                       </button>
@@ -654,11 +648,10 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                           key={c.id}
                           type="button"
                           onClick={() => setResolvedFields(prev => ({ ...prev, place: pl }))}
-                          className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${
-                            resolvedFields.place === pl
+                          className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${resolvedFields.place === pl
                               ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf] font-bold'
                               : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#ede3d3]'
-                          }`}
+                            }`}
                         >
                           Option {i + 1}: "{pl}"
                         </button>
@@ -688,11 +681,10 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                           key={c.id}
                           type="button"
                           onClick={() => setResolvedFields(prev => ({ ...prev, referredBy: c.referredBy || '' }))}
-                          className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${
-                            resolvedFields.referredBy === c.referredBy
+                          className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${resolvedFields.referredBy === c.referredBy
                               ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf] font-bold'
                               : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#ede3d3]'
-                          }`}
+                            }`}
                         >
                           Option {i + 1}: "{c.referredBy}"
                         </button>

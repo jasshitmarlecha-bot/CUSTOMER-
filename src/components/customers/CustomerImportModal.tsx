@@ -380,22 +380,20 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setImportMode('upload')}
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                    importMode === 'upload'
+                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${importMode === 'upload'
                       ? 'bg-[#0b241c] text-[#f7eedf] font-bold'
                       : 'text-[#718079] hover:text-[#0b241c]'
-                  }`}
+                    }`}
                 >
                   Upload File (.xlsx / .csv)
                 </button>
                 <button
                   type="button"
                   onClick={() => setImportMode('paste')}
-                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                    importMode === 'paste'
+                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${importMode === 'paste'
                       ? 'bg-[#0b241c] text-[#f7eedf] font-bold'
                       : 'text-[#718079] hover:text-[#0b241c]'
-                  }`}
+                    }`}
                 >
                   Paste Data Directly
                 </button>

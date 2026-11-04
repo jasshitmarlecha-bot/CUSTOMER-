@@ -172,11 +172,10 @@ export const UnifiedAnalysisCenter: React.FC<UnifiedAnalysisCenterProps> = ({
             <button
               key={r}
               onClick={() => setTimeRange(r)}
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                timeRange === r
+              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${timeRange === r
                   ? 'bg-[#0b241c] text-[#f7eedf]'
                   : 'text-[#718079] hover:text-[#0b241c]'
-              }`}
+                }`}
             >
               {r === 'all' && 'All Time'}
               {r === '30days' && 'Last 30 Days'}
@@ -500,9 +499,8 @@ export const UnifiedAnalysisCenter: React.FC<UnifiedAnalysisCenterProps> = ({
                 {duplicates.length === 0 ? 'Zero conflicts' : 'Requires review'}
               </span>
             </div>
-            <div className={`w-10 h-10 rounded-xl border flex items-center justify-center ${
-              duplicates.length > 0 ? 'bg-rose-50 border-rose-200 text-rose-700' : 'bg-white border-[#ded7ca] text-[#718079]'
-            }`}>
+            <div className={`w-10 h-10 rounded-xl border flex items-center justify-center ${duplicates.length > 0 ? 'bg-rose-50 border-rose-200 text-rose-700' : 'bg-white border-[#ded7ca] text-[#718079]'
+              }`}>
               <AlertTriangle className="w-5 h-5" />
             </div>
           </div>

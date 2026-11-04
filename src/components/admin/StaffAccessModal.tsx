@@ -230,72 +230,72 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
     description: string;
     icon: any;
   }> = [
-    {
-      key: 'canViewCustomers',
-      label: 'View Customer Directory',
-      description: 'Can see list of customers and search profiles',
-      icon: Users
-    },
-    {
-      key: 'canAddEditCustomers',
-      label: 'Add & Edit Customer Records',
-      description: 'Can create new walk-in entries and edit details',
-      icon: Plus
-    },
-    {
-      key: 'canDeleteCustomers',
-      label: 'Delete Customer Records',
-      description: 'Can remove profiles or purge customer records',
-      icon: Trash2
-    },
-    {
-      key: 'canExportData',
-      label: 'Export Data (Excel & CSV)',
-      description: 'Can download customer database into Excel spreadsheets',
-      icon: Download
-    },
-    {
-      key: 'canImportData',
-      label: 'Import Customer Data',
-      description: 'Can bulk import files into showroom database',
-      icon: Upload
-    },
-    {
-      key: 'canPrintData',
-      label: 'Print Customer Rosters',
-      description: 'Can generate print documents and summaries',
-      icon: Printer
-    },
-    {
-      key: 'canManageCategories',
-      label: 'Manage Jewellery Categories',
-      description: 'Can create, edit, and delete category interest tags',
-      icon: Tags
-    },
-    {
-      key: 'canRunCleaning',
-      label: 'Resolve Duplicates & Hygiene',
-      description: 'Can execute duplicate consolidation and conflict merges',
-      icon: Sparkles
-    },
-    {
-      key: 'canViewAnalytics',
-      label: 'View Footfall & Analytics Hub',
-      description: 'Can inspect showroom performance and conversion charts',
-      icon: BarChart3
-    },
-    {
-      key: 'canViewCommonQR',
-      label: 'Access Showroom QR Standee',
-      description: 'Can access and print counter QR standees',
-      icon: QrCode
-    }
-  ];
+      {
+        key: 'canViewCustomers',
+        label: 'View Customer Directory',
+        description: 'Can see list of customers and search profiles',
+        icon: Users
+      },
+      {
+        key: 'canAddEditCustomers',
+        label: 'Add & Edit Customer Records',
+        description: 'Can create new walk-in entries and edit details',
+        icon: Plus
+      },
+      {
+        key: 'canDeleteCustomers',
+        label: 'Delete Customer Records',
+        description: 'Can remove profiles or purge customer records',
+        icon: Trash2
+      },
+      {
+        key: 'canExportData',
+        label: 'Export Data (Excel & CSV)',
+        description: 'Can download customer database into Excel spreadsheets',
+        icon: Download
+      },
+      {
+        key: 'canImportData',
+        label: 'Import Customer Data',
+        description: 'Can bulk import files into showroom database',
+        icon: Upload
+      },
+      {
+        key: 'canPrintData',
+        label: 'Print Customer Rosters',
+        description: 'Can generate print documents and summaries',
+        icon: Printer
+      },
+      {
+        key: 'canManageCategories',
+        label: 'Manage Jewellery Categories',
+        description: 'Can create, edit, and delete category interest tags',
+        icon: Tags
+      },
+      {
+        key: 'canRunCleaning',
+        label: 'Resolve Duplicates & Hygiene',
+        description: 'Can execute duplicate consolidation and conflict merges',
+        icon: Sparkles
+      },
+      {
+        key: 'canViewAnalytics',
+        label: 'View Footfall & Analytics Hub',
+        description: 'Can inspect showroom performance and conversion charts',
+        icon: BarChart3
+      },
+      {
+        key: 'canViewCommonQR',
+        label: 'Access Showroom QR Standee',
+        description: 'Can access and print counter QR standees',
+        icon: QrCode
+      }
+    ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#040e0b]/75 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-[#ffffff] border border-[#ede3d3] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#0b241c] font-sans">
-        
+
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
           <div className="flex items-center gap-3">
@@ -327,11 +327,10 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           <button
             type="button"
             onClick={() => setActiveTab('roster')}
-            className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${
-              activeTab === 'roster'
+            className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${activeTab === 'roster'
                 ? 'border-[#0b241c] text-[#0b241c] bg-[#faf7f0]'
                 : 'border-transparent text-[#718079] hover:text-[#0b241c]'
-            }`}
+              }`}
           >
             <Users className="w-4 h-4 text-[#b08738]" />
             <span>Staff Roster & Passwords ({staffUsers.length})</span>
@@ -340,11 +339,10 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           <button
             type="button"
             onClick={() => setActiveTab('permissions')}
-            className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${
-              activeTab === 'permissions'
+            className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${activeTab === 'permissions'
                 ? 'border-[#0b241c] text-[#0b241c] bg-[#faf7f0]'
                 : 'border-transparent text-[#718079] hover:text-[#0b241c]'
-            }`}
+              }`}
           >
             <Shield className="w-4 h-4 text-[#b08738]" />
             <span>Staff Permissions Matrix</span>
@@ -354,11 +352,10 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
         {/* Notification Banner */}
         {notice && (
           <div
-            className={`mx-6 mt-4 p-3.5 rounded-2xl border text-xs flex items-center justify-between gap-2 shadow-xs ${
-              notice.type === 'success'
+            className={`mx-6 mt-4 p-3.5 rounded-2xl border text-xs flex items-center justify-between gap-2 shadow-xs ${notice.type === 'success'
                 ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
                 : 'bg-rose-50 border-rose-300 text-rose-800'
-            }`}
+              }`}
           >
             <div className="flex items-center gap-2">
               {notice.type === 'success' ? (
@@ -552,11 +549,10 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                             {/* Role */}
                             <td className="py-3 px-3">
                               <span
-                                className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                  user.role === 'admin'
+                                className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${user.role === 'admin'
                                     ? 'bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono'
                                     : 'bg-[#faf7f0] text-[#4b5a54] border border-[#ded7ca]'
-                                }`}
+                                  }`}
                               >
                                 {user.role === 'admin' ? 'Store Admin' : 'Counter Staff'}
                               </span>
@@ -693,18 +689,16 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                     <div
                       key={item.key}
                       onClick={() => togglePermission(item.key)}
-                      className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
-                        isChecked
+                      className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${isChecked
                           ? 'bg-[#ffffff] border-[#0b241c] shadow-xs ring-1 ring-[#0b241c]/15'
                           : 'bg-[#faf7f0] border-[#ede3d3] opacity-75'
-                      }`}
+                        }`}
                     >
                       <div
-                        className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
-                          isChecked
+                        className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${isChecked
                             ? 'bg-[#0b241c] text-[#dfb76c] border-[#0b241c]'
                             : 'bg-[#ffffff] text-[#718079] border-[#ded7ca]'
-                        }`}
+                          }`}
                       >
                         <Icon className="w-4 h-4" />
                       </div>
@@ -715,7 +709,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                           <input
                             type="checkbox"
                             checked={isChecked}
-                            onChange={() => {}}
+                            onChange={() => { }}
                             className="w-4 h-4 rounded text-[#0b241c] focus:ring-[#0b241c] bg-[#ffffff] border-[#ded7ca] cursor-pointer accent-[#0b241c]"
                           />
                         </div>

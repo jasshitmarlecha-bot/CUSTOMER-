@@ -52,6 +52,7 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [loadedExistingId, setLoadedExistingId] = useState<string | null>(null);
   const [allowDuplicateBypass, setAllowDuplicateBypass] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
 
   // Quick inline category creator
   const [showQuickAddCat, setShowQuickAddCat] = useState(false);
@@ -72,22 +73,83 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
       setNotes(customer.notes || '');
       setStatus(customer.status || 'active');
       setLoadedExistingId(customer.id);
+      setDraftRestored(false);
     } else {
-      setName('');
-      setEmail('');
-      setPhone('');
-      setPlace('');
-      setReferredBy('');
-      setCategoryId(categories[0]?.id || '');
-      setAddress('');
-      setNotes('');
-      setStatus('active');
+      let restored = false;
+      try {
+        const savedDraft = sessionStorage.getItem('giri_walkin_draft');
+        if (savedDraft) {
+          const parsed = JSON.parse(savedDraft);
+          if (parsed && (parsed.name || parsed.phone || parsed.place || parsed.referredBy || parsed.email)) {
+            setName(parsed.name || '');
+            setEmail(parsed.email || '');
+            setPhone(parsed.phone || '');
+            setPlace(parsed.place || '');
+            setReferredBy(parsed.referredBy || '');
+            setCategoryId(parsed.categoryId || categories[0]?.id || '');
+            setAddress(parsed.address || '');
+            setNotes(parsed.notes || '');
+            setStatus(parsed.status || 'active');
+            restored = true;
+          }
+        }
+      } catch {
+        // ignore
+      }
+
+      if (!restored) {
+        setName('');
+        setEmail('');
+        setPhone('');
+        setPlace('');
+        setReferredBy('');
+        setCategoryId(categories[0]?.id || '');
+        setAddress('');
+        setNotes('');
+        setStatus('active');
+      }
+      setDraftRestored(restored);
       setLoadedExistingId(null);
     }
     setError(null);
     setAllowDuplicateBypass(false);
     setShowQuickAddCat(false);
   }, [customer, isOpen, categories]);
+
+  // Save unsubmitted draft to sessionStorage when staff is entering a new walk-in customer
+  useEffect(() => {
+    if (!customer && !loadedExistingId && isOpen) {
+      if (name.trim() || phone.trim() || place.trim() || referredBy.trim() || email.trim() || notes.trim()) {
+        try {
+          sessionStorage.setItem(
+            'giri_walkin_draft',
+            JSON.stringify({ name, phone, place, referredBy, email, address, notes, categoryId, status })
+          );
+        } catch {
+          // ignore
+        }
+      }
+    }
+  }, [name, phone, place, referredBy, email, address, notes, categoryId, status, customer, loadedExistingId, isOpen]);
+
+  const handleDiscardDraft = () => {
+    try {
+      sessionStorage.removeItem('giri_walkin_draft');
+    } catch {
+      // ignore
+    }
+    setName('');
+    setEmail('');
+    setPhone('');
+    setPlace('');
+    setReferredBy('');
+    setCategoryId(categories[0]?.id || '');
+    setAddress('');
+    setNotes('');
+    setStatus('active');
+    setDraftRestored(false);
+    setError(null);
+  };
 
   // Live duplicate detection as staff types phone or email
   const duplicateMatch = React.useMemo(() => {
@@ -148,6 +210,12 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
         notes: notes.trim(),
         status
       });
+      try {
+        sessionStorage.removeItem('giri_walkin_draft');
+      } catch {
+        // ignore
+      }
+      setDraftRestored(false);
       onClose();
     } catch (err: any) {
       setError(err.message || 'Failed to save customer');
@@ -218,6 +286,23 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Restored Draft Banner */}
+        {draftRestored && !customer && !loadedExistingId && (
+          <div className="mx-6 mt-4 p-3 rounded-xl bg-[#faf5eb] border border-[#dfb76c]/60 flex items-center justify-between text-xs text-[#523e1b] animate-in fade-in">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#dfb76c] animate-pulse shrink-0" />
+              <span><strong>Draft Restored:</strong> Restored unsubmitted customer information.</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleDiscardDraft}
+              className="text-[11px] font-bold text-[#b08738] hover:text-[#7f5d1e] underline cursor-pointer shrink-0 ml-3"
+            >
+              Discard Draft
+            </button>
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
@@ -439,9 +524,8 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                         key={c}
                         type="button"
                         onClick={() => setNewCatColor(c)}
-                        className={`w-5 h-5 rounded-full border transition-transform cursor-pointer ${
-                          newCatColor === c ? 'scale-125 border-[#0b241c] ring-1 ring-[#dfb76c]' : 'border-transparent'
-                        }`}
+                        className={`w-5 h-5 rounded-full border transition-transform cursor-pointer ${newCatColor === c ? 'scale-125 border-[#0b241c] ring-1 ring-[#dfb76c]' : 'border-transparent'
+                          }`}
                         style={{ backgroundColor: c }}
                       />
                     ))}
@@ -458,11 +542,10 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                   <div
                     key={c.id}
                     onClick={() => setCategoryId(c.id)}
-                    className={`group relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-all border ${
-                      isSelected
+                    className={`group relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-all border ${isSelected
                         ? 'bg-[#0b241c] text-[#f7eedf] border-[#0b241c] font-bold shadow-xs'
                         : 'bg-[#ffffff] text-[#4b5a54] border-[#ded7ca] hover:border-[#b08738]'
-                    }`}
+                      }`}
                   >
                     <span
                       className="w-2 h-2 rounded-full"

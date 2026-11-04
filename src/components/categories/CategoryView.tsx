@@ -175,9 +175,8 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                     key={color}
                     type="button"
                     onClick={() => setNewCatColor(color)}
-                    className={`w-6 h-6 rounded-full transition-transform border cursor-pointer ${
-                      newCatColor === color ? 'scale-125 border-[#0b241c] ring-2 ring-[#dfb76c]' : 'border-transparent'
-                    }`}
+                    className={`w-6 h-6 rounded-full transition-transform border cursor-pointer ${newCatColor === color ? 'scale-125 border-[#0b241c] ring-2 ring-[#dfb76c]' : 'border-transparent'
+                      }`}
                     style={{ backgroundColor: color }}
                   />
                 ))}
@@ -238,9 +237,8 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                           key={c}
                           type="button"
                           onClick={() => setEditColor(c)}
-                          className={`w-5 h-5 rounded-full border cursor-pointer ${
-                            editColor === c ? 'scale-125 border-[#0b241c] ring-1 ring-[#dfb76c]' : 'border-transparent'
-                          }`}
+                          className={`w-5 h-5 rounded-full border cursor-pointer ${editColor === c ? 'scale-125 border-[#0b241c] ring-1 ring-[#dfb76c]' : 'border-transparent'
+                            }`}
                           style={{ backgroundColor: c }}
                         />
                       ))}

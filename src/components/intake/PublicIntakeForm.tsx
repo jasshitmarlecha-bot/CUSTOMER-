@@ -40,7 +40,7 @@ export const PublicIntakeForm: React.FC<PublicIntakeFormProps> = ({
   const handleInteraction = () => {
     if (!hasInteractedRef.current && scanIdRef.current) {
       hasInteractedRef.current = true;
-      recordPublicInteraction(scanIdRef.current).catch(() => {});
+      recordPublicInteraction(scanIdRef.current).catch(() => { });
     }
   };
 
@@ -126,11 +126,10 @@ export const PublicIntakeForm: React.FC<PublicIntakeFormProps> = ({
         {/* Content */}
         {isSuccess ? (
           <div className="p-8 text-center space-y-4">
-            <div className={`w-16 h-16 rounded-full border flex items-center justify-center mx-auto shadow-inner ${
-              isReturning
+            <div className={`w-16 h-16 rounded-full border flex items-center justify-center mx-auto shadow-inner ${isReturning
                 ? 'bg-[#f4f7f5] border-emerald-500/50 text-[#0b241c]'
                 : 'bg-emerald-50 border-emerald-500 text-emerald-700'
-            }`}>
+              }`}>
               <CheckCircle2 className="w-10 h-10 text-emerald-600" />
             </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { QrCode, UserPlus, ShieldCheck, LogOut, Upload, ChevronDown, Menu } from 'lucide-react';
+import { QrCode, UserPlus, ShieldCheck, LogOut, Upload, ChevronDown, Menu, Store, ChevronRight } from 'lucide-react';
 import { StaffUser } from '../../types/index.ts';
 
 interface NavbarProps {
@@ -10,6 +10,7 @@ interface NavbarProps {
   onNavigateTab: (tab: string) => void;
   businessName: string;
   onToggleMobileMenu?: () => void;
+  activeTab?: string;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,13 +20,42 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAddCustomer,
   onNavigateTab,
   businessName,
-  onToggleMobileMenu
+  onToggleMobileMenu,
+  activeTab = 'dashboard'
 }) => {
   const permissions = currentUser.permissions || {
     canAddEditCustomers: currentUser.role === 'admin',
     canImportData: currentUser.role === 'admin',
     canViewCommonQR: true
   };
+
+  const getBreadcrumb = (tab: string) => {
+    switch (tab) {
+      case 'customers':
+        return { section: 'Store Operations', page: 'Customer Directory' };
+      case 'import':
+        return { section: 'Store Operations', page: 'Import Customer Data' };
+      case 'duplicates':
+        return { section: 'Store Operations', page: 'Duplicate Manager' };
+      case 'qr_common':
+      case 'intake':
+      case 'qr_print':
+      case 'qr_activity':
+        return { section: 'Store Operations', page: 'Showroom QR Standee' };
+      case 'analytics':
+      case 'cleaning':
+        return { section: 'Store Analytics', page: 'Footfall & Performance' };
+      case 'categories':
+        return { section: 'Showroom Setup', page: 'Jewellery Categories' };
+      case 'settings':
+        return { section: 'Showroom Setup', page: 'Settings & Backups' };
+      case 'dashboard':
+      default:
+        return { section: 'Store Operations', page: 'Store Dashboard' };
+    }
+  };
+
+  const breadcrumb = getBreadcrumb(activeTab);
 
   return (
     <header className="bg-[#fbf8f2]/95 backdrop-blur-md border-b border-[#e8decb] sticky top-0 z-30 shadow-xs">
@@ -61,17 +91,41 @@ export const Navbar: React.FC<NavbarProps> = ({
               {businessName || 'GIRI JEWELLERS'}
             </span>
           </button>
+
+          {/* Desktop Breadcrumb Wayfinding */}
+          <div className="hidden lg:flex items-center gap-2 text-xs font-medium text-[#718079]">
+            <button
+              type="button"
+              onClick={() => onNavigateTab('dashboard')}
+              className="flex items-center gap-1.5 hover:text-[#0b241c] transition-colors cursor-pointer"
+            >
+              <Store className="w-3.5 h-3.5 text-[#b08738]" />
+              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-[#0b241c]">
+                {businessName}
+              </span>
+            </button>
+            <ChevronRight className="w-3.5 h-3.5 text-[#c8bdaf]" />
+            <span className="text-[#8c9c94] text-[11px]">{breadcrumb.section}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-[#c8bdaf]" />
+            <span className="text-[#0b241c] font-bold text-xs">
+              {breadcrumb.page}
+            </span>
+          </div>
         </div>
 
-        {/* Action Pills & Profile (Matching Screenshot Exactly) */}
+        {/* Action Pills & Profile */}
         <div className="flex items-center gap-2 sm:gap-2.5 ml-auto">
           {/* QR Center Button */}
           <button
             onClick={() => onNavigateTab('qr_common')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#1c2823] bg-[#ffffff] hover:bg-[#f6eee0] border border-[#dfd3bd] transition-all cursor-pointer shadow-xs"
+            className={`hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+              activeTab === 'qr_common' || activeTab.startsWith('qr_')
+                ? 'bg-[#0b241c] text-[#f7eedf] border border-[#dfb76c]/40 font-bold'
+                : 'text-[#1c2823] bg-[#ffffff] hover:bg-[#f6eee0] border border-[#dfd3bd]'
+            }`}
             title="Open Showroom QR Center"
           >
-            <QrCode className="w-3.5 h-3.5 text-[#b08738]" />
+            <QrCode className={`w-3.5 h-3.5 ${activeTab === 'qr_common' ? 'text-[#dfb76c]' : 'text-[#b08738]'}`} />
             <span>QR Center</span>
           </button>
 
@@ -79,15 +133,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           {permissions.canImportData && (
             <button
               onClick={() => onNavigateTab('import')}
-              className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#1c2823] bg-[#ffffff] hover:bg-[#f6eee0] border border-[#dfd3bd] transition-all cursor-pointer shadow-xs"
+              className={`hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+                activeTab === 'import'
+                  ? 'bg-[#0b241c] text-[#f7eedf] border border-[#dfb76c]/40 font-bold'
+                  : 'text-[#1c2823] bg-[#ffffff] hover:bg-[#f6eee0] border border-[#dfd3bd]'
+              }`}
               title="Import outside customer data (Excel & CSV)"
             >
-              <Upload className="w-3.5 h-3.5 text-[#b08738]" />
+              <Upload className={`w-3.5 h-3.5 ${activeTab === 'import' ? 'text-[#dfb76c]' : 'text-[#b08738]'}`} />
               <span>Import Data</span>
             </button>
           )}
 
-          {/* + Add Walk-In Button (Dark Emerald Pill from Screenshot) */}
+          {/* + Add Walk-In Button */}
           {permissions.canAddEditCustomers && (
             <button
               onClick={onOpenAddCustomer}

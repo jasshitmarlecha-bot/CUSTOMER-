@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Store, Users, QrCode, UserPlus, Menu } from 'lucide-react';
 import { Navbar } from './components/layout/Navbar.tsx';
 import { Sidebar } from './components/layout/Sidebar.tsx';
 import { DashboardView } from './components/dashboard/DashboardView.tsx';
@@ -62,6 +63,28 @@ const DEFAULT_STAFF_PERMISSIONS: StaffPermissions = {
   canViewCommonQR: true
 };
 
+const VALID_TABS = [
+  'dashboard',
+  'customers',
+  'import',
+  'duplicates',
+  'qr_common',
+  'intake',
+  'qr_analytics',
+  'qr_activity',
+  'qr_print',
+  'categories',
+  'cleaning',
+  'analytics',
+  'settings'
+];
+
+const getTabFromHash = (): string => {
+  if (typeof window === 'undefined') return 'dashboard';
+  const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase().trim();
+  return VALID_TABS.includes(hash) ? hash : 'dashboard';
+};
+
 export default function App() {
   // Check if visitor is scanning the QR code at the counter
   const isDirectQRScan = typeof window !== 'undefined' && window.location.search.includes('intake=qr');
@@ -76,7 +99,7 @@ export default function App() {
     }
   });
 
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [activeTab, setActiveTab] = useState<string>(() => getTabFromHash());
   const [currentUser, setCurrentUser] = useState<StaffUser>({
     id: 'user-admin-1',
     name: 'Giri Admin',
@@ -131,6 +154,42 @@ export default function App() {
       console.warn('Initial data load notice:', err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Synchronize activeTab with URL Hash for natural Back / Forward browser navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const currentHashTab = getTabFromHash();
+      setActiveTab(currentHashTab);
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleHashChange);
+
+    // If initial URL has no hash, set it without cluttering history
+    if (typeof window !== 'undefined' && !window.location.hash) {
+      window.history.replaceState(null, '', `/#/${activeTab}`);
+    }
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handleHashChange);
+    };
+  }, []);
+
+  const handleNavigateTab = (tab: string, replace = false) => {
+    setActiveTab(tab);
+    setIsMobileDrawerOpen(false);
+    if (typeof window !== 'undefined') {
+      const targetHash = `#/${tab}`;
+      if (window.location.hash !== targetHash) {
+        if (replace) {
+          window.history.replaceState(null, '', targetHash);
+        } else {
+          window.history.pushState(null, '', targetHash);
+        }
+      }
     }
   };
 
@@ -288,10 +347,7 @@ export default function App() {
       {/* Left Navigation Sidebar */}
       <Sidebar
         activeTab={activeTab}
-        onSelectTab={(tab) => {
-          setActiveTab(tab);
-          setIsMobileDrawerOpen(false);
-        }}
+        onSelectTab={handleNavigateTab}
         onOpenAddCustomer={handleOpenAddCustomer}
         onOpenStaffAccessModal={() => setIsStaffAccessModalOpen(true)}
         customerCount={customers.length}
@@ -300,17 +356,6 @@ export default function App() {
         onCloseMobile={() => setIsMobileDrawerOpen(false)}
       />
 
-      {/* Floating Operations Drawer Trigger for Mobile & Tablet */}
-      <button
-        type="button"
-        onClick={() => setIsMobileDrawerOpen(true)}
-        className="lg:hidden fixed bottom-6 left-4 z-40 px-3.5 py-2.5 rounded-full bg-[#0b241c] text-[#f7eedf] hover:bg-[#12362b] border border-[#dfb76c]/70 shadow-2xl flex items-center gap-2 cursor-pointer active:scale-95 transition-all backdrop-blur-md"
-        title="Open Operations Drawer"
-      >
-        <span className="w-2 h-2 rounded-full bg-[#dfb76c] animate-pulse" />
-        <span className="text-xs font-bold">Operations</span>
-      </button>
-
       {/* Right Column: Top Navbar & Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         <Navbar
@@ -318,16 +363,14 @@ export default function App() {
           onLogout={handleLogout}
           onOpenStaffAccessModal={() => setIsStaffAccessModalOpen(true)}
           onOpenAddCustomer={handleOpenAddCustomer}
-          onNavigateTab={(tab) => {
-            setActiveTab(tab);
-            setIsMobileDrawerOpen(false);
-          }}
+          onNavigateTab={handleNavigateTab}
           businessName={businessName}
           onToggleMobileMenu={() => setIsMobileDrawerOpen(prev => !prev)}
+          activeTab={activeTab}
         />
 
         {/* Dynamic Content Views */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 pb-28 lg:pb-8">
           {activeTab === 'dashboard' && (
             <DashboardView
               customers={customers}
@@ -335,7 +378,7 @@ export default function App() {
               currentUser={currentUser}
               businessName={businessName}
               storeSettings={storeSettings}
-              onNavigateTab={(tab) => setActiveTab(tab)}
+              onNavigateTab={handleNavigateTab}
               onOpenAddCustomer={handleOpenAddCustomer}
               onSelectCustomer={handleEditCustomer}
             />
@@ -351,9 +394,9 @@ export default function App() {
                 onEditCustomer={handleEditCustomer}
                 onDeleteCustomer={handleDeleteCustomer}
                 onClearAllCustomers={handleClearAllCustomers}
-                onNavigateToQR={() => setActiveTab('qr_common')}
+                onNavigateToQR={() => handleNavigateTab('qr_common')}
                 onImportCustomers={handleImportCustomers}
-                onNavigateToImport={() => setActiveTab('import')}
+                onNavigateToImport={() => handleNavigateTab('import')}
                 businessName={businessName}
               />
             ) : (
@@ -370,7 +413,7 @@ export default function App() {
               <CustomerImportView
                 existingCustomers={customers}
                 onImportComplete={handleImportCustomers}
-                onNavigateToDirectory={() => setActiveTab('customers')}
+                onNavigateToDirectory={() => handleNavigateTab('customers')}
                 totalCustomersCount={customers.length}
               />
             ) : (
@@ -391,7 +434,7 @@ export default function App() {
                   setCustomers(refreshed);
                 }}
                 onEditCustomer={handleEditCustomer}
-                onNavigateToDirectory={() => setActiveTab('customers')}
+                onNavigateToDirectory={() => handleNavigateTab('customers')}
               />
             ) : (
               <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
@@ -493,6 +536,93 @@ export default function App() {
           )}
         </main>
       </div>
+
+      {/* Mobile & Tablet Bottom Navigation Bar (1-Thumb Ergonomic Quick Access) */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#ffffff]/95 backdrop-blur-md border-t border-[#ede3d3] shadow-[0_-4px_20px_rgba(11,36,28,0.08)] px-2 py-1.5 flex items-center justify-around"
+      >
+        {/* 1. Dashboard */}
+        <button
+          type="button"
+          onClick={() => handleNavigateTab('dashboard')}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
+            activeTab === 'dashboard'
+              ? 'text-[#0b241c] font-bold'
+              : 'text-[#718079] hover:text-[#0b241c]'
+          }`}
+        >
+          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+            <Store className="w-5 h-5" />
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">Dashboard</span>
+        </button>
+
+        {/* 2. Customer Directory */}
+        <button
+          type="button"
+          onClick={() => handleNavigateTab('customers')}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all relative cursor-pointer ${
+            activeTab === 'customers'
+              ? 'text-[#0b241c] font-bold'
+              : 'text-[#718079] hover:text-[#0b241c]'
+          }`}
+        >
+          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+            <Users className="w-5 h-5" />
+            {customers.length > 0 && (
+              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-[#dfb76c] text-[#0b241c] text-[9px] font-black rounded-full shadow-xs">
+                {customers.length}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">Customers</span>
+        </button>
+
+        {/* 3. Center Elevated + Walk-In Button */}
+        {permissions.canAddEditCustomers && (
+          <button
+            type="button"
+            onClick={handleOpenAddCustomer}
+            className="flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl bg-gradient-to-br from-[#dfb76c] via-[#d4a856] to-[#b08738] text-[#0b241c] font-bold shadow-lg shadow-[#dfb76c]/40 border-2 border-[#ffffff] active:scale-95 transition-transform cursor-pointer"
+            title="Add Walk-In Customer"
+          >
+            <UserPlus className="w-5 h-5 stroke-[2.5]" />
+            <span className="text-[10px] font-extrabold uppercase tracking-wide mt-0.5">+ Walk-In</span>
+          </button>
+        )}
+
+        {/* 4. Showroom QR Portal */}
+        <button
+          type="button"
+          onClick={() => handleNavigateTab('qr_common')}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
+            activeTab.startsWith('qr') || activeTab === 'intake'
+              ? 'text-[#0b241c] font-bold'
+              : 'text-[#718079] hover:text-[#0b241c]'
+          }`}
+        >
+          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+            <QrCode className="w-5 h-5" />
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">QR Center</span>
+        </button>
+
+        {/* 5. More / Menu Drawer */}
+        <button
+          type="button"
+          onClick={() => setIsMobileDrawerOpen(prev => !prev)}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
+            isMobileDrawerOpen ? 'text-[#0b241c] font-bold' : 'text-[#718079] hover:text-[#0b241c]'
+          }`}
+          title="Open Operations Menu"
+        >
+          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+            <Menu className="w-5 h-5" />
+          </div>
+          <span className="text-[10px] tracking-tight mt-0.5">Menu</span>
+        </button>
+      </nav>
 
       {/* Add / Edit Customer Modal */}
       <CustomerModal

@@ -264,16 +264,14 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleSelectRole('admin')}
-                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${
-                        selectedRole === 'admin'
+                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${selectedRole === 'admin'
                           ? 'bg-[#103328] border-[#dfb76c] shadow-[0_0_18px_rgba(223,183,108,0.22)] ring-1 ring-[#dfb76c]/60 text-white'
                           : 'bg-[#091f17] border-[#dfb76c]/20 hover:bg-[#0d2a20] text-[#cfdfd6]'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between w-full mb-1">
-                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${
-                          selectedRole === 'admin' ? 'bg-[#dfb76c] text-[#071c16]' : 'bg-[#143d30] text-[#dfb76c]'
-                        }`}>
+                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${selectedRole === 'admin' ? 'bg-[#dfb76c] text-[#071c16]' : 'bg-[#143d30] text-[#dfb76c]'
+                          }`}>
                           <User className="w-4 h-4" />
                         </div>
                         {selectedRole === 'admin' && (
@@ -292,16 +290,14 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleSelectRole('staff')}
-                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${
-                        selectedRole === 'staff'
+                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${selectedRole === 'staff'
                           ? 'bg-[#103328] border-[#dfb76c] shadow-[0_0_18px_rgba(223,183,108,0.22)] ring-1 ring-[#dfb76c]/60 text-white'
                           : 'bg-[#091f17] border-[#dfb76c]/20 hover:bg-[#0d2a20] text-[#cfdfd6]'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between w-full mb-1">
-                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${
-                          selectedRole === 'staff' ? 'bg-[#dfb76c] text-[#071c16]' : 'bg-[#143d30] text-[#dfb76c]'
-                        }`}>
+                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${selectedRole === 'staff' ? 'bg-[#dfb76c] text-[#071c16]' : 'bg-[#143d30] text-[#dfb76c]'
+                          }`}>
                           <Users className="w-4 h-4" />
                         </div>
                         {selectedRole === 'staff' && (

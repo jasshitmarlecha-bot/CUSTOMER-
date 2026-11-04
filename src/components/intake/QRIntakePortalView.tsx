@@ -243,11 +243,10 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
                     key={p.size}
                     type="button"
                     onClick={() => setQrSize(p.size)}
-                    className={`px-3 py-2 text-xs font-bold rounded-xl border transition-colors cursor-pointer text-left ${
-                      qrSize === p.size
+                    className={`px-3 py-2 text-xs font-bold rounded-xl border transition-colors cursor-pointer text-left ${qrSize === p.size
                         ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf]'
                         : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#faf7f0]'
-                    }`}
+                      }`}
                   >
                     <span className="block">{p.label}</span>
                     <span className={`text-[10px] font-mono ${qrSize === p.size ? 'text-[#dfb76c]' : 'text-[#718079]'}`}>
