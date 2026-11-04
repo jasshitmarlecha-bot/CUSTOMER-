@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  QrCode,
-  UserPlus,
-  Shield,
-  LogOut,
-  Upload,
-  Menu
-} from 'lucide-react';
+import { QrCode, UserPlus, ShieldCheck, LogOut, Upload, Bell, ChevronDown, Menu } from 'lucide-react';
 import { StaffUser } from '../../types/index.ts';
 
 interface NavbarProps {
@@ -35,109 +28,119 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="bg-[#12141a] border-b border-[#21242d] sticky top-0 z-30">
+    <header className="bg-[#130c15]/95 backdrop-blur-md border-b border-[#2d1b28] sticky top-0 z-30 shadow-lg shadow-black/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand & Mobile Hamburger */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Mobile/Tablet Menu Button to Slide Operations Drawer */}
           {onToggleMobileMenu && (
             <button
               type="button"
               onClick={onToggleMobileMenu}
-              className="lg:hidden p-2 rounded-lg bg-[#181a22] text-[#f4f5f7] hover:bg-[#20232c] border border-[#272b36] flex items-center gap-1.5 cursor-pointer transition-colors"
-              title="Open Navigation"
+              className="lg:hidden p-2 rounded-xl bg-[#1d121c] text-[#faeed4] hover:bg-[#281928] border border-[#482c40] flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95 transition-all"
+              title="Open Operations Menu"
               aria-label="Toggle operations navigation"
             >
-              <Menu className="w-4 h-4 text-[#d4af37]" />
+              <Menu className="w-5 h-5 text-[#dfb76c]" />
+              <span className="text-[11px] font-bold text-[#faeed4] hidden sm:inline">Menu</span>
             </button>
           )}
 
           <button
             onClick={() => onNavigateTab('dashboard')}
-            className="flex items-center gap-3 text-left focus:outline-none group cursor-pointer"
+            className="flex items-center gap-2.5 sm:gap-3 text-left focus:outline-none group cursor-pointer"
           >
-            <img
-              src="/assets/aistudio/giri_jewellers_logo_transparent.png"
-              alt="Giri Jewellers Crest"
-              className="w-8 h-8 object-contain shrink-0"
-            />
+            {/* Royal Crown & Laurel Monogram Emblem without black background */}
+            <div className="relative group-hover:scale-105 transition-transform shrink-0">
+              <img
+                src="/assets/aistudio/giri_jewellers_logo_transparent.png"
+                alt="Giri Jewellers Crest"
+                className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_10px_rgba(245,215,127,0.45)]"
+              />
+            </div>
             <div>
-              <span className="font-cinzel text-sm sm:text-base font-semibold tracking-[0.14em] text-[#e8c86d] uppercase block leading-tight">
+              <span className="font-cinzel text-base sm:text-lg font-bold tracking-[0.16em] text-[#fae7ba] uppercase block leading-tight">
                 {businessName || 'GIRI JEWELLERS'}
               </span>
-              <p className="text-[11px] text-[#8a919e] hidden sm:block font-normal">
-                Customer Management & Showroom Suite
+              <p className="text-[10.5px] text-[#d6be9a] hidden sm:block font-medium tracking-wide">
+                Customer Database & Showroom QR Suite
               </p>
             </div>
           </button>
         </div>
 
-        {/* Action Controls & User Profile */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Showroom QR Portal */}
+        {/* Quick Actions & Staff Profile */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* QR Center Button */}
           <button
             onClick={() => onNavigateTab('qr_common')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#c0c6d2] hover:text-white bg-[#181b22] hover:bg-[#20242e] border border-[#262a34] rounded-lg transition-colors cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#f2e6ee] bg-[#1a111a] hover:bg-[#281928] border border-[#482c40] rounded-xl transition-all cursor-pointer shadow-xs"
             title="Open Showroom QR Center"
           >
-            <QrCode className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>QR Intake</span>
+            <QrCode className="w-3.5 h-3.5 text-[#dfb76c]" />
+            <span>QR Center</span>
           </button>
 
-          {/* Import Customer Data */}
+          {/* Import Data Button */}
           {permissions.canImportData && (
             <button
               onClick={() => onNavigateTab('import')}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#c0c6d2] hover:text-white bg-[#181b22] hover:bg-[#20242e] border border-[#262a34] rounded-lg transition-colors cursor-pointer"
-              title="Import Excel or CSV records"
+              className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#f2e6ee] bg-[#1a111a] hover:bg-[#281928] border border-[#482c40] rounded-xl transition-all cursor-pointer shadow-xs"
+              title="Import outside customer data (Excel & CSV)"
             >
-              <Upload className="w-3.5 h-3.5 text-[#d4af37]" />
-              <span>Import</span>
+              <Upload className="w-3.5 h-3.5 text-[#dfb76c]" />
+              <span>Import Data</span>
             </button>
           )}
 
-          {/* Add Walk-In (Primary CTA) */}
+          {/* + Add Walk-In Button (Warm Champagne Gold from Screenshot) */}
           {permissions.canAddEditCustomers && (
             <button
               onClick={onOpenAddCustomer}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#14161d] bg-[#d4af37] hover:bg-[#e0bc45] active:bg-[#c29f2f] rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold text-[#1c1206] bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-95 rounded-xl shadow-[0_2px_12px_rgba(250,226,171,0.25)] transition-all cursor-pointer"
             >
-              <UserPlus className="w-3.5 h-3.5 text-[#14161d] stroke-[2.5]" />
-              <span>New Walk-In</span>
+              <UserPlus className="w-3.5 h-3.5 text-[#1c1206] stroke-[2.5]" />
+              <span>+ Add Walk-In</span>
             </button>
           )}
 
-          {/* Staff Access Administration */}
+          {/* Staff Access Control Button */}
           {currentUser.role === 'admin' && (
             <button
               onClick={onOpenStaffAccessModal}
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#c0c6d2] hover:text-white bg-[#181b22] hover:bg-[#20242e] border border-[#262a34] rounded-lg transition-colors cursor-pointer"
-              title="Staff Permissions & User Roster"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#f2e6ee] bg-[#1a111a] hover:bg-[#281928] border border-[#482c40] rounded-xl transition-all cursor-pointer shadow-xs"
+              title="Manage Staff Permissions & Access"
             >
-              <Shield className="w-3.5 h-3.5 text-[#8a919e]" />
-              <span>Staff Access</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-[#d8b4fe]" />
+              <span>Staff Access Control</span>
             </button>
           )}
 
           {/* User Account / Role Pill */}
-          <div className="flex items-center gap-2 pl-2 border-l border-[#21242d]">
-            <div className="hidden sm:block text-right">
-              <span className="block text-xs font-medium text-[#e4e7eb] leading-tight">
-                {currentUser.name}
-              </span>
-              <span className="text-[10px] text-[#8a919e] font-normal uppercase tracking-wider">
-                {currentUser.role === 'admin' ? 'Store Admin' : 'Counter Staff'}
-              </span>
+          <div className="hidden sm:flex items-center gap-1.5 text-right pl-2 pr-1">
+            <div>
+              <p className="text-[11px] font-semibold text-[#cfb7c8] leading-tight">Store Manager</p>
+              <div className="flex items-center gap-1 text-xs text-[#fae7ba] font-bold">
+                <span>{currentUser.role === 'admin' ? 'Store Admin' : 'Counter Staff'}</span>
+                <ChevronDown className="w-3 h-3 text-[#dfb76c]" />
+              </div>
             </div>
+          </div>
 
-            <button
-              type="button"
-              onClick={onLogout}
-              className="p-1.5 rounded-lg text-[#8a919e] hover:text-white hover:bg-[#1e212b] transition-colors cursor-pointer"
-              title="Sign Out"
-              aria-label="Sign out"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
+          {/* Log Out Button */}
+          <button
+            onClick={onLogout}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#f2e6ee] bg-[#1a111a] hover:bg-[#281928] border border-[#482c40] rounded-xl transition-all cursor-pointer shadow-xs"
+            title="Log out and return to password login gate"
+          >
+            <LogOut className="w-3.5 h-3.5 text-[#d8b4fe]" />
+            <span>Log Out</span>
+          </button>
+
+          {/* Bell with red indicator dot */}
+          <div className="relative p-1.5 text-[#d8b4fe] hidden sm:block cursor-pointer hover:text-white">
+            <Bell className="w-4 h-4" />
+            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-[#130c15]" />
           </div>
         </div>
       </div>
