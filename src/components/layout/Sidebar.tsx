@@ -11,8 +11,7 @@ import {
   Lock,
   Upload,
   CopyCheck,
-  X,
-  ChevronRight
+  X
 } from 'lucide-react';
 import { StaffUser } from '../../types/index.ts';
 
@@ -58,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           id: 'dashboard',
           label: 'Store Dashboard',
           icon: LayoutDashboard,
-          badge: 'Home',
+          badge: null,
           badgeType: 'home',
           isPermitted: true
         },
@@ -82,7 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           id: 'duplicates',
           label: 'Duplicate Manager',
           icon: CopyCheck,
-          badge: 'Clean',
+          badge: null,
           badgeType: 'clean',
           isPermitted: permissions.canRunCleaning
         },
@@ -148,62 +147,97 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   // Reusable Sidebar Inner Content
   const renderSidebarContent = (isMobileView = false) => (
-    <div className="flex flex-col h-full overflow-y-auto">
-      {/* Mobile Drawer Header */}
-      {isMobileView && (
-        <div className="p-4 border-b border-[#2d1b28] flex items-center justify-between bg-[#150a17]">
-          <div className="flex items-center gap-2.5">
-            <div className="shrink-0">
-              <img
-                src="/assets/aistudio/giri_jewellers_logo_transparent.png"
-                alt="Giri Jewellers Crest"
-                className="w-7 h-7 object-contain drop-shadow-[0_0_8px_rgba(245,215,127,0.4)]"
-              />
-            </div>
-            <div>
-              <span className="font-cinzel text-sm font-bold tracking-widest text-[#faeed4] uppercase">
-                GIRI JEWELLERS
-              </span>
-              <p className="text-[10px] text-[#dfb76c]">Showroom Operations</p>
-            </div>
+    <div className="flex flex-col h-full overflow-y-auto relative select-none">
+      {/* Decorative Gold Silk Wave at top-right */}
+      <svg
+        className="absolute top-0 right-0 pointer-events-none opacity-30"
+        width="110"
+        height="110"
+        viewBox="0 0 110 110"
+        fill="none"
+      >
+        <path
+          d="M0,0 C50,15 90,50 110,110 L110,0 Z"
+          fill="url(#goldSilkTopGrad)"
+        />
+        <defs>
+          <linearGradient id="goldSilkTopGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#dfb76c" />
+            <stop offset="100%" stopColor="#8c6422" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* Brand Header: Faceted Diamond Logo & Title */}
+      <div className="p-5 pb-3 flex items-center justify-between relative z-10">
+        <button
+          onClick={() => handleItemClick('dashboard')}
+          className="flex flex-col items-center w-full text-center group cursor-pointer focus:outline-none"
+        >
+          {/* Faceted Brilliant-Cut Diamond Icon */}
+          <div className="mb-2 p-1 relative">
+            <svg
+              className="w-9 h-9 text-[#dfb76c] drop-shadow-[0_2px_8px_rgba(223,183,108,0.45)] group-hover:scale-105 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 3h12l4 6-10 12L2 9z" />
+              <path d="M11 3v18" />
+              <path d="M2 9h20" />
+              <path d="M7 9l5 12 5-12" />
+              <path d="M6 3l5 6 5-6" />
+            </svg>
           </div>
 
+          <h1 className="font-cinzel text-base sm:text-[17px] font-bold tracking-[0.14em] text-[#f4dfb5] uppercase leading-tight">
+            GIRI JEWELLERS
+          </h1>
+          <p className="text-[10px] text-[#8cb2a3] tracking-wide mt-1 font-medium">
+            Customer Database & Showroom QR Suite
+          </p>
+        </button>
+
+        {isMobileView && onCloseMobile && (
           <button
             type="button"
             onClick={onCloseMobile}
-            className="p-1.5 text-[#cfb7c8] hover:text-white hover:bg-[#261327] rounded-xl transition-colors cursor-pointer"
+            className="absolute top-4 right-4 p-1.5 text-[#a1c4b8] hover:text-white hover:bg-[#163e32] rounded-xl transition-colors cursor-pointer"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* Quick Add Walk-In Button */}
+      {/* Quick Add Walk-In Pill Button */}
       {permissions.canAddEditCustomers && (
-        <div className="p-4 pb-2">
+        <div className="px-4 py-2 relative z-10">
           <button
             type="button"
             onClick={handleQuickAddClick}
-            className="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-[0.98] text-[#1c1206] font-bold text-xs sm:text-[12.5px] shadow-[0_4px_16px_rgba(250,226,171,0.22)] transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#fae7c2] via-[#eecd93] to-[#dfb76c] hover:brightness-105 active:scale-[0.98] text-[#0a1e16] font-bold text-xs shadow-[0_4px_16px_rgba(223,183,108,0.22)] border border-[#f5dfb3] transition-all cursor-pointer"
           >
-            <UserPlus className="w-4 h-4 text-[#1c1206] stroke-[2.5]" />
+            <UserPlus className="w-4 h-4 text-[#0a1e16] stroke-[2.4]" />
             <span>Quick Walk-In Entry</span>
           </button>
         </div>
       )}
 
-      {/* Menu List */}
-      <div className="p-3 space-y-5 overflow-y-auto flex-1 z-10">
+      {/* Menu Sections */}
+      <div className="p-3 space-y-4 overflow-y-auto flex-1 z-10">
         {menuSections.map((section, sIdx) => (
-          <div key={sIdx} className="space-y-1.5">
-            <div className="px-3">
-              <p className="text-[10.5px] font-bold text-[#dfb76c] uppercase tracking-wider">
+          <div key={sIdx} className="space-y-1">
+            <div className="px-3 pt-1">
+              <p className="text-[10px] font-bold text-[#648d7e] uppercase tracking-wider">
                 {section.title}
               </p>
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const isActive =
@@ -218,42 +252,40 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     disabled={!isPermitted}
                     type="button"
                     onClick={() => handleItemClick(item.id)}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                       !isPermitted
-                        ? 'opacity-40 cursor-not-allowed text-[#6d5267]'
+                        ? 'opacity-40 cursor-not-allowed text-[#4f6b61]'
                         : isActive
-                        ? 'bg-gradient-to-r from-[#b3854d] via-[#dfb76c] to-[#b3854d] text-[#180f03] font-bold shadow-[0_4px_14px_rgba(223,183,108,0.25)] border-none'
-                        : 'text-[#cfb7c8] hover:text-white hover:bg-[#1a0f1b]'
+                        ? 'bg-gradient-to-r from-[#e3bf7d] via-[#d6ad64] to-[#c79d50] text-[#091d15] font-bold shadow-[0_3px_12px_rgba(215,174,100,0.25)] border-none'
+                        : 'text-[#c2ded4] hover:text-white hover:bg-[#11352a]'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       <Icon
                         className={`w-4 h-4 shrink-0 ${
                           isActive
-                            ? 'text-[#180f03] stroke-[2.5]'
+                            ? 'text-[#091d15] stroke-[2.4]'
                             : isPermitted
-                            ? 'text-[#dfb76c]'
-                            : 'text-[#6d5267]'
+                            ? 'text-[#82b4a3]'
+                            : 'text-[#4f6b61]'
                         }`}
                       />
                       <span className="truncate">{item.label}</span>
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                      {!isPermitted && <Lock className="w-3 h-3 text-[#6d5267]" />}
+                      {!isPermitted && <Lock className="w-3 h-3 text-[#4f6b61]" />}
 
                       {item.badge !== null && isPermitted && (
                         <span
                           className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
                             isActive
-                              ? 'bg-[#180f03]/20 text-[#180f03]'
-                              : item.badgeType === 'home'
-                              ? 'bg-[#261327] text-[#faeed4] border border-[#482c40]'
+                              ? 'bg-[#091d15]/20 text-[#091d15]'
                               : item.badgeType === 'live'
-                              ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'
-                              : item.badgeType === 'clean'
-                              ? 'bg-purple-950/80 text-purple-300 border border-purple-800'
-                              : 'bg-[#1e1320] text-[#dfb76c] border border-[#392233]'
+                              ? 'bg-[#0e3b2e] text-[#4ade80] border border-[#166534]'
+                              : item.badgeType === 'import'
+                              ? 'bg-[#153c30] text-[#f2e0b5] border border-[#d4af37]/60'
+                              : 'bg-[#13382c] text-[#dfb76c] border border-[#235342]'
                           }`}
                         >
                           {item.badge}
@@ -269,20 +301,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Staff Access Control shortcut */}
         {currentUser.role === 'admin' && onOpenStaffAccessModal && (
-          <div className="pt-2 border-t border-[#2d1b28]">
+          <div className="pt-2">
             <button
               type="button"
               onClick={() => {
                 onOpenStaffAccessModal();
                 if (onCloseMobile) onCloseMobile();
               }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#faeed4] bg-[#1a0f1b] hover:bg-[#261327] border border-[#482c40] transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold text-[#f4dfb5] bg-[#0c241c] hover:bg-[#143a2d] border border-[#1d4d3c] transition-colors cursor-pointer"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-[#dfb76c]" />
                 <span>Staff Access Control</span>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-900/80 text-purple-200">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#1b4334] text-[#f2e0b5] border border-[#d4af37]/50">
                 Manage
               </span>
             </button>
@@ -290,33 +322,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      {/* Classical Architectural Facade Sketch Watermark */}
-      <div className="mt-auto p-4 relative overflow-hidden pointer-events-none opacity-20 select-none">
+      {/* Decorative Gold Silk Curve at bottom-left */}
+      <div className="mt-auto p-4 relative overflow-hidden pointer-events-none select-none">
         <svg
-          className="w-full h-20 text-[#dfb76c]"
-          viewBox="0 0 200 100"
+          className="w-full h-12 text-[#dfb76c]/30"
+          viewBox="0 0 200 60"
           fill="none"
           stroke="currentColor"
-          strokeWidth="0.8"
+          strokeWidth="1.2"
         >
-          <polygon points="10 40 100 15 190 40" />
-          <line x1="5" y1="40" x2="195" y2="40" strokeWidth="1.2" />
-          <line x1="10" y1="44" x2="190" y2="44" />
-          <line x1="25" y1="44" x2="25" y2="95" strokeWidth="1" />
-          <line x1="30" y1="44" x2="30" y2="95" />
-          <line x1="55" y1="44" x2="55" y2="95" strokeWidth="1" />
-          <line x1="60" y1="44" x2="60" y2="95" />
-          <line x1="85" y1="44" x2="85" y2="95" strokeWidth="1" />
-          <line x1="90" y1="44" x2="90" y2="95" />
-          <line x1="110" y1="44" x2="110" y2="95" strokeWidth="1" />
-          <line x1="115" y1="44" x2="115" y2="95" />
-          <line x1="140" y1="44" x2="140" y2="95" strokeWidth="1" />
-          <line x1="145" y1="44" x2="145" y2="95" />
-          <line x1="170" y1="44" x2="170" y2="95" strokeWidth="1" />
-          <line x1="175" y1="44" x2="175" y2="95" />
-          <line x1="15" y1="95" x2="185" y2="95" strokeWidth="1.2" />
-          <line x1="10" y1="99" x2="190" y2="99" strokeWidth="1.5" />
-          <circle cx="100" cy="30" r="6" />
+          <path d="M0 45 C 50 10, 150 60, 200 20" />
+          <path d="M0 55 C 60 20, 140 50, 200 30" opacity="0.6" />
         </svg>
       </div>
     </div>
@@ -324,29 +340,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* 1. Desktop Persistent Sidebar (Only visible on lg: and above) */}
-      <aside className="hidden lg:flex w-64 bg-[#110913] border-r border-[#2d1b28] flex-col shrink-0 font-sans relative">
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden lg:flex w-64 xl:w-72 bg-gradient-to-b from-[#071c16] via-[#0a261e] to-[#061611] border-r border-[#15382e] flex-col shrink-0 font-sans relative h-screen sticky top-0">
         {renderSidebarContent(false)}
       </aside>
 
-      {/* 2. Mobile & Tablet Left-to-Right Slide-Over Drawer */}
+      {/* Mobile Left-to-Right Slide-Over Drawer */}
       <div
         className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${
           isMobileOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
         }`}
       >
-        {/* Backdrop Overlay */}
         <div
           onClick={onCloseMobile}
-          className={`fixed inset-0 bg-black/80 backdrop-blur-xs transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity duration-300 ${
             isMobileOpen ? 'opacity-100' : 'opacity-0'
           }`}
           aria-hidden="true"
         />
 
-        {/* Sliding Panel: Slides from Left to Right */}
         <aside
-          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-[#110913] border-r border-[#392233] shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
+          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-gradient-to-b from-[#071c16] via-[#0a261e] to-[#061611] border-r border-[#15382e] shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
             isMobileOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >

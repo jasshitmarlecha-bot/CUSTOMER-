@@ -1,13 +1,29 @@
 @import "tailwindcss";
 
 @layer base {
-  * {
-    border-color: #2d1b28;
+  :root {
+    --bg-main: #f5efe6;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #fffcf7;
+    --border-subtle: #ede3d3;
+    --border-strong: #dfd3bd;
+    --text-primary: #19241f;
+    --text-secondary: #576560;
+    --text-muted: #83918b;
+    --emerald-dark: #071c16;
+    --emerald-primary: #0b271f;
+    --emerald-light: #164234;
+    --gold-primary: #dfb76c;
+    --gold-accent: #c59b48;
+    --gold-light: #fae7c2;
   }
+
   body {
-    background-color: #0c070e; /* Luxury Obsidian Charcoal & Velvet */
-    color: #ffffff;
+    background-color: #f5efe6;
+    color: #19241f;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -19,49 +35,26 @@
   font-family: 'Cormorant Garamond', serif;
 }
 
-.gold-gradient-text {
-  background: linear-gradient(180deg, #fff5d6 0%, #f7dc94 40%, #d4a94b 80%, #b3832c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gold-border-glow {
-  box-shadow: 0 0 25px rgba(212, 169, 75, 0.15), inset 0 1px 1px rgba(255, 235, 178, 0.35);
-}
-
-/* Custom Luxury Scrollbars */
+/* Luxury custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #0c070e;
+  background: #f0e8dc;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #2d1b28;
+  background: #d9cdbe;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #dfb76c;
+  background: #c5b6a3;
 }
 
 ::selection {
-  background-color: #dfb76c;
-  color: #1a1104;
-}
-
-@media print {
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  #printable-customer-data, #printable-customer-data * {
-    visibility: visible;
-  }
-  #printable-display-sign, #printable-display-sign * {
-    visibility: visible;
-  }
+  background-color: rgba(223, 183, 108, 0.35);
+  color: #0b241c;
 }

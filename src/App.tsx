@@ -284,48 +284,47 @@ export default function App() {
   const permissions = currentUser.role === 'admin' ? DEFAULT_ADMIN_PERMISSIONS : (currentUser.permissions || staffPermissions);
 
   return (
-    <div className="min-h-screen bg-[#0c070e] text-white flex flex-col font-sans selection:bg-[#dfb76c] selection:text-[#1a1104]">
-      {/* Top Navbar with Giri Jewels branding, staff role indicator and mobile operations drawer toggle */}
-      <Navbar
-        currentUser={currentUser}
-        onLogout={handleLogout}
-        onOpenStaffAccessModal={() => setIsStaffAccessModalOpen(true)}
-        onOpenAddCustomer={handleOpenAddCustomer}
-        onNavigateTab={(tab) => {
+    <div className="min-h-screen bg-[#f5efe6] text-[#19241f] flex flex-col lg:flex-row font-sans selection:bg-[#dfb76c]/40 selection:text-[#0b241c]">
+      {/* Left Navigation Sidebar */}
+      <Sidebar
+        activeTab={activeTab}
+        onSelectTab={(tab) => {
           setActiveTab(tab);
           setIsMobileDrawerOpen(false);
         }}
-        businessName={businessName}
-        onToggleMobileMenu={() => setIsMobileDrawerOpen(prev => !prev)}
+        onOpenAddCustomer={handleOpenAddCustomer}
+        onOpenStaffAccessModal={() => setIsStaffAccessModalOpen(true)}
+        customerCount={customers.length}
+        currentUser={currentUser}
+        isMobileOpen={isMobileDrawerOpen}
+        onCloseMobile={() => setIsMobileDrawerOpen(false)}
       />
 
-      {/* Main Body */}
-      <div className="flex-1 flex flex-col lg:flex-row max-w-7xl w-full mx-auto relative">
-        {/* Left Navigation Sidebar with Showroom QR Center, Desktop persistent view & Mobile slide-over drawer */}
-        <Sidebar
-          activeTab={activeTab}
-          onSelectTab={(tab) => {
+      {/* Floating Operations Drawer Trigger for Mobile & Tablet */}
+      <button
+        type="button"
+        onClick={() => setIsMobileDrawerOpen(true)}
+        className="lg:hidden fixed bottom-6 left-4 z-40 px-3.5 py-2.5 rounded-full bg-[#0b241c] text-[#f7eedf] hover:bg-[#12362b] border border-[#dfb76c]/70 shadow-2xl flex items-center gap-2 cursor-pointer active:scale-95 transition-all backdrop-blur-md"
+        title="Open Operations Drawer"
+      >
+        <span className="w-2 h-2 rounded-full bg-[#dfb76c] animate-pulse" />
+        <span className="text-xs font-bold">Operations</span>
+      </button>
+
+      {/* Right Column: Top Navbar & Main Content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <Navbar
+          currentUser={currentUser}
+          onLogout={handleLogout}
+          onOpenStaffAccessModal={() => setIsStaffAccessModalOpen(true)}
+          onOpenAddCustomer={handleOpenAddCustomer}
+          onNavigateTab={(tab) => {
             setActiveTab(tab);
             setIsMobileDrawerOpen(false);
           }}
-          onOpenAddCustomer={handleOpenAddCustomer}
-          onOpenStaffAccessModal={() => setIsStaffAccessModalOpen(true)}
-          customerCount={customers.length}
-          currentUser={currentUser}
-          isMobileOpen={isMobileDrawerOpen}
-          onCloseMobile={() => setIsMobileDrawerOpen(false)}
+          businessName={businessName}
+          onToggleMobileMenu={() => setIsMobileDrawerOpen(prev => !prev)}
         />
-
-        {/* Floating Operations Drawer Trigger for Mobile & Tablet */}
-        <button
-          type="button"
-          onClick={() => setIsMobileDrawerOpen(true)}
-          className="lg:hidden fixed bottom-6 left-4 z-40 px-3.5 py-2.5 rounded-full bg-[#1e1120] text-[#faeed4] hover:bg-[#2b172d] border border-[#dfb76c]/70 shadow-2xl flex items-center gap-2 cursor-pointer active:scale-95 transition-all backdrop-blur-md"
-          title="Open Operations Drawer"
-        >
-          <span className="w-2 h-2 rounded-full bg-[#dfb76c] animate-pulse" />
-          <span className="text-xs font-bold">Operations</span>
-        </button>
 
         {/* Dynamic Content Views */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0">
@@ -358,9 +357,9 @@ export default function App() {
                 businessName={businessName}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">You do not have permission to view the Customer Directory. Please request access from the Store Admin.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">You do not have permission to view the Customer Directory. Please request access from the Store Admin.</p>
               </div>
             )
           )}
@@ -375,9 +374,9 @@ export default function App() {
                 totalCustomersCount={customers.length}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">You do not have permission to import customer records. Please contact Store Admin.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">You do not have permission to import customer records. Please contact Store Admin.</p>
               </div>
             )
           )}
@@ -395,9 +394,9 @@ export default function App() {
                 onNavigateToDirectory={() => setActiveTab('customers')}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">You do not have permission to manage duplicates. Please contact Store Admin.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">You do not have permission to manage duplicates. Please contact Store Admin.</p>
               </div>
             )
           )}
@@ -420,9 +419,9 @@ export default function App() {
                 onRefreshData={loadInitialData}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">Common QR portal is restricted for your account.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">Common QR portal is restricted for your account.</p>
               </div>
             )
           )}
@@ -437,9 +436,9 @@ export default function App() {
                 onDeleteCategory={handleDeleteCategory}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">Category management is restricted to Store Admin.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">Category management is restricted to Store Admin.</p>
               </div>
             )
           )}
@@ -455,9 +454,9 @@ export default function App() {
                 onDeleteCustomer={handleDeleteCustomer}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">Data quality & duplicate analysis is reserved for Store Admin.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">Data quality & duplicate analysis is reserved for Store Admin.</p>
               </div>
             )
           )}
@@ -473,9 +472,9 @@ export default function App() {
                 onDeleteCustomer={handleDeleteCustomer}
               />
             ) : (
-              <div className="bg-[#160d16] border border-[#392233] rounded-2xl p-8 text-center space-y-3">
-                <p className="text-[#dfb76c] font-bold">Access Restricted</p>
-                <p className="text-xs text-purple-300/70">Store intelligence & scan analytics are restricted.</p>
+              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                <p className="text-[#b08738] font-bold">Access Restricted</p>
+                <p className="text-xs text-[#718079]">Store intelligence & scan analytics are restricted.</p>
               </div>
             )
           )}

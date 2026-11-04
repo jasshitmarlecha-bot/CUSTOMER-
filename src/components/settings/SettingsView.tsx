@@ -345,14 +345,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-[#14221d] tracking-tight">
               Store & Showroom Settings
             </h1>
-            <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#261327] text-[#faeed4] border border-[#482c40] font-bold uppercase tracking-wider">
+            <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#f5eee3] text-[#14221d] border border-[#dfd3bd] font-bold uppercase tracking-wider">
               Admin Suite
             </span>
           </div>
-          <p className="text-xs text-[#cfb7c8] mt-1 max-w-2xl">
+          <p className="text-xs text-[#718079] mt-1 max-w-2xl">
             Configure showroom identity, BIS hallmark details, customer deduplication safeguards, and enterprise-grade backup & restore.
           </p>
         </div>
@@ -361,7 +361,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <button
             type="button"
             onClick={handleExportFullBackup}
-            className="px-3.5 py-2 text-xs font-semibold text-[#faeed4] hover:text-white bg-[#1d121c] hover:bg-[#281829] border border-[#482c40] rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 text-xs font-semibold text-[#14221d] hover:text-[#14221d] bg-[#ffffff] hover:bg-[#f6eee0] border border-[#dfd3bd] rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
             title="Download offline JSON backup file"
           >
             <Download className="w-3.5 h-3.5 text-[#dfb76c]" />
@@ -371,7 +371,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             type="button"
             onClick={() => handleSaveAll()}
             disabled={isSaving}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-xs font-black rounded-xl shadow-lg shadow-purple-950/60 transition-all flex items-center gap-2 cursor-pointer active:scale-98"
+            className="px-4 py-2 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] disabled:opacity-50 text-white text-xs font-black rounded-xl shadow-lg shadow-purple-950/60 transition-all flex items-center gap-2 cursor-pointer active:scale-98"
           >
             <Save className="w-3.5 h-3.5" />
             <span>{isSaving ? 'Saving...' : 'Save Settings'}</span>
@@ -384,7 +384,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div
           className={`p-3.5 rounded-xl border text-xs flex items-center gap-2.5 shadow-md ${
             statusMessage.type === 'success'
-              ? 'bg-[#261327] border-purple-500/70 text-[#faeed4]'
+              ? 'bg-[#f5eee3] border-purple-500/70 text-[#14221d]'
               : 'bg-rose-950/80 border-rose-500/70 text-rose-200'
           }`}
         >
@@ -398,13 +398,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       )}
 
       {/* 2. Settings Category Navigation Tabs (Removed Live Rates!) */}
-      <div className="flex flex-wrap items-center gap-2 bg-[#160d16] p-2 rounded-2xl border border-[#392233]">
+      <div className="flex flex-wrap items-center gap-2 bg-[#ffffff] p-2 rounded-2xl border border-[#ede3d3]">
         <button
           onClick={() => setActiveTab('identity')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'identity'
-              ? 'bg-purple-600 text-white shadow-md'
-              : 'text-[#cfb7c8] hover:text-white hover:bg-[#261327]'
+              ? 'bg-[#0b241c] text-[#f7eedf] shadow-xs font-bold'
+              : 'text-[#718079] hover:text-white hover:bg-[#f5eee3]'
           }`}
         >
           <Building className="w-3.5 h-3.5" />
@@ -415,8 +415,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           onClick={() => setActiveTab('intake')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'intake'
-              ? 'bg-purple-600 text-white shadow-md'
-              : 'text-[#cfb7c8] hover:text-white hover:bg-[#261327]'
+              ? 'bg-[#0b241c] text-[#f7eedf] shadow-xs font-bold'
+              : 'text-[#718079] hover:text-white hover:bg-[#f5eee3]'
           }`}
         >
           <Sliders className="w-3.5 h-3.5" />
@@ -427,8 +427,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           onClick={() => setActiveTab('backup')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'backup'
-              ? 'bg-purple-600 text-white shadow-md'
-              : 'text-[#cfb7c8] hover:text-white hover:bg-[#261327]'
+              ? 'bg-[#0b241c] text-[#f7eedf] shadow-xs font-bold'
+              : 'text-[#718079] hover:text-white hover:bg-[#f5eee3]'
           }`}
         >
           <Database className="w-3.5 h-3.5" />
@@ -439,8 +439,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           onClick={() => setActiveTab('security')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === 'security'
-              ? 'bg-purple-600 text-white shadow-md'
-              : 'text-[#cfb7c8] hover:text-white hover:bg-[#261327]'
+              ? 'bg-[#0b241c] text-[#f7eedf] shadow-xs font-bold'
+              : 'text-[#718079] hover:text-white hover:bg-[#f5eee3]'
           }`}
         >
           <Lock className="w-3.5 h-3.5" />
@@ -454,20 +454,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             TAB 1: SHOWROOM IDENTITY & BIS COMPLIANCE
         ========================================================================= */}
         {activeTab === 'identity' && (
-          <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-6">
-            <div className="border-b border-[#392233] pb-4">
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xl space-y-6">
+            <div className="border-b border-[#ede3d3] pb-4">
+              <h2 className="text-base font-bold text-[#14221d] flex items-center gap-2">
                 <Building className="w-4 h-4 text-[#dfb76c]" />
                 <span>Showroom Identity & Government Compliance</span>
               </h2>
-              <p className="text-xs text-[#cfb7c8] mt-1">
+              <p className="text-xs text-[#718079] mt-1">
                 Official store details printed on customer summaries, exports, and receipts.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Jewellery Store Name *
                 </label>
                 <input
@@ -475,52 +475,52 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   required
                   value={settings.businessName}
                   onChange={(e) => handleFieldChange('businessName', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 font-bold"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c] font-bold"
                   placeholder="e.g. Giri Jewels"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Showroom Tagline
                 </label>
                 <input
                   type="text"
                   value={settings.tagline}
                   onChange={(e) => handleFieldChange('tagline', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c]"
                   placeholder="e.g. Fine Gold, Diamond & Heritage Bridal Jewellery"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Branch / Landmark
                 </label>
                 <input
                   type="text"
                   value={settings.branchName}
                   onChange={(e) => handleFieldChange('branchName', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c]"
                   placeholder="e.g. Trivandrum Flagship Showroom"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   GSTIN Tax Registration Number
                 </label>
                 <input
                   type="text"
                   value={settings.gstin}
                   onChange={(e) => handleFieldChange('gstin', e.target.value.toUpperCase())}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white font-mono focus:outline-none focus:ring-2 focus:ring-purple-500/50 uppercase"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c] uppercase"
                   placeholder="e.g. 32AABCG1234F1Z9"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4] flex items-center justify-between">
+                <label className="text-xs font-semibold text-[#14221d] flex items-center justify-between">
                   <span>BIS Hallmark Licence / HUID</span>
                   <span className="text-[10px] text-emerald-400 font-semibold">100% Certified</span>
                 </label>
@@ -528,95 +528,95 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   type="text"
                   value={settings.bisHallmarkNumber}
                   onChange={(e) => handleFieldChange('bisHallmarkNumber', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white font-mono focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c]"
                   placeholder="e.g. HM/C-7849201"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Official Customer Support Hotline
                 </label>
                 <input
                   type="text"
                   value={settings.whatsappPhone}
                   onChange={(e) => handleFieldChange('whatsappPhone', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 font-mono"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c] font-mono"
                   placeholder="e.g. +91 98470 54321"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Official Showroom Email
                 </label>
                 <input
                   type="email"
                   value={settings.email}
                   onChange={(e) => handleFieldChange('email', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 font-mono"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c] font-mono"
                   placeholder="e.g. girijewelstvm@gmail.com"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Store Contact Landline / Phone
                 </label>
                 <input
                   type="text"
                   value={settings.phone}
                   onChange={(e) => handleFieldChange('phone', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 font-mono"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c] font-mono"
                   placeholder="e.g. +91 98470 54321"
                 />
               </div>
             </div>
 
             {/* Address Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-[#392233]">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-[#ede3d3]">
               <div className="sm:col-span-3 space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Full Street Address
                 </label>
                 <input
                   type="text"
                   value={settings.address}
                   onChange={(e) => handleFieldChange('address', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c]"
                   placeholder="e.g. MG Road, Overbridge Junction, East Fort"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">City / District</label>
+                <label className="text-xs font-semibold text-[#14221d]">City / District</label>
                 <input
                   type="text"
                   value={settings.city}
                   onChange={(e) => handleFieldChange('city', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c]"
                   placeholder="e.g. Thiruvananthapuram"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">State</label>
+                <label className="text-xs font-semibold text-[#14221d]">State</label>
                 <input
                   type="text"
                   value={settings.state}
                   onChange={(e) => handleFieldChange('state', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c]"
                   placeholder="e.g. Kerala"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">Postal PIN Code</label>
+                <label className="text-xs font-semibold text-[#14221d]">Postal PIN Code</label>
                 <input
                   type="text"
                   value={settings.pincode}
                   onChange={(e) => handleFieldChange('pincode', e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 font-mono"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#0b241c]/30 focus:border-[#0b241c] font-mono"
                   placeholder="e.g. 695001"
                 />
               </div>
@@ -628,64 +628,64 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             TAB 2: CUSTOMER INTAKE & DEDUPLICATION SAFEGUARDS
         ========================================================================= */}
         {activeTab === 'intake' && (
-          <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-6">
-            <div className="border-b border-[#392233] pb-4">
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xl space-y-6">
+            <div className="border-b border-[#ede3d3] pb-4">
+              <h2 className="text-base font-bold text-[#14221d] flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-[#dfb76c]" />
                 <span>Customer Data Quality & Deduplication Policies</span>
               </h2>
-              <p className="text-xs text-[#cfb7c8] mt-1">
+              <p className="text-xs text-[#718079] mt-1">
                 Automated safeguards to prevent duplicate customer numbers and ensure clean records.
               </p>
             </div>
 
             <div className="space-y-3.5">
-              <label className="flex items-start gap-3 p-4 bg-[#100911] rounded-2xl border border-[#392233] cursor-pointer hover:border-purple-600 transition-colors">
+              <label className="flex items-start gap-3 p-4 bg-[#faf7f0] rounded-2xl border border-[#ede3d3] cursor-pointer hover:border-purple-600 transition-colors">
                 <input
                   type="checkbox"
                   checked={settings.enableDuplicateGuard}
                   onChange={(e) => handleFieldChange('enableDuplicateGuard', e.target.checked)}
-                  className="mt-1 rounded border-[#482c40] text-purple-600 focus:ring-purple-500"
+                  className="mt-1 rounded border-[#dfd3bd] text-purple-600 focus:ring-purple-500"
                 />
                 <div>
-                  <span className="text-xs font-bold text-white block">
+                  <span className="text-xs font-bold text-[#14221d] block">
                     Automatic Phone Duplicate Guard (Active Protection)
                   </span>
-                  <span className="text-[11px] text-[#cfb7c8] block mt-0.5">
+                  <span className="text-[11px] text-[#718079] block mt-0.5">
                     Checks customer mobile numbers in real time while typing. If existing customer is found, offers 1-click update instead of creating redundant profiles.
                   </span>
                 </div>
               </label>
 
-              <label className="flex items-start gap-3 p-4 bg-[#100911] rounded-2xl border border-[#392233] cursor-pointer hover:border-purple-600 transition-colors">
+              <label className="flex items-start gap-3 p-4 bg-[#faf7f0] rounded-2xl border border-[#ede3d3] cursor-pointer hover:border-purple-600 transition-colors">
                 <input
                   type="checkbox"
                   checked={settings.autoFormatNames}
                   onChange={(e) => handleFieldChange('autoFormatNames', e.target.checked)}
-                  className="mt-1 rounded border-[#482c40] text-purple-600 focus:ring-purple-500"
+                  className="mt-1 rounded border-[#dfd3bd] text-purple-600 focus:ring-purple-500"
                 />
                 <div>
-                  <span className="text-xs font-bold text-white block">
+                  <span className="text-xs font-bold text-[#14221d] block">
                     Auto-Format Customer Names (Proper Title Case)
                   </span>
-                  <span className="text-[11px] text-[#cfb7c8] block mt-0.5">
+                  <span className="text-[11px] text-[#718079] block mt-0.5">
                     Automatically converts lowercase or all-caps names (e.g. "priya sharma" → "Priya Sharma").
                   </span>
                 </div>
               </label>
 
-              <label className="flex items-start gap-3 p-4 bg-[#100911] rounded-2xl border border-[#392233] cursor-pointer hover:border-purple-600 transition-colors">
+              <label className="flex items-start gap-3 p-4 bg-[#faf7f0] rounded-2xl border border-[#ede3d3] cursor-pointer hover:border-purple-600 transition-colors">
                 <input
                   type="checkbox"
                   checked={settings.requireCityOnWalkin}
                   onChange={(e) => handleFieldChange('requireCityOnWalkin', e.target.checked)}
-                  className="mt-1 rounded border-[#482c40] text-purple-600 focus:ring-purple-500"
+                  className="mt-1 rounded border-[#dfd3bd] text-purple-600 focus:ring-purple-500"
                 />
                 <div>
-                  <span className="text-xs font-bold text-white block">
+                  <span className="text-xs font-bold text-[#14221d] block">
                     Highlight Place & Referral Attribution on Intake
                   </span>
-                  <span className="text-[11px] text-[#cfb7c8] block mt-0.5">
+                  <span className="text-[11px] text-[#718079] block mt-0.5">
                     Prompts staff to record customer's place/town and referral person for regional outreach.
                   </span>
                 </div>
@@ -693,7 +693,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[#faeed4]">
+                  <label className="text-xs font-semibold text-[#14221d]">
                     Minimum Phone Number Digits
                   </label>
                   <input
@@ -702,22 +702,22 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     max="15"
                     value={settings.minPhoneDigits}
                     onChange={(e) => handleFieldChange('minPhoneDigits', Number(e.target.value) || 10)}
-                    className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white font-mono focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white font-mono focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                   <span className="text-[10px] text-[#dfb76c] block">Standard is 10 digits</span>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[#faeed4]">
+                  <label className="text-xs font-semibold text-[#14221d]">
                     Default Customer Jewelry Category Tag
                   </label>
                   <select
                     value={settings.defaultCategoryId}
                     onChange={(e) => handleFieldChange('defaultCategoryId', e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
+                    className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
                   >
                     {categories.map((c) => (
-                      <option key={c.id} value={c.id} className="bg-[#261327]">
+                      <option key={c.id} value={c.id} className="bg-[#f5eee3]">
                         {c.name} {c.isDefault ? '(Default)' : ''}
                       </option>
                     ))}
@@ -732,28 +732,28 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             TAB 3: STRONG ENTERPRISE BACKUP & RESTORE SUITE
         ========================================================================= */}
         {activeTab === 'backup' && (
-          <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-6">
-            <div className="border-b border-[#392233] pb-4">
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xl space-y-6">
+            <div className="border-b border-[#ede3d3] pb-4">
+              <h2 className="text-base font-bold text-[#14221d] flex items-center gap-2">
                 <Database className="w-4 h-4 text-[#dfb76c]" />
                 <span>Enterprise Backup & Disaster Recovery Suite</span>
               </h2>
-              <p className="text-xs text-[#cfb7c8] mt-1">
+              <p className="text-xs text-[#718079] mt-1">
                 Protect your entire store database. Export multi-format backups or restore from an existing JSON backup file.
               </p>
             </div>
 
             {/* Backup Status Tile */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-[#160d16] via-[#160d16] to-[#160d16] border border-[#482c40] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-[#ffffff] via-[#ffffff] to-[#ffffff] border border-[#dfd3bd] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-600/20 text-[#cfb7c8] border border-purple-500/40 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-purple-600/20 text-[#718079] border border-purple-500/40 flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold text-white">
+                  <h3 className="text-xs font-bold text-[#14221d]">
                     Database Protection Status: <span className="text-emerald-400 font-bold">100% Healthy</span>
                   </h3>
-                  <p className="text-[11px] text-[#cfb7c8]">
+                  <p className="text-[11px] text-[#718079]">
                     {customers.length} customer records & {categories.length} category tags currently active in storage.
                   </p>
                 </div>
@@ -770,20 +770,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {/* 3 Strong Backup Action Blocks */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Option 1: Full JSON Backup */}
-              <div className="p-5 bg-[#100911] rounded-2xl border border-[#392233] space-y-3 flex flex-col justify-between">
+              <div className="p-5 bg-[#faf7f0] rounded-2xl border border-[#ede3d3] space-y-3 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-2 text-white font-bold text-xs">
+                  <div className="flex items-center gap-2 text-[#14221d] font-bold text-xs">
                     <Database className="w-4 h-4 text-[#dfb76c]" />
                     <span>Complete JSON Database Snapshot</span>
                   </div>
-                  <p className="text-[11px] text-[#cfb7c8] mt-1 leading-relaxed">
+                  <p className="text-[11px] text-[#718079] mt-1 leading-relaxed">
                     Downloads all customer profiles, referral links, category structures, and store configurations into an offline JSON snapshot.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={handleExportFullBackup}
-                  className="w-full py-2.5 px-4 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full py-2.5 px-4 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Full JSON Backup</span>
@@ -791,20 +791,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
 
               {/* Option 2: Excel Complete Workbook */}
-              <div className="p-5 bg-[#100911] rounded-2xl border border-[#392233] space-y-3 flex flex-col justify-between">
+              <div className="p-5 bg-[#faf7f0] rounded-2xl border border-[#ede3d3] space-y-3 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-2 text-white font-bold text-xs">
+                  <div className="flex items-center gap-2 text-[#14221d] font-bold text-xs">
                     <FileSpreadsheet className="w-4 h-4 text-[#dfb76c]" />
                     <span>Multi-Sheet Excel Workbook (.xlsx)</span>
                   </div>
-                  <p className="text-[11px] text-[#cfb7c8] mt-1 leading-relaxed">
+                  <p className="text-[11px] text-[#718079] mt-1 leading-relaxed">
                     Generates a multi-sheet spreadsheet: Customers roster, Category list, and Store Metadata. Perfect for offline auditing and accountant review.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={handleExportExcelFullBackup}
-                  className="w-full py-2.5 px-4 bg-[#1d121c] hover:bg-[#281829] text-[#faeed4] hover:text-white font-bold text-xs rounded-xl border border-[#482c40] transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full py-2.5 px-4 bg-[#ffffff] hover:bg-[#f6eee0] text-[#14221d] hover:text-white font-bold text-xs rounded-xl border border-[#dfd3bd] transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   <FileSpreadsheet className="w-3.5 h-3.5 text-[#dfb76c]" />
                   <span>Download Excel Workbook</span>
@@ -813,14 +813,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
 
             {/* RESTORE FROM BACKUP BLOCK */}
-            <div className="p-5 bg-gradient-to-r from-purple-950/60 to-[#160d16] rounded-2xl border-2 border-dashed border-[#482c40] space-y-4">
+            <div className="p-5 bg-gradient-to-r from-purple-950/60 to-[#ffffff] rounded-2xl border-2 border-dashed border-[#dfd3bd] space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="flex items-center gap-2 text-white font-bold text-xs">
+                  <div className="flex items-center gap-2 text-[#14221d] font-bold text-xs">
                     <Upload className="w-4 h-4 text-[#dfb76c]" />
                     <span>Restore Database from Backup Snapshot</span>
                   </div>
-                  <p className="text-[11px] text-[#cfb7c8] mt-0.5">
+                  <p className="text-[11px] text-[#718079] mt-0.5">
                     Upload a previously downloaded JSON backup file to restore records and configuration.
                   </p>
                 </div>
@@ -852,20 +852,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             TAB 4: SECURITY & MASTER PIN
         ========================================================================= */}
         {activeTab === 'security' && (
-          <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-6">
-            <div className="border-b border-[#392233] pb-4">
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xl space-y-6">
+            <div className="border-b border-[#ede3d3] pb-4">
+              <h2 className="text-base font-bold text-[#14221d] flex items-center gap-2">
                 <Lock className="w-4 h-4 text-[#dfb76c]" />
                 <span>Showroom Security & Manager Overrides</span>
               </h2>
-              <p className="text-xs text-[#cfb7c8] mt-1">
+              <p className="text-xs text-[#718079] mt-1">
                 Configure Master PIN codes for counter authorization and danger zone maintenance.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4] flex items-center justify-between">
+                <label className="text-xs font-semibold text-[#14221d] flex items-center justify-between">
                   <span>Store Master Security PIN *</span>
                   <span className="text-[10px] text-[#dfb76c] font-mono">Used for staff overrides</span>
                 </label>
@@ -874,7 +874,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   required
                   value={settings.masterSecurityPin}
                   onChange={(e) => handleFieldChange('masterSecurityPin', e.target.value.trim())}
-                  className="w-full px-3.5 py-2.5 text-xs bg-[#100911] border border-[#392233] rounded-xl text-white font-mono font-bold focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-white font-mono font-bold focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="GIRI-7788"
                 />
                 <span className="text-[10px] text-[#dfb76c] block">
@@ -883,18 +883,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#faeed4]">
+                <label className="text-xs font-semibold text-[#14221d]">
                   Allow Counter Staff to Export Lists
                 </label>
-                <div className="p-3 bg-[#100911] rounded-xl border border-[#392233]">
+                <div className="p-3 bg-[#faf7f0] rounded-xl border border-[#ede3d3]">
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={settings.allowStaffExports}
                       onChange={(e) => handleFieldChange('allowStaffExports', e.target.checked)}
-                      className="rounded border-[#482c40] text-purple-600 focus:ring-purple-500"
+                      className="rounded border-[#dfd3bd] text-purple-600 focus:ring-purple-500"
                     />
-                    <span className="text-xs text-[#faeed4]">
+                    <span className="text-xs text-[#14221d]">
                       Permit counter staff to download customer Excel / PDF rosters
                     </span>
                   </label>
@@ -903,9 +903,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
 
             {/* QR Scan Reset */}
-            <div className="p-4 bg-[#100911] rounded-2xl border border-[#392233] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="p-4 bg-[#faf7f0] rounded-2xl border border-[#ede3d3] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="text-xs font-bold text-white block">
+                <span className="text-xs font-bold text-[#14221d] block">
                   Showroom QR Logs & Footfall Reset
                 </span>
                 <span className="text-[11px] text-[#dfb76c] block mt-0.5">
@@ -915,7 +915,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <button
                 type="button"
                 onClick={promptClearQRData}
-                className="px-3.5 py-2 text-xs font-bold text-amber-300 hover:text-white bg-amber-950/60 hover:bg-amber-900 border border-amber-800 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 shrink-0"
+                className="px-3.5 py-2 text-xs font-bold text-amber-300 hover:text-[#14221d] bg-amber-950/60 hover:bg-amber-900 border border-amber-800 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 shrink-0"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Reset QR Activity Logs</span>
@@ -928,7 +928,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <AlertTriangle className="w-4 h-4 text-rose-500" />
                 <span>Danger Zone: Database Reset</span>
               </div>
-              <p className="text-xs text-[#cfb7c8] leading-relaxed">
+              <p className="text-xs text-[#718079] leading-relaxed">
                 Clear all {customers.length} customer records from live storage. Make sure to download a JSON backup first.
               </p>
               <button
@@ -944,14 +944,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         )}
 
         {/* Floating Bottom Save Action */}
-        <div className="p-4 bg-[#160d16] border border-[#392233] rounded-2xl flex items-center justify-between shadow-xl">
-          <div className="text-xs text-[#cfb7c8]">
+        <div className="p-4 bg-[#ffffff] border border-[#ede3d3] rounded-2xl flex items-center justify-between shadow-xl">
+          <div className="text-xs text-[#718079]">
             Showroom changes take effect across all terminals immediately.
           </div>
           <button
             type="submit"
             disabled={isSaving}
-            className="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-xs font-black rounded-xl shadow-lg shadow-purple-950/60 transition-all flex items-center gap-2 cursor-pointer active:scale-98"
+            className="px-6 py-2.5 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] disabled:opacity-50 text-white text-xs font-black rounded-xl shadow-lg shadow-purple-950/60 transition-all flex items-center gap-2 cursor-pointer active:scale-98"
           >
             <Save className="w-4 h-4" />
             <span>{isSaving ? 'Saving Changes...' : 'Save All Settings'}</span>
