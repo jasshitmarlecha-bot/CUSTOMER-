@@ -345,13 +345,13 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
       {/* Page Title & Top Toolbar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold text-[#14221d] tracking-tight flex items-center gap-2">
+          <h1 className="text-xl font-bold text-[#2a0717] tracking-tight flex items-center gap-2">
             <span>Customer Directory</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#f5eee3] text-[#4d3a28] border border-[#e5d7c3] font-bold">
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#f4e2d8] text-[#3d0c22] border border-[#ebdcd3] font-bold">
               {customers.length} total
             </span>
           </h1>
-          <p className="text-xs text-[#718079]">
+          <p className="text-xs text-[#876876] font-normal">
             Showroom client records with location place, referral attribution, category, and filtered export.
           </p>
         </div>
@@ -361,10 +361,10 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
           {permissions.canPrintData && customers.length > 0 && (
             <button
               onClick={() => setIsPrintModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#1c2823] bg-white hover:bg-[#f6eee0] border border-[#dfd3bd] rounded-full shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-[#2a0717] bg-white hover:bg-[#f6ebe4] border border-[#ebdcd3] rounded-full shadow-xs transition-colors cursor-pointer"
               title="Print Customer Data"
             >
-              <Printer className="w-3.5 h-3.5 text-[#b08738]" />
+              <Printer className="w-3.5 h-3.5 text-[#3d0c22]" />
               <span>Print Data</span>
             </button>
           )}
@@ -374,46 +374,46 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
             <div className="relative">
               <button
                 onClick={() => setIsExportDropdownOpen(!isExportDropdownOpen)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-[#1c2823] bg-white hover:bg-[#f6eee0] border border-[#dfd3bd] rounded-full shadow-xs transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#2a0717] bg-white hover:bg-[#f6ebe4] border border-[#ebdcd3] rounded-full shadow-xs transition-colors cursor-pointer"
                 title={`Export ${filteredCustomers.length} filtered customer records`}
               >
-                <Download className="w-3.5 h-3.5 text-[#b08738]" />
+                <Download className="w-3.5 h-3.5 text-[#3d0c22]" />
                 <span>Export Filtered ({filteredCustomers.length})</span>
-                <ChevronDown className="w-3 h-3 text-[#b08738]" />
+                <ChevronDown className="w-3 h-3 text-[#3d0c22]" />
               </button>
               {isExportDropdownOpen && (
-                <div className="absolute right-0 mt-1.5 w-56 bg-white border border-[#ede3d3] rounded-2xl shadow-xl z-30 py-2 text-xs">
-                  <div className="px-3.5 py-1 text-[11px] font-bold text-[#b08738] border-b border-[#f2ebd9]">
+                <div className="absolute right-0 mt-1.5 w-56 bg-white border border-[#ede0d6] rounded-2xl shadow-xl z-30 py-2 text-xs">
+                  <div className="px-3.5 py-1 text-[11px] font-bold text-[#3d0c22] border-b border-[#f2e7de]">
                     Export Filtered ({filteredCustomers.length} Records)
                   </div>
                   <button
                     onClick={handleExportExcel}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[#14221d] hover:bg-[#faf6ef] transition-colors cursor-pointer"
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[#2a0717] hover:bg-[#faf2ec] transition-colors cursor-pointer"
                   >
                     <FileSpreadsheet className="w-4 h-4 text-emerald-600 shrink-0" />
                     <div>
                       <span className="font-bold block">Excel Spreadsheet (.xlsx)</span>
-                      <span className="text-[10px] text-[#718079]">Filtered records with place & referral</span>
+                      <span className="text-[10px] text-[#876876]">Filtered records with place & referral</span>
                     </div>
                   </button>
                   <button
                     onClick={handleExportCSV}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[#14221d] hover:bg-[#faf6ef] transition-colors cursor-pointer"
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[#2a0717] hover:bg-[#faf2ec] transition-colors cursor-pointer"
                   >
                     <FileText className="w-4 h-4 text-sky-600 shrink-0" />
                     <div>
                       <span className="font-bold block">CSV Format (.csv)</span>
-                      <span className="text-[10px] text-[#718079]">Universal comma-separated file</span>
+                      <span className="text-[10px] text-[#876876]">Universal comma-separated file</span>
                     </div>
                   </button>
                   <button
                     onClick={handleExportPDF}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[#14221d] hover:bg-[#faf6ef] transition-colors cursor-pointer"
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-left text-[#2a0717] hover:bg-[#faf2ec] transition-colors cursor-pointer"
                   >
-                    <Printer className="w-4 h-4 text-[#b08738] shrink-0" />
+                    <Printer className="w-4 h-4 text-[#3d0c22] shrink-0" />
                     <div>
                       <span className="font-bold block">Printable Roster / PDF</span>
-                      <span className="text-[10px] text-[#718079]">Print layout formatted for paper</span>
+                      <span className="text-[10px] text-[#876876]">Print layout formatted for paper</span>
                     </div>
                   </button>
                 </div>
@@ -431,10 +431,10 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
                   setIsImportModalOpen(true);
                 }
               }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#1c2823] bg-white hover:bg-[#f6eee0] border border-[#dfd3bd] rounded-full shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-[#2a0717] bg-white hover:bg-[#f6ebe4] border border-[#ebdcd3] rounded-full shadow-xs transition-colors cursor-pointer"
               title="Import outside customer data from Excel or CSV"
             >
-              <Upload className="w-3.5 h-3.5 text-[#b08738]" />
+              <Upload className="w-3.5 h-3.5 text-[#3d0c22]" />
               <span>Import Data</span>
             </button>
           )}
@@ -443,9 +443,9 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
           {permissions.canAddEditCustomers && (
             <button
               onClick={onAddCustomer}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#f7eedf] bg-[#0b241c] hover:bg-[#12362b] active:scale-95 rounded-full shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-[#ffffff] bg-[#3d0c22] hover:bg-[#521130] active:scale-95 rounded-full shadow-md shadow-[#3d0c22]/20 transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4 text-[#f7eedf] stroke-[2.5]" />
+              <Plus className="w-4 h-4 text-[#ffffff] stroke-[2.5]" />
               <span>+ Add Customer</span>
             </button>
           )}
@@ -662,21 +662,21 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
                   return (
                     <tr
                       key={customer.id}
-                      className="hover:bg-[#faf7f2] transition-colors group"
+                      className="hover:bg-[#fcf7f3] transition-colors group"
                     >
                       {/* Customer Details */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-[#f5eee3] border border-[#e5d7c3] flex items-center justify-center text-[#0b241c] font-bold text-xs shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-[#fae8dc] border border-[#ebdcd3] flex items-center justify-center text-[#2a0717] font-bold text-xs shrink-0">
                             {customer.name ? customer.name.charAt(0).toUpperCase() : 'C'}
                           </div>
                           <div>
-                            <div className="font-semibold text-[#14221d] group-hover:text-[#0b241c] transition-colors">
+                            <div className="font-bold text-[#2a0717] group-hover:text-[#3d0c22] transition-colors">
                               {customer.name}
                             </div>
                             {customer.email && (
-                              <div className="text-[11px] text-[#718079] flex items-center gap-1 mt-0.5">
-                                <Mail className="w-3 h-3 text-[#b08738]" />
+                              <div className="text-[11px] text-[#876876] font-medium flex items-center gap-1 mt-0.5">
+                                <Mail className="w-3 h-3 text-[#3d0c22]" />
                                 <span>{customer.email}</span>
                               </div>
                             )}
@@ -686,7 +686,7 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
 
                       {/* Contact Phone */}
                       <td className="py-3.5 px-4">
-                        <span className="font-mono text-[#33413b] font-semibold">
+                        <span className="font-mono text-[#2a0717] font-bold text-xs">
                           {customer.phone || 'No phone'}
                         </span>
                       </td>
@@ -694,30 +694,30 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
                       {/* Customer Place */}
                       <td className="py-3.5 px-4">
                         {customerPlace ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium text-[#4d3a28] bg-[#f5eee3] border border-[#e5d7c3]">
-                            <MapPin className="w-3 h-3 text-[#b08738]" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold text-[#4a2e1d] bg-[#fbf0e4] border border-[#edd5bf]">
+                            <MapPin className="w-3 h-3 text-[#dfb76c]" />
                             <span>{customerPlace}</span>
                           </span>
                         ) : (
-                          <span className="text-[#8a9691] text-[11px] italic">Not specified</span>
+                          <span className="text-[#a08290] text-[11px] italic">Not specified</span>
                         )}
                       </td>
 
                       {/* Referred By */}
                       <td className="py-3.5 px-4">
                         {customer.referredBy ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold text-[#4d3a28] bg-[#f5eee3] border border-[#e5d7c3]">
-                            <UserCheck className="w-3 h-3 text-[#b08738]" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold text-[#4a2e1d] bg-[#fbf0e4] border border-[#edd5bf]">
+                            <UserCheck className="w-3 h-3 text-[#dfb76c]" />
                             <span>{customer.referredBy}</span>
                           </span>
                         ) : (
-                          <span className="text-[#8a9691] text-[11px]">Direct Walk-In</span>
+                          <span className="text-[#876876] text-[11px] font-medium">Direct Walk-In</span>
                         )}
                       </td>
 
                       {/* Category */}
                       <td className="py-3.5 px-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#f5eee3] text-[#4d3a28] border border-[#e5d7c3]">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#fbf0e4] text-[#4a2e1d] border border-[#edd5bf]">
                           {customer.categoryName || 'General'}
                         </span>
                       </td>
@@ -725,24 +725,24 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
                       {/* Source */}
                       <td className="py-3.5 px-4">
                         {customer.source === 'walkin_qr' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#fbf3e4] text-[#9a7228] border border-[#ebd8b7]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#fbf3e4] text-[#9a7228] border border-[#ebd8b7]">
                             <QrCode className="w-3 h-3" />
                             <span>QR Standee</span>
                           </span>
                         ) : customer.source === 'import' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#f0f4f8] text-[#334e68] border border-[#d9e2ec]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#f0f4f8] text-[#334e68] border border-[#d9e2ec]">
                             <Upload className="w-3 h-3" />
                             <span>Imported</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#e8f5ee] text-[#0f3d2e] border border-[#c2e5d3]">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#eaf4ee] text-[#134327] border border-[#cbe4d4]">
                             <span>Manual Staff</span>
                           </span>
                         )}
                       </td>
 
                       {/* Registered Date */}
-                      <td className="py-3.5 px-4 text-[#718079] text-[11px] font-mono">
+                      <td className="py-3.5 px-4 text-[#876876] text-[11px] font-mono font-medium">
                         {new Date(customer.createdAt).toLocaleDateString('en-IN', {
                           day: 'numeric',
                           month: 'short',
@@ -756,7 +756,7 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
                           {permissions.canAddEditCustomers && (
                             <button
                               onClick={() => onEditCustomer(customer)}
-                              className="p-1.5 text-[#718079] hover:text-[#0b241c] hover:bg-[#f0e8dc] rounded-full transition-colors cursor-pointer"
+                              className="p-1.5 text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc] rounded-full transition-colors cursor-pointer"
                               title="Edit customer details"
                             >
                               <Edit2 className="w-3.5 h-3.5" />

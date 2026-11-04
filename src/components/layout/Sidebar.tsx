@@ -193,10 +193,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </svg>
           </div>
 
-          <h1 className="font-cinzel text-base sm:text-[17px] font-bold tracking-[0.14em] text-[#f4dfb5] uppercase leading-tight">
+          <h1 className="font-cinzel text-base sm:text-[17px] font-bold tracking-[0.14em] text-[#faead1] uppercase leading-tight">
             GIRI JEWELLERS
           </h1>
-          <p className="text-[10px] text-[#8cb2a3] tracking-wide mt-1 font-medium">
+          <p className="text-[10px] text-[#cca2b5] tracking-wide mt-1 font-medium">
             Customer Database & Showroom QR Suite
           </p>
         </button>
@@ -205,7 +205,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={onCloseMobile}
-            className="absolute top-4 right-4 p-1.5 text-[#a1c4b8] hover:text-white hover:bg-[#163e32] rounded-xl transition-colors cursor-pointer"
+            className="absolute top-4 right-4 p-1.5 text-[#e8d2dc] hover:text-white hover:bg-[#450b27] rounded-xl transition-colors cursor-pointer"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
@@ -219,9 +219,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={handleQuickAddClick}
-            className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#fae7c2] via-[#eecd93] to-[#dfb76c] hover:brightness-105 active:scale-[0.98] text-[#0a1e16] font-bold text-xs shadow-[0_4px_16px_rgba(223,183,108,0.22)] border border-[#f5dfb3] transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#fae7c2] via-[#eecd93] to-[#dfb76c] hover:brightness-105 active:scale-[0.98] text-[#2c0819] font-bold text-xs shadow-[0_4px_16px_rgba(223,183,108,0.22)] border border-[#f5dfb3] transition-all cursor-pointer"
           >
-            <UserPlus className="w-4 h-4 text-[#0a1e16] stroke-[2.4]" />
+            <UserPlus className="w-4 h-4 text-[#2c0819] stroke-[2.4]" />
             <span>Quick Walk-In Entry</span>
           </button>
         </div>
@@ -232,7 +232,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {menuSections.map((section, sIdx) => (
           <div key={sIdx} className="space-y-1">
             <div className="px-3 pt-1">
-              <p className="text-[10px] font-bold text-[#648d7e] uppercase tracking-wider">
+              <p className="text-[10px] font-bold text-[#e2b79e]/80 uppercase tracking-wider">
                 {section.title}
               </p>
             </div>
@@ -254,38 +254,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onClick={() => handleItemClick(item.id)}
                     className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                       !isPermitted
-                        ? 'opacity-40 cursor-not-allowed text-[#4f6b61]'
+                        ? 'opacity-40 cursor-not-allowed text-[#684654]'
                         : isActive
-                        ? 'bg-gradient-to-r from-[#e3bf7d] via-[#d6ad64] to-[#c79d50] text-[#091d15] font-bold shadow-[0_3px_12px_rgba(215,174,100,0.25)] border-none'
-                        : 'text-[#c2ded4] hover:text-white hover:bg-[#11352a]'
+                        ? 'bg-gradient-to-r from-[#e7b897] via-[#dfa782] to-[#d69871] text-[#2c0819] font-bold shadow-[0_3px_12px_rgba(223,167,130,0.3)] border-none'
+                        : 'text-[#e8d2dc] hover:text-white hover:bg-[#ffffff]/10'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon
                         className={`w-4 h-4 shrink-0 ${
                           isActive
-                            ? 'text-[#091d15] stroke-[2.4]'
+                            ? 'text-[#2c0819] stroke-[2.4]'
                             : isPermitted
-                            ? 'text-[#82b4a3]'
-                            : 'text-[#4f6b61]'
+                            ? 'text-[#d9b1c2]'
+                            : 'text-[#684654]'
                         }`}
                       />
                       <span className="truncate">{item.label}</span>
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                      {!isPermitted && <Lock className="w-3 h-3 text-[#4f6b61]" />}
+                      {!isPermitted && <Lock className="w-3 h-3 text-[#684654]" />}
 
                       {item.badge !== null && isPermitted && (
                         <span
                           className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
                             isActive
-                              ? 'bg-[#091d15]/20 text-[#091d15]'
+                              ? 'bg-[#2c0819]/20 text-[#2c0819]'
                               : item.badgeType === 'live'
-                              ? 'bg-[#0e3b2e] text-[#4ade80] border border-[#166534]'
+                              ? 'bg-[#521130] text-[#fca5a5] border border-[#9f1239]'
                               : item.badgeType === 'import'
-                              ? 'bg-[#153c30] text-[#f2e0b5] border border-[#d4af37]/60'
-                              : 'bg-[#13382c] text-[#dfb76c] border border-[#235342]'
+                              ? 'bg-[#480d2a] text-[#fce7d2] border border-[#dfb76c]/40'
+                              : 'bg-[#450b27] text-[#faead1] border border-[#dfb76c]/30'
                           }`}
                         >
                           {item.badge}
@@ -308,13 +308,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onOpenStaffAccessModal();
                 if (onCloseMobile) onCloseMobile();
               }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold text-[#f4dfb5] bg-[#0c241c] hover:bg-[#143a2d] border border-[#1d4d3c] transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold text-[#faead1] bg-[#32081e] hover:bg-[#430c2a] border border-[#dfb76c]/30 transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-[#dfb76c]" />
                 <span>Staff Access Control</span>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#1b4334] text-[#f2e0b5] border border-[#d4af37]/50">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#480d2a] text-[#fce7d2] border border-[#dfb76c]/40">
                 Manage
               </span>
             </button>
@@ -341,7 +341,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       {/* Desktop Persistent Sidebar */}
-      <aside className="hidden lg:flex w-64 xl:w-72 bg-gradient-to-b from-[#071c16] via-[#0a261e] to-[#061611] border-r border-[#15382e] flex-col shrink-0 font-sans relative h-screen sticky top-0">
+      <aside className="hidden lg:flex w-64 xl:w-72 bg-gradient-to-b from-[#2a0719] via-[#380b22] to-[#1e0412] border-r border-[#dfb76c]/30 flex-col shrink-0 font-sans relative h-screen sticky top-0 shadow-xl">
         {renderSidebarContent(false)}
       </aside>
 
@@ -353,14 +353,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         <div
           onClick={onCloseMobile}
-          className={`fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300 ${
             isMobileOpen ? 'opacity-100' : 'opacity-0'
           }`}
           aria-hidden="true"
         />
 
         <aside
-          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-gradient-to-b from-[#071c16] via-[#0a261e] to-[#061611] border-r border-[#15382e] shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
+          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-gradient-to-b from-[#2a0719] via-[#380b22] to-[#1e0412] border-r border-[#dfb76c]/30 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
             isMobileOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >

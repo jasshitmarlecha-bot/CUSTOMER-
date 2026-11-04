@@ -262,26 +262,26 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#040e0b]/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
-      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-8 text-[#0b241c] font-sans">
+    <div className="fixed inset-0 z-50 bg-[#1f0512]/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
+      <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-8 text-[#2a0717] font-sans">
         {/* Header */}
-        <div className="p-5 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
+        <div className="p-5 border-b border-[#ebdcd3] flex items-center justify-between bg-[#faf2ec]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <User className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-black text-[#0b241c] tracking-tight">
+              <h2 className="text-base font-black text-[#2a0717] tracking-tight">
                 {customer ? 'Edit Customer Profile' : 'Register New Walk-In Customer'}
               </h2>
-              <p className="text-xs text-[#718079]">
+              <p className="text-xs text-[#876876] font-medium">
                 Showroom Client Intake & Referral Profile
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-[#718079] hover:text-[#0b241c] rounded-lg hover:bg-[#ede3d3] transition-colors cursor-pointer"
+            className="p-1.5 text-[#876876] hover:text-[#2a0717] rounded-lg hover:bg-[#ebdcd3] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -289,7 +289,7 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
 
         {/* Restored Draft Banner */}
         {draftRestored && !customer && !loadedExistingId && (
-          <div className="mx-6 mt-4 p-3 rounded-xl bg-[#faf5eb] border border-[#dfb76c]/60 flex items-center justify-between text-xs text-[#523e1b] animate-in fade-in">
+          <div className="mx-6 mt-4 p-3 rounded-xl bg-[#faf2ec] border border-[#dfb76c]/60 flex items-center justify-between text-xs text-[#3d0c22] animate-in fade-in">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#dfb76c] animate-pulse shrink-0" />
               <span><strong>Draft Restored:</strong> Restored unsubmitted customer information.</span>
@@ -307,7 +307,7 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
           {error && (
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 font-medium">
               <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
               <span>{error}</span>
             </div>
@@ -316,8 +316,8 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
           {/* Name & Phone */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26] flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-[#b08738]" />
+              <label className="text-xs font-bold text-[#2a0717] flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-[#3d0c22]" />
                 <span>Customer Full Name *</span>
               </label>
               <input
@@ -326,12 +326,12 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Ramesh Kumar"
-                className="w-full px-3 py-2 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
+                className="w-full px-3 py-2 text-xs bg-[#faf4f0] border border-[#ebdcd3] rounded-xl text-[#2a0717] placeholder-[#876876] focus:outline-none focus:border-[#3d0c22] font-semibold"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26] flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-[#b08738]" />
+              <label className="text-xs font-bold text-[#2a0717] flex items-center gap-1.5">
+                <Phone className="w-3.5 h-3.5 text-[#3d0c22]" />
                 <span>Mobile Phone *</span>
               </label>
               <input
@@ -340,7 +340,7 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="e.g. 98470 12345"
-                className="w-full px-3 py-2 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-mono font-medium"
+                className="w-full px-3 py-2 text-xs bg-[#faf4f0] border border-[#ebdcd3] rounded-xl text-[#2a0717] placeholder-[#876876] focus:outline-none focus:border-[#3d0c22] font-mono font-bold"
               />
             </div>
           </div>
@@ -348,8 +348,8 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
           {/* Customer Place & Referred By */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26] flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#b08738]" />
+              <label className="text-xs font-bold text-[#2a0717] flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[#3d0c22]" />
                 <span>Customer Place / Location</span>
               </label>
               <input
@@ -357,12 +357,12 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                 value={place}
                 onChange={(e) => setPlace(e.target.value)}
                 placeholder="e.g. Trivandrum, East Fort, Kollam"
-                className="w-full px-3 py-2 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
+                className="w-full px-3 py-2 text-xs bg-[#faf4f0] border border-[#ebdcd3] rounded-xl text-[#2a0717] placeholder-[#876876] focus:outline-none focus:border-[#3d0c22] font-semibold"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26] flex items-center gap-1.5">
-                <UserCheck className="w-3.5 h-3.5 text-[#b08738]" />
+              <label className="text-xs font-bold text-[#2a0717] flex items-center gap-1.5">
+                <UserCheck className="w-3.5 h-3.5 text-[#3d0c22]" />
                 <span>Referred By (Person / Source)</span>
               </label>
               <input
@@ -370,7 +370,7 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                 value={referredBy}
                 onChange={(e) => setReferredBy(e.target.value)}
                 placeholder="e.g. Priya Sharma, Family friend, Walk-in"
-                className="w-full px-3 py-2 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
+                className="w-full px-3 py-2 text-xs bg-[#faf4f0] border border-[#ebdcd3] rounded-xl text-[#2a0717] placeholder-[#876876] focus:outline-none focus:border-[#3d0c22] font-semibold"
               />
             </div>
           </div>
@@ -378,8 +378,8 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
           {/* Email & Status */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26] flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-[#b08738]" />
+              <label className="text-xs font-bold text-[#2a0717] flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-[#3d0c22]" />
                 <span>Email Address (Optional)</span>
               </label>
               <input
@@ -387,17 +387,17 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. customer@email.com"
-                className="w-full px-3 py-2 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
+                className="w-full px-3 py-2 text-xs bg-[#faf4f0] border border-[#ebdcd3] rounded-xl text-[#2a0717] placeholder-[#876876] focus:outline-none focus:border-[#3d0c22] font-semibold"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26]">
+              <label className="text-xs font-bold text-[#2a0717]">
                 Customer Status
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as any)}
-                className="w-full px-3 py-2 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 cursor-pointer font-medium"
+                className="w-full px-3 py-2 text-xs bg-[#faf4f0] border border-[#ebdcd3] rounded-xl text-[#2a0717] focus:outline-none focus:border-[#3d0c22] cursor-pointer font-bold"
               >
                 <option value="active">Active Customer</option>
                 <option value="lead">Prospect / Walk-In Lead</option>
@@ -543,8 +543,8 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
                     key={c.id}
                     onClick={() => setCategoryId(c.id)}
                     className={`group relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-all border ${isSelected
-                        ? 'bg-[#0b241c] text-[#f7eedf] border-[#0b241c] font-bold shadow-xs'
-                        : 'bg-[#ffffff] text-[#4b5a54] border-[#ded7ca] hover:border-[#b08738]'
+                      ? 'bg-[#0b241c] text-[#f7eedf] border-[#0b241c] font-bold shadow-xs'
+                      : 'bg-[#ffffff] text-[#4b5a54] border-[#ded7ca] hover:border-[#b08738]'
                       }`}
                   >
                     <span
@@ -582,18 +582,18 @@ export const CustomerModal: React.FC<CustomerModalProps> = ({
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-3 border-t border-[#ede3d3] flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-[#ede0d6] flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-[#718079] hover:text-[#0b241c] bg-[#ffffff] hover:bg-[#faf7f0] rounded-xl border border-[#ded7ca] transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-[#876876] hover:text-[#2a0717] bg-[#ffffff] hover:bg-[#faf4f0] rounded-xl border border-[#ebdcd3] transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 text-xs font-bold text-[#f7eedf] bg-[#0b241c] hover:bg-[#12362b] active:scale-95 rounded-xl shadow-xs transition-all disabled:opacity-50 cursor-pointer border border-[#dfb76c]/40"
+              className="px-5 py-2 text-xs font-bold text-[#ffffff] bg-[#3d0c22] hover:bg-[#521130] active:scale-95 rounded-xl shadow-md shadow-[#3d0c22]/20 transition-all disabled:opacity-50 cursor-pointer border border-[#5c1334]"
             >
               {isSubmitting ? 'Saving...' : customer ? 'Update Profile' : 'Save Customer'}
             </button>

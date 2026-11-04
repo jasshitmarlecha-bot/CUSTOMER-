@@ -257,20 +257,20 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
   return (
     <div className="space-y-6 font-sans">
       {/* 1. Header Banner */}
-      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <CopyCheck className="w-5 h-5" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-[#0b241c] tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-[#2a0717] tracking-tight">
               Duplicate Conflict & Merge Manager
             </h1>
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#fae8dc] text-[#3d0c22] border border-[#dfb76c]/40 font-mono">
               Data Hygiene
             </span>
           </div>
-          <p className="text-xs text-[#718079]">
+          <p className="text-xs text-[#876876]">
             Preview conflicting customer names, places, and referrals, and choose which details to update and unify.
           </p>
         </div>
@@ -279,9 +279,9 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
           <button
             onClick={loadDuplicateData}
             disabled={isLoading}
-            className="px-3.5 py-2 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="px-3.5 py-2 bg-[#ffffff] hover:bg-[#faf4f0] text-[#2a0717] border border-[#ebdcd3] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#b08738]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#3d0c22]" />
             <span>Scan Database</span>
           </button>
 
@@ -289,7 +289,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
             <button
               onClick={handleAutoMergeAll}
               disabled={isMerging}
-              className="px-4 py-2 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] border border-[#dfb76c]/40 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-4 py-2 bg-[#3d0c22] hover:bg-[#521130] text-[#ffffff] border border-[#5c1334] rounded-xl text-xs font-bold transition-all shadow-md shadow-[#3d0c22]/20 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               <Merge className="w-3.5 h-3.5 text-[#dfb76c]" />
               <span>Auto-Merge ({duplicateGroups.length})</span>
@@ -315,33 +315,33 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
 
       {/* 2. Audit Pulse Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#ffffff] border border-[#ede3d3] p-5 rounded-2xl flex items-center justify-between shadow-xs">
+        <div className="bg-[#ffffff] border border-[#ede0d6] p-5 rounded-2xl flex items-center justify-between shadow-xs">
           <div>
-            <span className="text-[11px] font-bold text-[#718079] uppercase tracking-wider block">Duplicate Clusters</span>
-            <span className="text-2xl font-black text-[#0b241c] mt-1 block">{duplicateGroups.length}</span>
-            <span className="text-[11px] text-[#718079]">
+            <span className="text-[11px] font-bold text-[#876876] uppercase tracking-wider block">Duplicate Clusters</span>
+            <span className="text-2xl font-black text-[#3d0c22] mt-1 block">{duplicateGroups.length}</span>
+            <span className="text-[11px] text-[#876876]">
               {duplicateGroups.length === 0 ? 'Zero conflicts' : 'Requires review'}
             </span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-[#faf7f0] text-[#0b241c] border border-[#ede3d3] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-[#fcf8f6] text-[#3d0c22] border border-[#ede0d6] flex items-center justify-center">
             <CopyCheck className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-[#ffffff] border border-[#ede3d3] p-5 rounded-2xl flex items-center justify-between shadow-xs">
+        <div className="bg-[#ffffff] border border-[#ede0d6] p-5 rounded-2xl flex items-center justify-between shadow-xs">
           <div>
-            <span className="text-[11px] font-bold text-[#718079] uppercase tracking-wider block">Conflicting Records</span>
-            <span className="text-2xl font-black text-[#0b241c] mt-1 block">{totalDuplicateRecords}</span>
-            <span className="text-[11px] text-[#718079]">Customer profiles involved</span>
+            <span className="text-[11px] font-bold text-[#876876] uppercase tracking-wider block">Conflicting Records</span>
+            <span className="text-2xl font-black text-[#3d0c22] mt-1 block">{totalDuplicateRecords}</span>
+            <span className="text-[11px] text-[#876876]">Customer profiles involved</span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-[#faf7f0] text-[#0b241c] border border-[#ede3d3] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-[#fcf8f6] text-[#3d0c22] border border-[#ede0d6] flex items-center justify-center">
             <Users className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-[#ffffff] border border-[#ede3d3] p-5 rounded-2xl flex items-center justify-between shadow-xs">
+        <div className="bg-[#ffffff] border border-[#ede0d6] p-5 rounded-2xl flex items-center justify-between shadow-xs">
           <div>
-            <span className="text-[11px] font-bold text-[#718079] uppercase tracking-wider block">Directory Health</span>
+            <span className="text-[11px] font-bold text-[#876876] uppercase tracking-wider block">Directory Health</span>
             <span className="text-2xl font-black text-emerald-700 mt-1 block">
               {customers.length > 0
                 ? `${Math.max(0, Math.round(((customers.length - totalDuplicateRecords) / customers.length) * 100))}%`
@@ -356,17 +356,17 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
       </div>
 
       {/* 3. Filter Bar */}
-      <div className="flex items-center justify-between gap-3 bg-[#ffffff] p-3 rounded-2xl border border-[#ede3d3] shadow-xs">
+      <div className="flex items-center justify-between gap-3 bg-[#ffffff] p-3 rounded-2xl border border-[#ede0d6] shadow-xs">
         <div className="flex items-center gap-1.5 overflow-x-auto">
-          <span className="text-xs text-[#718079] font-semibold px-2 flex items-center gap-1">
+          <span className="text-xs text-[#876876] font-semibold px-2 flex items-center gap-1">
             <Filter className="w-3.5 h-3.5 text-[#b08738]" />
             <span>Filter:</span>
           </span>
           <button
             onClick={() => setFilterReason('all')}
             className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${filterReason === 'all'
-                ? 'bg-[#0b241c] text-[#f7eedf]'
-                : 'bg-[#faf7f0] text-[#4b5a54] hover:bg-[#ede3d3] border border-[#ded7ca]'
+                ? 'bg-[#3d0c22] text-[#ffffff]'
+                : 'bg-[#fcf8f6] text-[#523443] hover:bg-[#ede0d6] border border-[#edd4c8]'
               }`}
           >
             All Clusters ({duplicateGroups.length})
@@ -374,8 +374,8 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
           <button
             onClick={() => setFilterReason('conflicts')}
             className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${filterReason === 'conflicts'
-                ? 'bg-[#0b241c] text-[#f7eedf]'
-                : 'bg-[#faf7f0] text-[#4b5a54] hover:bg-[#ede3d3] border border-[#ded7ca]'
+                ? 'bg-[#3d0c22] text-[#ffffff]'
+                : 'bg-[#fcf8f6] text-[#523443] hover:bg-[#ede0d6] border border-[#edd4c8]'
               }`}
           >
             Differing Data Only
@@ -383,8 +383,8 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
           <button
             onClick={() => setFilterReason('phone')}
             className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${filterReason === 'phone'
-                ? 'bg-[#0b241c] text-[#f7eedf]'
-                : 'bg-[#faf7f0] text-[#4b5a54] hover:bg-[#ede3d3] border border-[#ded7ca]'
+                ? 'bg-[#3d0c22] text-[#ffffff]'
+                : 'bg-[#fcf8f6] text-[#523443] hover:bg-[#ede0d6] border border-[#edd4c8]'
               }`}
           >
             Phone Matches
@@ -393,7 +393,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
 
         <button
           onClick={onNavigateToDirectory}
-          className="text-xs text-[#0b241c] hover:underline font-bold whitespace-nowrap cursor-pointer px-2"
+          className="text-xs text-[#3d0c22] hover:underline font-bold whitespace-nowrap cursor-pointer px-2"
         >
           View Full Directory →
         </button>
@@ -412,19 +412,19 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
             return (
               <div
                 key={group.id}
-                className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4"
+                className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4"
               >
                 {/* Group Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#ede3d3]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#ede0d6]">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#dfb76c] animate-pulse" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#718079]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#876876]">
                       {group.reason === 'phone' ? 'Phone Match' : 'Email Match'}
                     </span>
-                    <span className="text-xs font-mono px-2 py-0.5 rounded bg-[#faf7f0] border border-[#ede3d3] text-[#0b241c] font-bold">
+                    <span className="text-xs font-mono px-2 py-0.5 rounded bg-[#fcf8f6] border border-[#ede0d6] text-[#3d0c22] font-bold">
                       {group.key}
                     </span>
-                    <span className="text-xs text-[#718079]">
+                    <span className="text-xs text-[#876876]">
                       ({group.customers.length} records)
                     </span>
 
@@ -446,7 +446,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                     <button
                       type="button"
                       onClick={() => handleDismissGroup(group.id)}
-                      className="px-3 py-1.5 text-xs text-[#4b5a54] hover:text-[#0b241c] bg-[#ffffff] hover:bg-[#faf7f0] rounded-xl border border-[#ded7ca] transition-colors cursor-pointer"
+                      className="px-3 py-1.5 text-xs text-[#523443] hover:text-[#3d0c22] bg-[#ffffff] hover:bg-[#fcf8f6] rounded-xl border border-[#edd4c8] transition-colors cursor-pointer"
                     >
                       Keep Separate
                     </button>
@@ -454,7 +454,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                     <button
                       type="button"
                       onClick={() => handleOpenConflictResolution(group)}
-                      className="px-4 py-1.5 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      className="px-4 py-1.5 bg-[#3d0c22] hover:bg-[#12362b] active:scale-95 text-[#ffffff] border border-[#dfb76c]/40 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5 text-[#dfb76c]" />
                       <span>Preview & Update Conflict</span>
@@ -472,15 +472,15 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                       <div
                         key={cust.id}
                         className={`p-4 rounded-2xl border transition-all ${isPrimary
-                            ? 'bg-[#faf7f0] border-[#dfb76c]/60 shadow-xs'
-                            : 'bg-[#ffffff] border-[#ede3d3]'
+                            ? 'bg-[#fcf8f6] border-[#dfb76c]/60 shadow-xs'
+                            : 'bg-[#ffffff] border-[#ede0d6]'
                           }`}
                       >
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[#0b241c]">{cust.name}</span>
+                            <span className="text-sm font-bold text-[#3d0c22]">{cust.name}</span>
                             {isPrimary && (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/50">
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#fae8dc] text-[#785b1f] border border-[#dfb76c]/50">
                                 Master Record (Oldest)
                               </span>
                             )}
@@ -489,29 +489,29 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                             <button
                               type="button"
                               onClick={() => onEditCustomer(cust)}
-                              className="text-[11px] text-[#0b241c] font-semibold hover:underline cursor-pointer"
+                              className="text-[11px] text-[#3d0c22] font-semibold hover:underline cursor-pointer"
                             >
                               Edit Profile
                             </button>
                           )}
                         </div>
 
-                        <div className="space-y-1.5 text-xs text-[#4b5a54]">
-                          <div className="flex items-center gap-2 font-mono text-[#0b241c]">
+                        <div className="space-y-1.5 text-xs text-[#523443]">
+                          <div className="flex items-center gap-2 font-mono text-[#3d0c22]">
                             <Phone className="w-3.5 h-3.5 text-[#b08738]" />
                             <span className="font-semibold">{cust.phone}</span>
                           </div>
 
                           <div className="flex items-center gap-2">
                             <MapPin className="w-3.5 h-3.5 text-[#b08738]" />
-                            <span className={custPlace ? 'text-[#0b241c] font-medium' : 'text-gray-400 italic'}>
+                            <span className={custPlace ? 'text-[#3d0c22] font-medium' : 'text-gray-400 italic'}>
                               {custPlace || 'No place recorded'}
                             </span>
                           </div>
 
                           <div className="flex items-center gap-2">
                             <UserCheck className="w-3.5 h-3.5 text-[#b08738]" />
-                            <span className={cust.referredBy ? 'text-[#0b241c] font-medium' : 'text-gray-400 italic'}>
+                            <span className={cust.referredBy ? 'text-[#3d0c22] font-medium' : 'text-gray-400 italic'}>
                               Referred by: {cust.referredBy || 'Direct Walk-in'}
                             </span>
                           </div>
@@ -524,18 +524,18 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                           )}
 
                           {cust.notes && (
-                            <div className="p-2.5 bg-[#ffffff] rounded-xl border border-[#ede3d3] text-[11px] text-[#4b5a54] mt-1">
-                              <strong className="text-[#0b241c]">Notes:</strong> {cust.notes}
+                            <div className="p-2.5 bg-[#ffffff] rounded-xl border border-[#ede0d6] text-[11px] text-[#523443] mt-1">
+                              <strong className="text-[#3d0c22]">Notes:</strong> {cust.notes}
                             </div>
                           )}
 
                           <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
                             {cust.categoryName && (
-                              <span className="px-2 py-0.5 rounded-md bg-[#faf7f0] border border-[#ded7ca] text-[#0b241c] font-medium">
+                              <span className="px-2 py-0.5 rounded-md bg-[#fcf8f6] border border-[#edd4c8] text-[#3d0c22] font-medium">
                                 {cust.categoryName}
                               </span>
                             )}
-                            <span className="flex items-center gap-1 font-mono text-[10px] text-[#718079]">
+                            <span className="flex items-center gap-1 font-mono text-[10px] text-[#876876]">
                               <Calendar className="w-3 h-3 text-[#b08738]" />
                               <span>{cust.createdAt ? new Date(cust.createdAt).toLocaleDateString() : 'N/A'}</span>
                             </span>
@@ -551,19 +551,19 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
         </div>
       ) : (
         /* Empty State */
-        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-12 text-center space-y-4 shadow-xs">
+        <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-12 text-center space-y-4 shadow-xs">
           <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center mx-auto shadow-inner">
             <ShieldCheck className="w-8 h-8" />
           </div>
           <div className="space-y-1">
-            <h3 className="text-lg font-black text-[#0b241c]">Database 100% Clean & Deduplicated</h3>
-            <p className="text-xs text-[#718079] max-w-md mx-auto">
+            <h3 className="text-lg font-black text-[#3d0c22]">Database 100% Clean & Deduplicated</h3>
+            <p className="text-xs text-[#876876] max-w-md mx-auto">
               Zero conflicting customer records found. All phone numbers and profiles in GIRI JEWELLERS are unified.
             </p>
           </div>
           <button
             onClick={onNavigateToDirectory}
-            className="px-5 py-2.5 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer border border-[#dfb76c]/40"
+            className="px-5 py-2.5 bg-[#3d0c22] hover:bg-[#12362b] text-[#ffffff] text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer border border-[#dfb76c]/40"
           >
             Open Customer Directory
           </button>
@@ -572,22 +572,22 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
 
       {/* CONFLICT RESOLUTION & UPDATE MODAL */}
       {activeConflictGroup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#040e0b]/70 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-[#ffffff] border border-[#ede3d3] w-full max-w-3xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#0b241c] font-sans">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#1a050f]/70 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-[#ffffff] border border-[#ede0d6] w-full max-w-3xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#3d0c22] font-sans">
             {/* Modal Header */}
-            <div className="p-5 sm:p-6 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
+            <div className="p-5 sm:p-6 border-b border-[#ede0d6] flex items-center justify-between bg-[#fcf8f6]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
+                <div className="w-10 h-10 rounded-2xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center shadow-xs">
                   <Edit3 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-black tracking-tight text-[#0b241c] flex items-center gap-2">
+                  <h2 className="text-lg font-black tracking-tight text-[#3d0c22] flex items-center gap-2">
                     <span>Resolve Conflicting Data & Update</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/50">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#fae8dc] text-[#785b1f] border border-[#dfb76c]/50">
                       {activeConflictGroup.key}
                     </span>
                   </h2>
-                  <p className="text-xs text-[#718079]">
+                  <p className="text-xs text-[#876876]">
                     Select which value to keep for each field, or customize the master profile before unifying.
                   </p>
                 </div>
@@ -595,7 +595,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveConflictGroup(null)}
-                className="p-2 text-[#718079] hover:text-[#0b241c] hover:bg-[#ede3d3] rounded-xl transition-colors cursor-pointer"
+                className="p-2 text-[#876876] hover:text-[#3d0c22] hover:bg-[#ede0d6] rounded-xl transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -605,9 +605,9 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
             <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
               <div className="space-y-4">
                 {/* 1. Customer Name */}
-                <div className="bg-[#faf7f0] border border-[#ede3d3] p-4 rounded-2xl space-y-2">
+                <div className="bg-[#fcf8f6] border border-[#ede0d6] p-4 rounded-2xl space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-[#0b241c]">Unified Customer Name</label>
+                    <label className="text-xs font-bold text-[#3d0c22]">Unified Customer Name</label>
                     <span className="text-[11px] text-[#b08738] font-medium">Select or edit final value</span>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-2">
@@ -617,8 +617,8 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                         type="button"
                         onClick={() => setResolvedFields(prev => ({ ...prev, name: c.name }))}
                         className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${resolvedFields.name === c.name
-                            ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf] font-bold'
-                            : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#ede3d3]'
+                            ? 'bg-[#3d0c22] border-[#3d0c22] text-[#ffffff] font-bold'
+                            : 'bg-[#ffffff] border-[#edd4c8] text-[#523443] hover:bg-[#ede0d6]'
                           }`}
                       >
                         Option {i + 1}: "{c.name}"
@@ -629,14 +629,14 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                     type="text"
                     value={resolvedFields.name}
                     onChange={(e) => setResolvedFields(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] focus:outline-none font-medium"
+                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] focus:outline-none font-medium"
                   />
                 </div>
 
                 {/* 2. Place / Location */}
-                <div className="bg-[#faf7f0] border border-[#ede3d3] p-4 rounded-2xl space-y-2">
+                <div className="bg-[#fcf8f6] border border-[#ede0d6] p-4 rounded-2xl space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-[#0b241c]">Customer Place / Location</label>
+                    <label className="text-xs font-bold text-[#3d0c22]">Customer Place / Location</label>
                     <span className="text-[11px] text-[#b08738] font-medium">Native town / city</span>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-2">
@@ -649,8 +649,8 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                           type="button"
                           onClick={() => setResolvedFields(prev => ({ ...prev, place: pl }))}
                           className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${resolvedFields.place === pl
-                              ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf] font-bold'
-                              : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#ede3d3]'
+                              ? 'bg-[#3d0c22] border-[#3d0c22] text-[#ffffff] font-bold'
+                              : 'bg-[#ffffff] border-[#edd4c8] text-[#523443] hover:bg-[#ede0d6]'
                             }`}
                         >
                           Option {i + 1}: "{pl}"
@@ -663,14 +663,14 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                     value={resolvedFields.place}
                     onChange={(e) => setResolvedFields(prev => ({ ...prev, place: e.target.value }))}
                     placeholder="e.g. East Fort, Trivandrum"
-                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] focus:outline-none font-medium"
+                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] focus:outline-none font-medium"
                   />
                 </div>
 
                 {/* 3. Referred By */}
-                <div className="bg-[#faf7f0] border border-[#ede3d3] p-4 rounded-2xl space-y-2">
+                <div className="bg-[#fcf8f6] border border-[#ede0d6] p-4 rounded-2xl space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-[#0b241c]">Referred By</label>
+                    <label className="text-xs font-bold text-[#3d0c22]">Referred By</label>
                     <span className="text-[11px] text-[#b08738] font-medium">Referral attribution</span>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-2">
@@ -682,8 +682,8 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                           type="button"
                           onClick={() => setResolvedFields(prev => ({ ...prev, referredBy: c.referredBy || '' }))}
                           className={`px-3 py-1 text-xs rounded-xl border transition-colors cursor-pointer ${resolvedFields.referredBy === c.referredBy
-                              ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf] font-bold'
-                              : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#ede3d3]'
+                              ? 'bg-[#3d0c22] border-[#3d0c22] text-[#ffffff] font-bold'
+                              : 'bg-[#ffffff] border-[#edd4c8] text-[#523443] hover:bg-[#ede0d6]'
                             }`}
                         >
                           Option {i + 1}: "{c.referredBy}"
@@ -696,30 +696,30 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                     value={resolvedFields.referredBy}
                     onChange={(e) => setResolvedFields(prev => ({ ...prev, referredBy: e.target.value }))}
                     placeholder="e.g. Dr. Rajesh Nair, Walk-in Board"
-                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] focus:outline-none font-medium"
+                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] focus:outline-none font-medium"
                   />
                 </div>
 
                 {/* 4. Notes (Consolidated) */}
-                <div className="bg-[#faf7f0] border border-[#ede3d3] p-4 rounded-2xl space-y-2">
-                  <label className="text-xs font-bold text-[#0b241c] block">Consolidated Customer Notes</label>
+                <div className="bg-[#fcf8f6] border border-[#ede0d6] p-4 rounded-2xl space-y-2">
+                  <label className="text-xs font-bold text-[#3d0c22] block">Consolidated Customer Notes</label>
                   <textarea
                     rows={3}
                     value={resolvedFields.notes}
                     onChange={(e) => setResolvedFields(prev => ({ ...prev, notes: e.target.value }))}
                     placeholder="Merged jewelry preferences, purchase history, family notes..."
-                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] focus:outline-none font-medium"
+                    className="w-full text-xs px-3.5 py-2.5 bg-[#ffffff] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] focus:outline-none font-medium"
                   />
                 </div>
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 sm:p-5 border-t border-[#ede3d3] bg-[#faf7f0] flex items-center justify-between">
+            <div className="p-4 sm:p-5 border-t border-[#ede0d6] bg-[#fcf8f6] flex items-center justify-between">
               <button
                 type="button"
                 onClick={() => setActiveConflictGroup(null)}
-                className="px-4 py-2 bg-[#ffffff] hover:bg-[#ede3d3] text-[#4b5a54] border border-[#ded7ca] rounded-xl text-xs font-semibold cursor-pointer"
+                className="px-4 py-2 bg-[#ffffff] hover:bg-[#ede0d6] text-[#523443] border border-[#edd4c8] rounded-xl text-xs font-semibold cursor-pointer"
               >
                 Cancel
               </button>
@@ -728,7 +728,7 @@ export const DuplicateManagerView: React.FC<DuplicateManagerViewProps> = ({
                 type="button"
                 onClick={handleSaveResolution}
                 disabled={isMerging || !resolvedFields.name.trim()}
-                className="px-6 py-2.5 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-40"
+                className="px-6 py-2.5 bg-[#3d0c22] hover:bg-[#12362b] active:scale-95 text-[#ffffff] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-40"
               >
                 <Merge className="w-4 h-4 text-[#dfb76c]" />
                 <span>{isMerging ? 'Unifying Record...' : 'Save & Unify Customer Profile'}</span>

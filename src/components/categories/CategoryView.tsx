@@ -13,7 +13,7 @@ interface CategoryViewProps {
 
 const PRESET_COLORS = [
   '#dfb76c', // Champagne Gold
-  '#0b241c', // Deep Emerald
+  '#3d0c22', // Deep Emerald
   '#164436', // Forest Jade
   '#b08738', // Heritage Gold
   '#1d3557', // Royal Sapphire
@@ -103,20 +103,20 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
   return (
     <div className="space-y-6 font-sans">
       {/* Title */}
-      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <Tag className="w-5 h-5" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-[#0b241c] tracking-tight flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-black text-[#3d0c22] tracking-tight flex items-center gap-2">
               <span>Showroom Jewellery Categories</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#fae8dc] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
                 {categories.length} Tags
               </span>
             </h1>
           </div>
-          <p className="text-xs text-[#718079] mt-1">
+          <p className="text-xs text-[#876876] mt-1">
             Organize customer jewellery interests and purchase preferences (e.g. 22K Gold, Heritage Bridal, Solitaire Diamonds, Silver).
           </p>
         </div>
@@ -134,38 +134,38 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
       {/* Two Column Layout: Add Category Form & Categories Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Add New Category */}
-        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs space-y-4">
-          <div className="flex items-center gap-2 text-[#0b241c] font-bold text-sm border-b border-[#ede3d3] pb-3">
+        <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-6 shadow-xs space-y-4">
+          <div className="flex items-center gap-2 text-[#3d0c22] font-bold text-sm border-b border-[#ede0d6] pb-3">
             <Plus className="w-4 h-4 text-[#b08738]" />
             <span>Create New Category</span>
           </div>
 
           <form onSubmit={handleCreate} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26]">Category Name *</label>
+              <label className="text-xs font-semibold text-[#2a0717]">Category Name *</label>
               <input
                 type="text"
                 required
                 value={newCatName}
                 onChange={(e) => setNewCatName(e.target.value)}
                 placeholder="e.g. 22K Antique Gold"
-                className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
+                className="w-full px-3.5 py-2.5 text-xs bg-[#fcf8f6] border border-[#edd4c8] rounded-xl text-[#3d0c22] placeholder-[#a88d9c] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#1c2e26]">Description (Optional)</label>
+              <label className="text-xs font-semibold text-[#2a0717]">Description (Optional)</label>
               <input
                 type="text"
                 value={newCatDesc}
                 onChange={(e) => setNewCatDesc(e.target.value)}
                 placeholder="e.g. Bridal necklaces, sets, & bangles"
-                className="w-full px-3.5 py-2.5 text-xs bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
+                className="w-full px-3.5 py-2.5 text-xs bg-[#fcf8f6] border border-[#edd4c8] rounded-xl text-[#3d0c22] placeholder-[#a88d9c] focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/40 font-medium"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#1c2e26] flex items-center justify-between">
+              <label className="text-xs font-semibold text-[#2a0717] flex items-center justify-between">
                 <span>Color Tag</span>
                 <span className="text-[10px] font-mono text-[#b08738]">{newCatColor}</span>
               </label>
@@ -175,7 +175,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                     key={color}
                     type="button"
                     onClick={() => setNewCatColor(color)}
-                    className={`w-6 h-6 rounded-full transition-transform border cursor-pointer ${newCatColor === color ? 'scale-125 border-[#0b241c] ring-2 ring-[#dfb76c]' : 'border-transparent'
+                    className={`w-6 h-6 rounded-full transition-transform border cursor-pointer ${newCatColor === color ? 'scale-125 border-[#3d0c22] ring-2 ring-[#dfb76c]' : 'border-transparent'
                       }`}
                     style={{ backgroundColor: color }}
                   />
@@ -186,7 +186,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
             <button
               type="submit"
               disabled={isCreating || !newCatName.trim()}
-              className="w-full py-2.5 px-3 text-xs font-bold text-[#f7eedf] bg-[#0b241c] hover:bg-[#12362b] active:scale-95 rounded-xl shadow-xs transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer border border-[#dfb76c]/40"
+              className="w-full py-2.5 px-3 text-xs font-bold text-[#ffffff] bg-[#3d0c22] hover:bg-[#521130] active:scale-95 rounded-xl shadow-md shadow-[#3d0c22]/20 transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer border border-[#5c1334]"
             >
               <Plus className="w-3.5 h-3.5 text-[#dfb76c]" />
               <span>{isCreating ? 'Adding...' : 'Add Category'}</span>
@@ -205,14 +205,14 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                 return (
                   <div
                     key={cat.id}
-                    className="p-4 rounded-2xl bg-[#faf7f0] border border-[#dfb76c] shadow-md space-y-3"
+                    className="p-4 rounded-2xl bg-[#fcf8f6] border border-[#dfb76c] shadow-md space-y-3"
                   >
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="flex-1 px-3 py-1.5 text-xs bg-white border border-[#ded7ca] rounded-lg text-[#0b241c] font-medium"
+                        className="flex-1 px-3 py-1.5 text-xs bg-white border border-[#edd4c8] rounded-lg text-[#3d0c22] font-medium"
                         placeholder="Category name"
                       />
                       <button
@@ -237,7 +237,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                           key={c}
                           type="button"
                           onClick={() => setEditColor(c)}
-                          className={`w-5 h-5 rounded-full border cursor-pointer ${editColor === c ? 'scale-125 border-[#0b241c] ring-1 ring-[#dfb76c]' : 'border-transparent'
+                          className={`w-5 h-5 rounded-full border cursor-pointer ${editColor === c ? 'scale-125 border-[#3d0c22] ring-1 ring-[#dfb76c]' : 'border-transparent'
                             }`}
                           style={{ backgroundColor: c }}
                         />
@@ -249,7 +249,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                       value={editDesc}
                       onChange={(e) => setEditDesc(e.target.value)}
                       placeholder="Optional description"
-                      className="w-full px-3 py-1.5 text-[11px] bg-white border border-[#ded7ca] rounded-lg text-[#0b241c]"
+                      className="w-full px-3 py-1.5 text-[11px] bg-white border border-[#edd4c8] rounded-lg text-[#3d0c22]"
                     />
                   </div>
                 );
@@ -258,7 +258,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
               return (
                 <div
                   key={cat.id}
-                  className="p-4 rounded-2xl bg-[#ffffff] border border-[#ede3d3] hover:border-[#dfb76c] transition-all flex flex-col justify-between shadow-xs group"
+                  className="p-4 rounded-2xl bg-[#ffffff] border border-[#ede0d6] hover:border-[#dfb76c] transition-all flex flex-col justify-between shadow-xs group"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2.5">
@@ -267,11 +267,11 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                         style={{ backgroundColor: cat.color || '#dfb76c' }}
                       />
                       <div>
-                        <h3 className="text-xs font-bold text-[#0b241c]">
+                        <h3 className="text-xs font-bold text-[#3d0c22]">
                           {cat.name}
                         </h3>
                         {cat.description && (
-                          <p className="text-[11px] text-[#718079] mt-0.5 line-clamp-1">
+                          <p className="text-[11px] text-[#876876] mt-0.5 line-clamp-1">
                             {cat.description}
                           </p>
                         )}
@@ -281,14 +281,14 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => startEdit(cat)}
-                        className="p-1 text-[#718079] hover:text-[#0b241c] rounded hover:bg-[#faf7f0] transition-colors cursor-pointer"
+                        className="p-1 text-[#876876] hover:text-[#3d0c22] rounded hover:bg-[#fcf8f6] transition-colors cursor-pointer"
                         title="Edit category"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => handleDelete(cat.id, cat.name)}
-                        className="p-1 text-[#718079] hover:text-rose-600 rounded hover:bg-rose-50 transition-colors cursor-pointer"
+                        className="p-1 text-[#876876] hover:text-rose-600 rounded hover:bg-rose-50 transition-colors cursor-pointer"
                         title="Delete category"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -296,7 +296,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-2.5 border-t border-[#ede3d3] flex items-center justify-between text-[11px] text-[#718079]">
+                  <div className="mt-4 pt-2.5 border-t border-[#ede0d6] flex items-center justify-between text-[11px] text-[#876876]">
                     <span>{count} customers registered</span>
                     <span className="text-[10px] font-mono text-[#b08738]">ID: {cat.id.slice(0, 8)}</span>
                   </div>

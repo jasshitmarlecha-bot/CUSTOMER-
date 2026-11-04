@@ -182,20 +182,20 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
     <div
       className="min-h-screen text-[#f7eedf] flex flex-col font-sans selection:bg-[#dfb76c]/30 selection:text-[#faeed4] relative overflow-x-hidden"
       style={{
-        backgroundColor: '#051610',
-        backgroundImage: 'radial-gradient(circle at 50% 25%, #0d2e24 0%, #071c16 55%, #030e0a 100%)'
+        backgroundColor: '#16030c',
+        backgroundImage: 'radial-gradient(circle at 50% 25%, #33081b 0%, #200411 55%, #0f0208 100%)'
       }}
     >
       {/* Subtle Luxury Ambience Accents */}
       <div className="fixed inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#dfb76c_1px,transparent_1px)] [background-size:32px_32px]" />
       <div className="fixed top-12 left-1/3 w-80 h-80 bg-[#dfb76c]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-12 right-1/4 w-96 h-96 bg-[#164436]/25 rounded-full blur-[140px] pointer-events-none" />
+      <div className="fixed bottom-12 right-1/4 w-96 h-96 bg-[#4d102e]/25 rounded-full blur-[140px] pointer-events-none" />
 
       {/* TOP LUXURY NAVBAR */}
-      <header className="relative z-30 w-full px-4 sm:px-8 py-4 flex items-center justify-between border-b border-[#dfb76c]/15 bg-[#071c16]/75 backdrop-blur-md">
+      <header className="relative z-30 w-full px-4 sm:px-8 py-4 flex items-center justify-between border-b border-[#dfb76c]/15 bg-[#200411]/75 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#dfb76c] to-[#b3883b] flex items-center justify-center p-1.5 shadow-md">
-            <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[#071c16]" stroke="currentColor" strokeWidth="2">
+            <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[#200411]" stroke="currentColor" strokeWidth="2">
               <path d="M6 3h12l4 7-10 11L2 10l4-7z" fill="currentColor" fillOpacity="0.15" />
               <path d="M2 10h20M12 21L7.5 10 12 3l4.5 7L12 21z" />
             </svg>
@@ -210,16 +210,16 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-[#0d2a21] border border-[#dfb76c]/25 text-[11px] text-[#dfb76c] font-medium">
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-[#35081c] border border-[#dfb76c]/25 text-[11px] text-[#dfb76c] font-medium">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>BIS 916 Hallmark Certified Suite</span>
         </div>
       </header>
 
-      {/* MAIN BODY: LUXURY EMERALD & GOLD CARD */}
+      {/* MAIN BODY: LUXURY WINE & GOLD CARD */}
       <main className="relative z-20 flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
         <div className="w-full max-w-[480px]">
-          <div className="relative rounded-[28px] bg-gradient-to-b from-[#0b241c] to-[#071a14] border border-[#dfb76c]/35 shadow-[0_25px_70px_rgba(0,0,0,0.65),0_0_30px_rgba(223,183,108,0.12)] p-6 sm:p-8 overflow-hidden">
+          <div className="relative rounded-[28px] bg-gradient-to-b from-[#2a0719] to-[#1c0310] border border-[#dfb76c]/35 shadow-[0_25px_70px_rgba(0,0,0,0.65),0_0_30px_rgba(223,183,108,0.12)] p-6 sm:p-8 overflow-hidden">
             {/* Top Golden Accent Line */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-[2px] bg-gradient-to-r from-transparent via-[#dfb76c] to-transparent shadow-[0_0_12px_#dfb76c]" />
 
@@ -264,25 +264,29 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleSelectRole('admin')}
-                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${selectedRole === 'admin'
-                          ? 'bg-[#103328] border-[#dfb76c] shadow-[0_0_18px_rgba(223,183,108,0.22)] ring-1 ring-[#dfb76c]/60 text-white'
-                          : 'bg-[#091f17] border-[#dfb76c]/20 hover:bg-[#0d2a20] text-[#cfdfd6]'
-                        }`}
+                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${
+                        selectedRole === 'admin'
+                          ? 'bg-[#3d0c22] border-[#dfb76c] shadow-[0_0_18px_rgba(223,183,108,0.22)] ring-1 ring-[#dfb76c]/60 text-white'
+                          : 'bg-[#220513] border-[#dfb76c]/20 hover:bg-[#2e081a] text-[#dfc5d1]'
+                      }`}
                     >
                       <div className="flex items-center justify-between w-full mb-1">
-                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${selectedRole === 'admin' ? 'bg-[#dfb76c] text-[#071c16]' : 'bg-[#143d30] text-[#dfb76c]'
-                          }`}>
+                        <div
+                          className={`w-7 h-7 rounded-xl flex items-center justify-center ${
+                            selectedRole === 'admin' ? 'bg-[#dfb76c] text-[#200411]' : 'bg-[#380920] text-[#dfb76c]'
+                          }`}
+                        >
                           <User className="w-4 h-4" />
                         </div>
                         {selectedRole === 'admin' && (
-                          <span className="text-[9px] font-bold uppercase tracking-wider text-[#071c16] bg-[#dfb76c] px-1.5 py-0.5 rounded-md font-sans">
+                          <span className="text-[9px] font-bold uppercase tracking-wider text-[#200411] bg-[#dfb76c] px-1.5 py-0.5 rounded-md font-sans">
                             Selected
                           </span>
                         )}
                       </div>
                       <div>
                         <div className="text-xs font-bold text-[#faeed4]">Store Admin</div>
-                        <div className="text-[10px] text-[#a5b9af]">Full Store Control</div>
+                        <div className="text-[10px] text-[#caa2b5]">Full Store Control</div>
                       </div>
                     </button>
 
@@ -290,33 +294,37 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleSelectRole('staff')}
-                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${selectedRole === 'staff'
-                          ? 'bg-[#103328] border-[#dfb76c] shadow-[0_0_18px_rgba(223,183,108,0.22)] ring-1 ring-[#dfb76c]/60 text-white'
-                          : 'bg-[#091f17] border-[#dfb76c]/20 hover:bg-[#0d2a20] text-[#cfdfd6]'
-                        }`}
+                      className={`p-3 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between border ${
+                        selectedRole === 'staff'
+                          ? 'bg-[#3d0c22] border-[#dfb76c] shadow-[0_0_18px_rgba(223,183,108,0.22)] ring-1 ring-[#dfb76c]/60 text-white'
+                          : 'bg-[#220513] border-[#dfb76c]/20 hover:bg-[#2e081a] text-[#dfc5d1]'
+                      }`}
                     >
                       <div className="flex items-center justify-between w-full mb-1">
-                        <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${selectedRole === 'staff' ? 'bg-[#dfb76c] text-[#071c16]' : 'bg-[#143d30] text-[#dfb76c]'
-                          }`}>
+                        <div
+                          className={`w-7 h-7 rounded-xl flex items-center justify-center ${
+                            selectedRole === 'staff' ? 'bg-[#dfb76c] text-[#200411]' : 'bg-[#380920] text-[#dfb76c]'
+                          }`}
+                        >
                           <Users className="w-4 h-4" />
                         </div>
                         {selectedRole === 'staff' && (
-                          <span className="text-[9px] font-bold uppercase tracking-wider text-[#071c16] bg-[#dfb76c] px-1.5 py-0.5 rounded-md font-sans">
+                          <span className="text-[9px] font-bold uppercase tracking-wider text-[#200411] bg-[#dfb76c] px-1.5 py-0.5 rounded-md font-sans">
                             Selected
                           </span>
                         )}
                       </div>
                       <div>
                         <div className="text-xs font-bold text-[#faeed4]">Counter Staff</div>
-                        <div className="text-[10px] text-[#a5b9af]">Showroom & Intake</div>
+                        <div className="text-[10px] text-[#caa2b5]">Showroom & Intake</div>
                       </div>
                     </button>
                   </div>
                 </div>
 
                 {/* 2. PASSCODE REFERENCE HELPER & 1-CLICK INSTANT ENTRY */}
-                <div className="p-3 rounded-xl bg-[#091f17] border border-[#dfb76c]/25 flex items-center justify-between gap-2 text-[11px]">
-                  <div className="text-[#d8e3dc] space-x-1">
+                <div className="p-3 rounded-xl bg-[#220513] border border-[#dfb76c]/25 flex items-center justify-between gap-2 text-[11px]">
+                  <div className="text-[#e2cbd6] space-x-1">
                     <span className="font-bold text-[#dfb76c]">Passcodes:</span>
                     <span>Admin: <strong className="text-white">admin123</strong></span>
                     <span className="text-[#dfb76c]/50">•</span>

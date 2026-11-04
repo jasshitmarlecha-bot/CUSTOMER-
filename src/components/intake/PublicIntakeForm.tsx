@@ -82,27 +82,27 @@ export const PublicIntakeForm: React.FC<PublicIntakeFormProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#f5efe6] py-8 px-4 flex flex-col items-center justify-center font-sans selection:bg-[#dfb76c]/30 selection:text-[#0b241c]">
+    <div className="min-h-screen bg-[#fbf7f4] py-8 px-4 flex flex-col items-center justify-center font-sans selection:bg-[#dfb76c]/30 selection:text-[#2a0717]">
       {isPreview && onClosePreview && (
         <div className="mb-4">
           <button
             onClick={onClosePreview}
-            className="px-4 py-2 rounded-full bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] text-xs font-semibold border border-[#dfb76c]/60 shadow-md transition-colors cursor-pointer flex items-center gap-2"
+            className="px-4 py-2 rounded-full bg-[#3d0c22] hover:bg-[#521130] text-[#ffffff] text-xs font-bold border border-[#dfb76c]/60 shadow-md transition-colors cursor-pointer flex items-center gap-2"
           >
             <span>← Back to Store Admin Dashboard</span>
           </button>
         </div>
       )}
 
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-[0_20px_50px_rgba(7,28,22,0.12)] overflow-hidden border border-[#ede3d3]">
-        {/* Mobile Header Banner with Royal Emerald & Champagne Gold */}
-        <div className="bg-gradient-to-b from-[#0b241c] to-[#071c16] text-[#faeed4] p-7 text-center space-y-2.5 relative border-b border-[#dfb76c]/25">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-[0_20px_50px_rgba(42,7,23,0.12)] overflow-hidden border border-[#ede0d6]">
+        {/* Mobile Header Banner with Royal Wine & Champagne Gold */}
+        <div className="bg-gradient-to-b from-[#2a0719] to-[#1c0310] text-[#faeed4] p-7 text-center space-y-2.5 relative border-b border-[#dfb76c]/25">
           {/* Subtle gold line accent */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-[2px] bg-gradient-to-r from-transparent via-[#dfb76c] to-transparent shadow-[0_0_8px_#dfb76c]" />
 
           <div className="flex flex-col items-center justify-center">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#dfb76c] via-[#ecd49d] to-[#b3883b] p-2.5 flex items-center justify-center shadow-lg shadow-[#dfb76c]/20 mb-2">
-              <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[#071c16]" stroke="currentColor" strokeWidth="2">
+              <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[#200411]" stroke="currentColor" strokeWidth="2">
                 <path d="M6 3h12l4 7-10 11L2 10l4-7z" fill="currentColor" fillOpacity="0.2" />
                 <path d="M2 10h20M12 21L7.5 10 12 3l4.5 7L12 21z" />
               </svg>
@@ -113,11 +113,11 @@ export const PublicIntakeForm: React.FC<PublicIntakeFormProps> = ({
             {businessName}
           </h1>
 
-          <p className="text-xs text-[#cfdfd6] font-medium leading-relaxed max-w-xs mx-auto">
+          <p className="text-xs text-[#dfc5d1] font-medium leading-relaxed max-w-xs mx-auto">
             Welcome to our showroom. Register your walk-in visit for hallmark warranty and bespoke assistance.
           </p>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#103328] text-[#dfb76c] text-[10.5px] font-semibold border border-[#dfb76c]/30">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#3d0c22] text-[#dfb76c] text-[10.5px] font-bold border border-[#dfb76c]/30">
             <Smartphone className="w-3.5 h-3.5 text-[#dfb76c]" />
             <span>Showroom QR Verified Session</span>
           </div>
@@ -279,7 +279,7 @@ export const PublicIntakeForm: React.FC<PublicIntakeFormProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 px-4 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] font-bold text-xs rounded-xl shadow-lg shadow-[#0b241c]/20 active:scale-[0.99] disabled:opacity-50 transition-all cursor-pointer border border-[#dfb76c]/40 flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[#3d0c22] hover:bg-[#521130] text-[#ffffff] font-bold text-xs rounded-xl shadow-lg shadow-[#3d0c22]/20 active:scale-[0.99] disabled:opacity-50 transition-all cursor-pointer border border-[#dfb76c]/40 flex items-center justify-center gap-2"
             >
               <span>{isSubmitting ? 'Registering Details...' : 'Submit & Register'}</span>
               <ArrowRight className="w-4 h-4 text-[#dfb76c]" />

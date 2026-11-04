@@ -293,43 +293,43 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
     ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#040e0b]/75 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-[#ffffff] border border-[#ede3d3] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#0b241c] font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#1a050f]/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[#ffffff] border border-[#ede0d6] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#3d0c22] font-sans">
 
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
+        <div className="p-5 sm:p-6 border-b border-[#ede0d6] flex items-center justify-between bg-[#fcf8f6]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-black tracking-tight text-[#0b241c] flex items-center gap-2">
+              <h2 className="text-lg font-black tracking-tight text-[#3d0c22] flex items-center gap-2">
                 <span>Staff Access & Password Management</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#fae8dc] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
                   Giri Jewellers
                 </span>
               </h2>
-              <p className="text-xs text-[#718079]">
+              <p className="text-xs text-[#876876]">
                 Add staff members, create passwords to give them, and manage counter access permissions.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-[#718079] hover:text-[#0b241c] hover:bg-[#ede3d3] rounded-xl transition-colors cursor-pointer"
+            className="p-2 text-[#876876] hover:text-[#3d0c22] hover:bg-[#ede0d6] rounded-xl transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-2 px-6 pt-3 border-b border-[#ede3d3] bg-[#ffffff]">
+        <div className="flex items-center gap-2 px-6 pt-3 border-b border-[#ede0d6] bg-[#ffffff]">
           <button
             type="button"
             onClick={() => setActiveTab('roster')}
             className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${activeTab === 'roster'
-                ? 'border-[#0b241c] text-[#0b241c] bg-[#faf7f0]'
-                : 'border-transparent text-[#718079] hover:text-[#0b241c]'
+                ? 'border-[#3d0c22] text-[#3d0c22] bg-[#fcf8f6]'
+                : 'border-transparent text-[#876876] hover:text-[#3d0c22]'
               }`}
           >
             <Users className="w-4 h-4 text-[#b08738]" />
@@ -340,8 +340,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
             type="button"
             onClick={() => setActiveTab('permissions')}
             className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${activeTab === 'permissions'
-                ? 'border-[#0b241c] text-[#0b241c] bg-[#faf7f0]'
-                : 'border-transparent text-[#718079] hover:text-[#0b241c]'
+                ? 'border-[#3d0c22] text-[#3d0c22] bg-[#fcf8f6]'
+                : 'border-transparent text-[#876876] hover:text-[#3d0c22]'
               }`}
           >
             <Shield className="w-4 h-4 text-[#b08738]" />
@@ -379,13 +379,13 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           {activeTab === 'roster' ? (
             <div className="space-y-6">
               {/* Card 1: Add New Staff Member Form */}
-              <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#ede3d3]">
+              <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#ede0d6]">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#0b241c] text-[#dfb76c] flex items-center justify-center">
+                    <div className="w-7 h-7 rounded-lg bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center">
                       <Plus className="w-4 h-4" />
                     </div>
-                    <h3 className="text-sm font-bold text-[#0b241c]">Add Staff Member & Create Password</h3>
+                    <h3 className="text-sm font-bold text-[#3d0c22]">Add Staff Member & Create Password</h3>
                   </div>
                   <span className="text-[11px] text-[#b08738] font-semibold">
                     Store Owner / Admin Tool
@@ -396,7 +396,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Staff Name */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#1c2e26] block">
+                      <label className="text-xs font-semibold text-[#2a0717] block">
                         Staff Member Full Name <span className="text-rose-600">*</span>
                       </label>
                       <input
@@ -405,13 +405,13 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                         onChange={(e) => handleNameChange(e.target.value)}
                         placeholder="e.g. Anjali Nair, Rahul Krishna"
                         required
-                        className="w-full text-xs px-3.5 py-2.5 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none font-medium"
+                        className="w-full text-xs px-3.5 py-2.5 bg-[#fcf8f6] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] placeholder-[#a88d9c] focus:outline-none font-medium"
                       />
                     </div>
 
                     {/* Login Username */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#1c2e26] block">
+                      <label className="text-xs font-semibold text-[#2a0717] block">
                         Login Username or Email
                       </label>
                       <input
@@ -419,20 +419,20 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                         value={newStaffUsername}
                         onChange={(e) => setNewStaffUsername(e.target.value)}
                         placeholder="e.g. anjali or anjali@girijewels.com"
-                        className="w-full text-xs px-3.5 py-2.5 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none font-medium"
+                        className="w-full text-xs px-3.5 py-2.5 bg-[#fcf8f6] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] placeholder-[#a88d9c] focus:outline-none font-medium"
                       />
                     </div>
 
                     {/* Staff Password with generator */}
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <label className="text-xs font-semibold text-[#1c2e26] block">
+                        <label className="text-xs font-semibold text-[#2a0717] block">
                           Create Staff Password <span className="text-rose-600">*</span>
                         </label>
                         <button
                           type="button"
                           onClick={handleGeneratePassword}
-                          className="text-[11px] text-[#0b241c] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
+                          className="text-[11px] text-[#3d0c22] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
                         >
                           <Sparkles className="w-3 h-3 text-[#b08738]" />
                           <span>Generate Password</span>
@@ -445,30 +445,30 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                           onChange={(e) => setNewStaffPassword(e.target.value)}
                           placeholder="e.g. Giri@2025"
                           required
-                          className="w-full text-xs font-mono px-3.5 py-2.5 pr-10 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none font-medium"
+                          className="w-full text-xs font-mono px-3.5 py-2.5 pr-10 bg-[#fcf8f6] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] placeholder-[#a88d9c] focus:outline-none font-medium"
                         />
                         <button
                           type="button"
                           onClick={() => setShowNewPassword(!showNewPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#718079] hover:text-[#0b241c] cursor-pointer"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#876876] hover:text-[#3d0c22] cursor-pointer"
                         >
                           {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
-                      <span className="text-[10.5px] text-[#718079] block">
+                      <span className="text-[10.5px] text-[#876876] block">
                         You can show this password to your staff member so they can log in.
                       </span>
                     </div>
 
                     {/* Staff Role */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#1c2e26] block">
+                      <label className="text-xs font-semibold text-[#2a0717] block">
                         Staff Role
                       </label>
                       <select
                         value={newStaffRole}
                         onChange={(e) => setNewStaffRole(e.target.value as any)}
-                        className="w-full text-xs px-3.5 py-2.5 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] focus:outline-none cursor-pointer font-medium"
+                        className="w-full text-xs px-3.5 py-2.5 bg-[#fcf8f6] border border-[#edd4c8] focus:border-[#3d0c22] rounded-xl text-[#3d0c22] focus:outline-none cursor-pointer font-medium"
                       >
                         <option value="staff">Counter Staff (Standard)</option>
                         <option value="admin">Store Admin (Full Showroom Control)</option>
@@ -480,7 +480,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                     <button
                       type="submit"
                       disabled={isCreatingStaff || !newStaffName.trim() || !newStaffPassword.trim()}
-                      className="px-5 py-2.5 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5 disabled:opacity-40"
+                      className="px-5 py-2.5 bg-[#3d0c22] hover:bg-[#12362b] active:scale-95 text-[#ffffff] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5 disabled:opacity-40"
                     >
                       <Plus className="w-4 h-4 text-[#dfb76c]" />
                       <span>{isCreatingStaff ? 'Creating Staff Account...' : 'Create Staff & Password'}</span>
@@ -490,20 +490,20 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
               </div>
 
               {/* Card 2: Current Staff Roster & Passwords Table */}
-              <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#ede3d3]">
+              <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#ede0d6]">
                   <div>
-                    <h3 className="text-sm font-bold text-[#0b241c] flex items-center gap-2">
+                    <h3 className="text-sm font-bold text-[#3d0c22] flex items-center gap-2">
                       <Users className="w-4 h-4 text-[#b08738]" />
                       <span>Active Staff Accounts & Passwords</span>
                     </h3>
-                    <p className="text-[11px] text-[#718079] mt-0.5">
+                    <p className="text-[11px] text-[#876876] mt-0.5">
                       View assigned credentials, reveal passwords to give to staff, or reset credentials.
                     </p>
                   </div>
                   <button
                     onClick={loadStaff}
-                    className="p-1.5 text-[#718079] hover:text-[#0b241c] bg-[#faf7f0] rounded-lg border border-[#ede3d3] cursor-pointer"
+                    className="p-1.5 text-[#876876] hover:text-[#3d0c22] bg-[#fcf8f6] rounded-lg border border-[#ede0d6] cursor-pointer"
                     title="Refresh list"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isLoadingStaff ? 'animate-spin' : ''}`} />
@@ -512,7 +512,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
 
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-[#faf7f0] text-[#718079] font-semibold border-b border-[#ede3d3]">
+                    <thead className="bg-[#fcf8f6] text-[#876876] font-semibold border-b border-[#ede0d6]">
                       <tr>
                         <th className="py-3 px-3">Staff Name</th>
                         <th className="py-3 px-3">Role</th>
@@ -521,23 +521,23 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                         <th className="py-3 px-3 text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#ede3d3]">
+                    <tbody className="divide-y divide-[#ede0d6]">
                       {staffUsers.map((user) => {
                         const isRevealed = Boolean(revealedPasswords[user.id]);
                         const isEditingThisPassword = editingPasswordUserId === user.id;
 
                         return (
-                          <tr key={user.id} className="hover:bg-[#faf7f0] transition-colors">
+                          <tr key={user.id} className="hover:bg-[#fcf8f6] transition-colors">
                             {/* Staff Name */}
                             <td className="py-3 px-3">
                               <div className="flex items-center gap-2">
-                                <div className="w-7 h-7 rounded-lg bg-[#0b241c] text-[#dfb76c] flex items-center justify-center font-bold text-[11px]">
+                                <div className="w-7 h-7 rounded-lg bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center font-bold text-[11px]">
                                   {user.name.slice(0, 1).toUpperCase()}
                                 </div>
                                 <div>
-                                  <span className="font-bold text-[#0b241c] block">{user.name}</span>
+                                  <span className="font-bold text-[#3d0c22] block">{user.name}</span>
                                   {user.phone && (
-                                    <span className="text-[10.5px] text-[#718079] flex items-center gap-1 font-mono">
+                                    <span className="text-[10.5px] text-[#876876] flex items-center gap-1 font-mono">
                                       <Phone className="w-2.5 h-2.5 text-[#b08738]" />
                                       {user.phone}
                                     </span>
@@ -550,8 +550,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                             <td className="py-3 px-3">
                               <span
                                 className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${user.role === 'admin'
-                                    ? 'bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono'
-                                    : 'bg-[#faf7f0] text-[#4b5a54] border border-[#ded7ca]'
+                                    ? 'bg-[#fae8dc] text-[#785b1f] border border-[#dfb76c]/40 font-mono'
+                                    : 'bg-[#fcf8f6] text-[#523443] border border-[#edd4c8]'
                                   }`}
                               >
                                 {user.role === 'admin' ? 'Store Admin' : 'Counter Staff'}
@@ -559,7 +559,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                             </td>
 
                             {/* Login Email / Username */}
-                            <td className="py-3 px-3 font-mono text-[#0b241c]">
+                            <td className="py-3 px-3 font-mono text-[#3d0c22]">
                               {user.email}
                             </td>
 
@@ -572,7 +572,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                                     value={inlineNewPassword}
                                     onChange={(e) => setInlineNewPassword(e.target.value)}
                                     placeholder="Enter new password"
-                                    className="w-32 px-2 py-1 text-xs bg-white border border-[#0b241c] rounded-lg text-[#0b241c] font-mono focus:outline-none"
+                                    className="w-32 px-2 py-1 text-xs bg-white border border-[#3d0c22] rounded-lg text-[#3d0c22] font-mono focus:outline-none"
                                   />
                                   <button
                                     type="button"
@@ -584,20 +584,20 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setEditingPasswordUserId(null)}
-                                    className="px-2 py-1 text-[#718079] hover:text-[#0b241c] rounded text-[11px] cursor-pointer"
+                                    className="px-2 py-1 text-[#876876] hover:text-[#3d0c22] rounded text-[11px] cursor-pointer"
                                   >
                                     Cancel
                                   </button>
                                 </div>
                               ) : (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-mono text-xs text-[#0b241c] bg-[#faf7f0] px-2.5 py-1 rounded-lg border border-[#ede3d3]">
+                                  <span className="font-mono text-xs text-[#3d0c22] bg-[#fcf8f6] px-2.5 py-1 rounded-lg border border-[#ede0d6]">
                                     {isRevealed ? (user.password || '••••••••') : '••••••••'}
                                   </span>
                                   <button
                                     type="button"
                                     onClick={() => handleTogglePasswordVisibility(user.id)}
-                                    className="p-1 text-[#718079] hover:text-[#0b241c] cursor-pointer"
+                                    className="p-1 text-[#876876] hover:text-[#3d0c22] cursor-pointer"
                                     title={isRevealed ? 'Hide Password' : 'Show Password to give to staff'}
                                   >
                                     {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -612,7 +612,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => handleCopyCredentials(user)}
-                                  className="p-1.5 bg-[#ffffff] hover:bg-[#faf7f0] border border-[#ded7ca] text-[#0b241c] rounded-lg transition-colors cursor-pointer shadow-xs"
+                                  className="p-1.5 bg-[#ffffff] hover:bg-[#fcf8f6] border border-[#edd4c8] text-[#3d0c22] rounded-lg transition-colors cursor-pointer shadow-xs"
                                   title="Copy Login & Password to share with staff"
                                 >
                                   {copiedId === user.id ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -624,7 +624,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                                     setEditingPasswordUserId(user.id);
                                     setInlineNewPassword(user.password || '');
                                   }}
-                                  className="px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] rounded-lg text-[11px] font-semibold transition-colors cursor-pointer shadow-xs"
+                                  className="px-2.5 py-1 bg-[#ffffff] hover:bg-[#fcf8f6] text-[#3d0c22] border border-[#edd4c8] rounded-lg text-[11px] font-semibold transition-colors cursor-pointer shadow-xs"
                                   title="Change Password"
                                 >
                                   <Key className="w-3 h-3 inline mr-1 text-[#b08738]" />
@@ -654,10 +654,10 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           ) : (
             /* Tab 2: Permissions Matrix */
             <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#faf7f0] p-4 rounded-2xl border border-[#ede3d3]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#fcf8f6] p-4 rounded-2xl border border-[#ede0d6]">
                 <div>
-                  <h3 className="text-sm font-bold text-[#0b241c]">Counter Staff Role Permissions</h3>
-                  <p className="text-xs text-[#718079]">
+                  <h3 className="text-sm font-bold text-[#3d0c22]">Counter Staff Role Permissions</h3>
+                  <p className="text-xs text-[#876876]">
                     Control what features your counter staff can access and execute in the showroom suite.
                   </p>
                 </div>
@@ -665,14 +665,14 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSelectAll(true)}
-                    className="px-3 py-1.5 text-xs font-semibold text-[#0b241c] bg-[#ffffff] hover:bg-[#ede3d3] border border-[#ded7ca] rounded-xl transition-colors cursor-pointer"
+                    className="px-3 py-1.5 text-xs font-semibold text-[#3d0c22] bg-[#ffffff] hover:bg-[#ede0d6] border border-[#edd4c8] rounded-xl transition-colors cursor-pointer"
                   >
                     Select All
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSelectAll(false)}
-                    className="px-3 py-1.5 text-xs font-semibold text-[#718079] hover:text-[#0b241c] bg-[#ffffff] border border-[#ded7ca] rounded-xl transition-colors cursor-pointer"
+                    className="px-3 py-1.5 text-xs font-semibold text-[#876876] hover:text-[#3d0c22] bg-[#ffffff] border border-[#edd4c8] rounded-xl transition-colors cursor-pointer"
                   >
                     Deselect All
                   </button>
@@ -690,14 +690,14 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                       key={item.key}
                       onClick={() => togglePermission(item.key)}
                       className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${isChecked
-                          ? 'bg-[#ffffff] border-[#0b241c] shadow-xs ring-1 ring-[#0b241c]/15'
-                          : 'bg-[#faf7f0] border-[#ede3d3] opacity-75'
+                          ? 'bg-[#ffffff] border-[#3d0c22] shadow-xs ring-1 ring-[#3d0c22]/15'
+                          : 'bg-[#fcf8f6] border-[#ede0d6] opacity-75'
                         }`}
                     >
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${isChecked
-                            ? 'bg-[#0b241c] text-[#dfb76c] border-[#0b241c]'
-                            : 'bg-[#ffffff] text-[#718079] border-[#ded7ca]'
+                            ? 'bg-[#3d0c22] text-[#dfb76c] border-[#3d0c22]'
+                            : 'bg-[#ffffff] text-[#876876] border-[#edd4c8]'
                           }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -705,15 +705,15 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <h4 className="text-xs font-bold text-[#0b241c] truncate">{item.label}</h4>
+                          <h4 className="text-xs font-bold text-[#3d0c22] truncate">{item.label}</h4>
                           <input
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => { }}
-                            className="w-4 h-4 rounded text-[#0b241c] focus:ring-[#0b241c] bg-[#ffffff] border-[#ded7ca] cursor-pointer accent-[#0b241c]"
+                            className="w-4 h-4 rounded text-[#3d0c22] focus:ring-[#3d0c22] bg-[#ffffff] border-[#edd4c8] cursor-pointer accent-[#3d0c22]"
                           />
                         </div>
-                        <p className="text-[11px] text-[#718079] mt-0.5 line-clamp-2">
+                        <p className="text-[11px] text-[#876876] mt-0.5 line-clamp-2">
                           {item.description}
                         </p>
                       </div>
@@ -727,7 +727,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                   type="button"
                   onClick={handleSavePermissions}
                   disabled={isSaving}
-                  className="px-6 py-2.5 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-[#3d0c22] hover:bg-[#12362b] active:scale-95 text-[#ffffff] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   <ShieldCheck className="w-4 h-4 text-[#dfb76c]" />
                   <span>{isSaving ? 'Saving Permissions...' : 'Save Permissions'}</span>
@@ -738,8 +738,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 sm:p-5 border-t border-[#ede3d3] bg-[#faf7f0] flex items-center justify-between">
-          <p className="text-[11px] text-[#718079]">
+        <div className="p-4 sm:p-5 border-t border-[#ede0d6] bg-[#fcf8f6] flex items-center justify-between">
+          <p className="text-[11px] text-[#876876]">
             {activeTab === 'roster'
               ? 'Give the created login username and password to your staff member to access the showroom portal.'
               : 'Permissions take effect across counter terminals immediately.'}
@@ -747,7 +747,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 bg-[#ffffff] hover:bg-[#ede3d3] text-[#0b241c] border border-[#ded7ca] rounded-xl text-xs font-bold cursor-pointer transition-colors"
+            className="px-4 py-2 bg-[#ffffff] hover:bg-[#ede0d6] text-[#3d0c22] border border-[#edd4c8] rounded-xl text-xs font-bold cursor-pointer transition-colors"
           >
             Close
           </button>

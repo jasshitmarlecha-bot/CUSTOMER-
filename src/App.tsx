@@ -343,7 +343,7 @@ export default function App() {
   const permissions = currentUser.role === 'admin' ? DEFAULT_ADMIN_PERMISSIONS : (currentUser.permissions || staffPermissions);
 
   return (
-    <div className="min-h-screen bg-[#f5efe6] text-[#19241f] flex flex-col lg:flex-row font-sans selection:bg-[#dfb76c]/40 selection:text-[#0b241c]">
+    <div className="min-h-screen bg-[#fbf7f4] text-[#2a0717] flex flex-col lg:flex-row font-sans selection:bg-[#dfb76c]/40 selection:text-[#2a0717]">
       {/* Left Navigation Sidebar */}
       <Sidebar
         activeTab={activeTab}
@@ -450,24 +450,24 @@ export default function App() {
             activeTab === 'qr_analytics' ||
             activeTab === 'qr_activity' ||
             activeTab === 'qr_print') && (
-            permissions.canViewCommonQR ? (
-              <QRIntakePortalView
-                businessName={businessName}
-                categories={categories}
-                initialSubTab={
-                  activeTab === 'qr_activity'
-                    ? 'activity'
-                    : 'common_qr'
-                }
-                onRefreshData={loadInitialData}
-              />
-            ) : (
-              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
-                <p className="text-[#b08738] font-bold">Access Restricted</p>
-                <p className="text-xs text-[#718079]">Common QR portal is restricted for your account.</p>
-              </div>
-            )
-          )}
+              permissions.canViewCommonQR ? (
+                <QRIntakePortalView
+                  businessName={businessName}
+                  categories={categories}
+                  initialSubTab={
+                    activeTab === 'qr_activity'
+                      ? 'activity'
+                      : 'common_qr'
+                  }
+                  onRefreshData={loadInitialData}
+                />
+              ) : (
+                <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+                  <p className="text-[#b08738] font-bold">Access Restricted</p>
+                  <p className="text-xs text-[#718079]">Common QR portal is restricted for your account.</p>
+                </div>
+              )
+            )}
 
           {activeTab === 'categories' && (
             permissions.canManageCategories ? (
@@ -540,7 +540,7 @@ export default function App() {
       {/* Mobile & Tablet Bottom Navigation Bar (1-Thumb Ergonomic Quick Access) */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#ffffff]/95 backdrop-blur-md border-t border-[#ede3d3] shadow-[0_-4px_20px_rgba(11,36,28,0.08)] px-2 py-1.5 flex items-center justify-around"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#ffffff]/95 backdrop-blur-md border-t border-[#ebdcd3] shadow-[0_-4px_20px_rgba(42,7,23,0.08)] px-2 py-1.5 flex items-center justify-around"
       >
         {/* 1. Dashboard */}
         <button
@@ -548,11 +548,11 @@ export default function App() {
           onClick={() => handleNavigateTab('dashboard')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
             activeTab === 'dashboard'
-              ? 'text-[#0b241c] font-bold'
-              : 'text-[#718079] hover:text-[#0b241c]'
+              ? 'text-[#3d0c22] font-bold'
+              : 'text-[#876876] hover:text-[#3d0c22]'
           }`}
         >
-          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
             <Store className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">Dashboard</span>
@@ -564,14 +564,14 @@ export default function App() {
           onClick={() => handleNavigateTab('customers')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all relative cursor-pointer ${
             activeTab === 'customers'
-              ? 'text-[#0b241c] font-bold'
-              : 'text-[#718079] hover:text-[#0b241c]'
+              ? 'text-[#3d0c22] font-bold'
+              : 'text-[#876876] hover:text-[#3d0c22]'
           }`}
         >
-          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
             <Users className="w-5 h-5" />
             {customers.length > 0 && (
-              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-[#dfb76c] text-[#0b241c] text-[9px] font-black rounded-full shadow-xs">
+              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-[#dfb76c] text-[#2a0717] text-[9px] font-black rounded-full shadow-xs">
                 {customers.length}
               </span>
             )}
@@ -584,7 +584,7 @@ export default function App() {
           <button
             type="button"
             onClick={handleOpenAddCustomer}
-            className="flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl bg-gradient-to-br from-[#dfb76c] via-[#d4a856] to-[#b08738] text-[#0b241c] font-bold shadow-lg shadow-[#dfb76c]/40 border-2 border-[#ffffff] active:scale-95 transition-transform cursor-pointer"
+            className="flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl bg-gradient-to-br from-[#4d102e] via-[#3d0c22] to-[#250514] text-[#ffffff] font-bold shadow-lg shadow-[#3d0c22]/40 border-2 border-[#ffffff] active:scale-95 transition-transform cursor-pointer"
             title="Add Walk-In Customer"
           >
             <UserPlus className="w-5 h-5 stroke-[2.5]" />
@@ -598,11 +598,11 @@ export default function App() {
           onClick={() => handleNavigateTab('qr_common')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
             activeTab.startsWith('qr') || activeTab === 'intake'
-              ? 'text-[#0b241c] font-bold'
-              : 'text-[#718079] hover:text-[#0b241c]'
+              ? 'text-[#3d0c22] font-bold'
+              : 'text-[#876876] hover:text-[#3d0c22]'
           }`}
         >
-          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
             <QrCode className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">QR Center</span>
@@ -613,11 +613,11 @@ export default function App() {
           type="button"
           onClick={() => setIsMobileDrawerOpen(prev => !prev)}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
-            isMobileDrawerOpen ? 'text-[#0b241c] font-bold' : 'text-[#718079] hover:text-[#0b241c]'
+            isMobileDrawerOpen ? 'text-[#3d0c22] font-bold' : 'text-[#876876] hover:text-[#3d0c22]'
           }`}
           title="Open Operations Menu"
         >
-          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-[#ede3d3]/70 text-[#0b241c]' : ''}`}>
+          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
             <Menu className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">Menu</span>

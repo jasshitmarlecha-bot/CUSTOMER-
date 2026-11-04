@@ -24,17 +24,17 @@ export const CustomerPrintModal: React.FC<CustomerPrintModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#040e0b]/75 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1a050f]/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[#ffffff] border border-[#ede0d6] rounded-3xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] font-sans">
         {/* Modal Header */}
-        <div className="p-4 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0] print:hidden">
+        <div className="p-4 border-b border-[#ede0d6] flex items-center justify-between bg-[#fcf8f6] print:hidden">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <Printer className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0b241c]">Print Customer Roster Preview</h2>
-              <p className="text-xs text-[#718079]">
+              <h2 className="text-sm font-bold text-[#3d0c22]">Print Customer Roster Preview</h2>
+              <p className="text-xs text-[#876876]">
                 Ready to print {customers.length} customer records with Place & Referral details.
               </p>
             </div>
@@ -43,14 +43,14 @@ export const CustomerPrintModal: React.FC<CustomerPrintModalProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-4 py-2 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2 bg-[#3d0c22] hover:bg-[#12362b] text-[#ffffff] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
             >
               <Printer className="w-4 h-4 text-[#dfb76c]" />
               <span>Print Now</span>
             </button>
             <button
               onClick={onClose}
-              className="text-[#718079] hover:text-[#0b241c] p-1.5 rounded-lg hover:bg-[#ede3d3] transition-colors cursor-pointer"
+              className="text-[#876876] hover:text-[#3d0c22] p-1.5 rounded-lg hover:bg-[#ede0d6] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -61,14 +61,14 @@ export const CustomerPrintModal: React.FC<CustomerPrintModalProps> = ({
         <div className="p-6 overflow-y-auto bg-white text-slate-900 flex-1 font-sans">
           <div id="printable-customer-data" className="space-y-6">
             {/* Document Header */}
-            <div className="border-b-2 border-[#0b241c] pb-4 flex items-start justify-between">
+            <div className="border-b-2 border-[#3d0c22] pb-4 flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center font-bold">
+                  <div className="w-9 h-9 rounded-xl bg-[#3d0c22] text-[#dfb76c] flex items-center justify-center font-bold">
                     <Gem className="w-5 h-5" />
                   </div>
                   <div>
-                    <h1 className="text-2xl font-black tracking-tight text-[#0b241c] uppercase font-cinzel">
+                    <h1 className="text-2xl font-black tracking-tight text-[#3d0c22] uppercase font-cinzel">
                       {businessName}
                     </h1>
                     <p className="text-[11px] font-semibold tracking-wider text-[#b08738] uppercase">
@@ -80,7 +80,7 @@ export const CustomerPrintModal: React.FC<CustomerPrintModalProps> = ({
 
               <div className="text-right text-xs text-slate-600 space-y-0.5">
                 <div className="flex items-center justify-end gap-1 font-semibold text-slate-900">
-                  <Calendar className="w-3.5 h-3.5 text-[#0b241c]" />
+                  <Calendar className="w-3.5 h-3.5 text-[#3d0c22]" />
                   <span>{new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                 </div>
                 <p className="text-[11px]">Total Records: <strong className="text-slate-900">{customers.length}</strong></p>
