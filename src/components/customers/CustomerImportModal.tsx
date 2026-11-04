@@ -234,147 +234,141 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
   const invalidCount = parsedRows.length - validCount;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-[#160d16] border border-[#392233] rounded-2xl w-full max-w-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#040e0b]/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl w-full max-w-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] font-sans">
         {/* Header */}
-        <div className="p-5 border-b border-[#392233] flex items-center justify-between bg-[#1d121c]">
+        <div className="p-5 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-[#cfb7c8]">
+            <div className="w-10 h-10 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <FileSpreadsheet className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
-                <span>Import Outside Customer Data</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#261327] text-[#cfb7c8] border border-[#482c40]">
+              <h2 className="text-base font-bold text-[#0b241c] flex items-center gap-2">
+                <span>Import Customer Records</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
                   Excel & CSV
                 </span>
               </h2>
-              <p className="text-xs text-[#cfb7c8]">
+              <p className="text-xs text-[#718079]">
                 Bulk upload customer records including place and referral attribution.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-[#cfb7c8] hover:text-white p-1 rounded-lg hover:bg-[#281829] transition-colors cursor-pointer"
+            className="text-[#718079] hover:text-[#0b241c] p-1.5 rounded-lg hover:bg-[#ede3d3] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-5 overflow-y-auto space-y-5 flex-1 bg-[#160d16]">
+        <div className="p-5 overflow-y-auto space-y-5 flex-1 bg-white">
           {importResult ? (
             /* Success Summary View */
             <div className="p-6 text-center space-y-4">
-              <div className="w-14 h-14 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h3 className="text-lg font-bold text-white">Import Complete!</h3>
-              <p className="text-sm text-[#faeed4]">
-                Successfully imported <span className="text-emerald-400 font-bold">{importResult.importedCount}</span> customer records into Giri Jewels database.
+              <h3 className="text-lg font-bold text-[#0b241c]">Import Complete!</h3>
+              <p className="text-sm text-[#4b5a54]">
+                Successfully imported <span className="text-emerald-700 font-bold">{importResult.importedCount}</span> customer records into showroom database.
               </p>
               {importResult.errors && importResult.errors.length > 0 && (
-                <div className="p-3 bg-[#261327] border border-[#392233] rounded-xl text-xs text-[#faeed4] text-left max-h-32 overflow-y-auto space-y-1">
-                  <p className="font-semibold text-rose-400">Skipped rows:</p>
+                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 text-left max-h-32 overflow-y-auto space-y-1">
+                  <p className="font-semibold text-rose-900">Skipped rows:</p>
                   {importResult.errors.map((e, idx) => (
-                    <p key={idx} className="text-[#cfb7c8]">• {e}</p>
+                    <p key={idx} className="text-rose-700">• {e}</p>
                   ))}
                 </div>
               )}
               <button
                 onClick={onClose}
-                className="py-2.5 px-6 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 text-[#1c1206] font-bold text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer"
+                className="py-2.5 px-6 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
               >
                 Close & View Directory
               </button>
             </div>
           ) : (
             <>
-              {/* PARTICULAR FORMAT SPECIFICATION & GUIDELINES */}
-              <div className="bg-black/40 rounded-xl p-4 border border-[#392233] space-y-3">
+              {/* Format Specifications */}
+              <div className="bg-[#faf7f0] rounded-2xl p-4 border border-[#ede3d3] space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#cfb7c8]">
-                    <HelpCircle className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#0b241c]">
+                    <HelpCircle className="w-4 h-4 text-[#b08738]" />
                     <span>Required Import Format Specifications</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => handleDownloadTemplate('xlsx')}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-[#faeed4] bg-[#261327] hover:bg-[#281829] border border-[#482c40] rounded-lg transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-[#0b241c] bg-white hover:bg-[#ede3d3] border border-[#ded7ca] rounded-lg transition-colors cursor-pointer"
                     >
-                      <Download className="w-3 h-3 text-[#dfb76c]" />
+                      <Download className="w-3 h-3 text-[#b08738]" />
                       <span>Download Sample Excel (.xlsx)</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => handleDownloadTemplate('csv')}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-[#faeed4] bg-[#261327] hover:bg-[#281829] border border-[#482c40] rounded-lg transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold text-[#0b241c] bg-white hover:bg-[#ede3d3] border border-[#ded7ca] rounded-lg transition-colors cursor-pointer"
                     >
-                      <Download className="w-3 h-3 text-[#dfb76c]" />
+                      <Download className="w-3 h-3 text-[#b08738]" />
                       <span>Download Sample (.csv)</span>
                     </button>
                   </div>
                 </div>
 
-                <p className="text-[11px] text-[#cfb7c8]">
+                <p className="text-[11px] text-[#718079]">
                   Your Excel or CSV spreadsheet must have a header row with the following column names:
                 </p>
 
                 {/* Format Table */}
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-[11px] border-collapse">
+                  <table className="w-full text-left text-[11px] border-collapse bg-white rounded-xl border border-[#ede3d3]">
                     <thead>
-                      <tr className="border-b border-[#392233] text-[#cfb7c8]">
-                        <th className="py-1 px-2 font-semibold">Column Name</th>
-                        <th className="py-1 px-2 font-semibold">Requirement</th>
-                        <th className="py-1 px-2 font-semibold">Example Value</th>
-                        <th className="py-1 px-2 font-semibold">Notes</th>
+                      <tr className="border-b border-[#ede3d3] text-[#718079] bg-[#faf7f0]">
+                        <th className="py-1.5 px-2.5 font-semibold">Column Name</th>
+                        <th className="py-1.5 px-2.5 font-semibold">Requirement</th>
+                        <th className="py-1.5 px-2.5 font-semibold">Example Value</th>
+                        <th className="py-1.5 px-2.5 font-semibold">Notes</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-purple-900/30 text-[#faeed4]">
+                    <tbody className="divide-y divide-[#ede3d3] text-[#4b5a54]">
                       <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#cfb7c8] font-bold">Name</td>
-                        <td className="py-1.5 px-2 text-rose-400 font-semibold">Required</td>
-                        <td className="py-1.5 px-2 text-white">Priya Sharma</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">Customer's full name</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c] font-bold">Name</td>
+                        <td className="py-1.5 px-2.5 text-rose-600 font-semibold">Required</td>
+                        <td className="py-1.5 px-2.5 text-[#0b241c]">Priya Sharma</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Customer's full name</td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#cfb7c8] font-bold">Phone</td>
-                        <td className="py-1.5 px-2 text-rose-400 font-semibold">Required</td>
-                        <td className="py-1.5 px-2 font-mono text-white">9845012345</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">Primary mobile number (10 digits)</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c] font-bold">Phone</td>
+                        <td className="py-1.5 px-2.5 text-rose-600 font-semibold">Required</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c]">9845012345</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Primary mobile number (10 digits)</td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#cfb7c8] font-bold">Place</td>
-                        <td className="py-1.5 px-2 text-[#cfb7c8] font-semibold">Recommended</td>
-                        <td className="py-1.5 px-2 text-white">Indiranagar, Bangalore</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">Customer's native place or town</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c] font-bold">Place</td>
+                        <td className="py-1.5 px-2.5 text-[#b08738] font-semibold">Recommended</td>
+                        <td className="py-1.5 px-2.5 text-[#0b241c]">Indiranagar, Bangalore</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Customer's native place or town</td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#cfb7c8] font-bold">ReferredBy</td>
-                        <td className="py-1.5 px-2 text-[#cfb7c8] font-semibold">Recommended</td>
-                        <td className="py-1.5 px-2 text-white">Ramesh Gupta</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">Referred person or lead source</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c] font-bold">ReferredBy</td>
+                        <td className="py-1.5 px-2.5 text-[#b08738] font-semibold">Recommended</td>
+                        <td className="py-1.5 px-2.5 text-[#0b241c]">Ramesh Gupta</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Referred person or lead source</td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#faeed4]">Email</td>
-                        <td className="py-1.5 px-2 text-purple-400/70">Optional</td>
-                        <td className="py-1.5 px-2 text-white">priya@example.com</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">Customer email address</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c]">Email</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Optional</td>
+                        <td className="py-1.5 px-2.5 text-[#0b241c]">priya@example.com</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Customer email address</td>
                       </tr>
                       <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#faeed4]">Category</td>
-                        <td className="py-1.5 px-2 text-purple-400/70">Optional</td>
-                        <td className="py-1.5 px-2 text-white">Bridal Gold</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">Auto-matches or creates category</td>
-                      </tr>
-                      <tr>
-                        <td className="py-1.5 px-2 font-mono text-[#faeed4]">Status</td>
-                        <td className="py-1.5 px-2 text-purple-400/70">Optional</td>
-                        <td className="py-1.5 px-2 text-white">active</td>
-                        <td className="py-1.5 px-2 text-purple-400/80">active, lead, or inactive (defaults to active)</td>
+                        <td className="py-1.5 px-2.5 font-mono text-[#0b241c]">Category</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Optional</td>
+                        <td className="py-1.5 px-2.5 text-[#0b241c]">Bridal Gold</td>
+                        <td className="py-1.5 px-2.5 text-[#718079]">Auto-matches or creates category</td>
                       </tr>
                     </tbody>
                   </table>
@@ -382,14 +376,14 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
               </div>
 
               {/* Upload or Paste Selector */}
-              <div className="flex items-center gap-2 border-b border-[#392233] pb-2">
+              <div className="flex items-center gap-2 border-b border-[#ede3d3] pb-2">
                 <button
                   type="button"
                   onClick={() => setImportMode('upload')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                     importMode === 'upload'
-                      ? 'bg-purple-600 text-white font-bold'
-                      : 'text-[#cfb7c8] hover:text-white'
+                      ? 'bg-[#0b241c] text-[#f7eedf] font-bold'
+                      : 'text-[#718079] hover:text-[#0b241c]'
                   }`}
                 >
                   Upload File (.xlsx / .csv)
@@ -397,10 +391,10 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setImportMode('paste')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+                  className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                     importMode === 'paste'
-                      ? 'bg-purple-600 text-white font-bold'
-                      : 'text-[#cfb7c8] hover:text-white'
+                      ? 'bg-[#0b241c] text-[#f7eedf] font-bold'
+                      : 'text-[#718079] hover:text-[#0b241c]'
                   }`}
                 >
                   Paste Data Directly
@@ -411,7 +405,7 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
                 /* Dropzone */
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-[#392233] hover:border-purple-500 rounded-2xl p-6 text-center cursor-pointer transition-colors bg-[#261327] hover:bg-[#261327]"
+                  className="border-2 border-dashed border-[#ded7ca] hover:border-[#0b241c] rounded-2xl p-6 text-center cursor-pointer transition-colors bg-[#faf7f0]/60 hover:bg-[#faf7f0]"
                 >
                   <input
                     ref={fileInputRef}
@@ -420,11 +414,11 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
                     onChange={handleFileUpload}
                     className="hidden"
                   />
-                  <Upload className="w-8 h-8 text-[#dfb76c] mx-auto mb-2" />
-                  <p className="text-xs font-semibold text-white">
+                  <Upload className="w-8 h-8 text-[#b08738] mx-auto mb-2" />
+                  <p className="text-xs font-semibold text-[#0b241c]">
                     {file ? file.name : 'Click to select Excel (.xlsx) or CSV file'}
                   </p>
-                  <p className="text-[11px] text-[#cfb7c8] mt-1">
+                  <p className="text-[11px] text-[#718079] mt-1">
                     Drag and drop file here or click to browse
                   </p>
                 </div>
@@ -436,12 +430,12 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
                     value={pasteData}
                     onChange={(e) => setPasteData(e.target.value)}
                     placeholder="Paste rows copied from Excel or CSV here..."
-                    className="w-full text-xs font-mono p-3 bg-black/40 border border-[#392233] rounded-xl text-white placeholder:text-purple-400/40 focus:outline-none focus:border-purple-400"
+                    className="w-full text-xs font-mono p-3 bg-[#faf7f0] border border-[#ded7ca] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none focus:border-[#0b241c]"
                   />
                   <button
                     type="button"
                     onClick={handleProcessPasted}
-                    className="px-3.5 py-1.5 bg-[#261327] hover:bg-[#281829] text-[#faeed4] text-xs font-semibold rounded-lg border border-[#482c40] cursor-pointer"
+                    className="px-3.5 py-1.5 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] text-xs font-semibold rounded-lg border border-[#dfb76c]/40 cursor-pointer"
                   >
                     Parse Pasted Text
                   </button>
@@ -449,8 +443,8 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
               )}
 
               {errorNotice && (
-                <div className="p-3 bg-red-950/80 border border-red-800 rounded-xl text-xs text-red-200 flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
                   <span>{errorNotice}</span>
                 </div>
               )}
@@ -459,19 +453,19 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
               {parsedRows.length > 0 && (
                 <div className="space-y-3 pt-2">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-white">Parsed Preview ({parsedRows.length} total rows)</span>
+                    <span className="font-bold text-[#0b241c]">Parsed Preview ({parsedRows.length} total rows)</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-emerald-400 font-semibold">{validCount} valid</span>
+                      <span className="text-emerald-700 font-semibold">{validCount} valid</span>
                       {invalidCount > 0 && (
-                        <span className="text-rose-400 font-semibold">{invalidCount} invalid</span>
+                        <span className="text-rose-700 font-semibold">{invalidCount} invalid</span>
                       )}
                     </div>
                   </div>
 
-                  <div className="border border-[#392233] rounded-xl overflow-x-auto max-h-56 bg-black/40">
+                  <div className="border border-[#ede3d3] rounded-xl overflow-x-auto max-h-56 bg-white">
                     <table className="w-full text-left text-xs">
                       <thead>
-                        <tr className="bg-[#1d121c] border-b border-[#392233] text-[#cfb7c8]">
+                        <tr className="bg-[#faf7f0] border-b border-[#ede3d3] text-[#718079]">
                           <th className="py-2 px-3">Status</th>
                           <th className="py-2 px-3">Name</th>
                           <th className="py-2 px-3">Phone</th>
@@ -480,32 +474,32 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
                           <th className="py-2 px-3">Category</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-purple-900/30">
+                      <tbody className="divide-y divide-[#ede3d3]">
                         {parsedRows.slice(0, 15).map((row, idx) => (
-                          <tr key={idx} className={row.isValid ? 'hover:bg-[#261327]' : 'bg-red-950/20'}>
+                          <tr key={idx} className={row.isValid ? 'hover:bg-[#faf7f0]' : 'bg-rose-50/50'}>
                             <td className="py-1.5 px-3">
                               {row.isValid ? (
-                                <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-semibold">
-                                  <CheckCircle2 className="w-3 h-3" /> Valid
+                                <span className="inline-flex items-center gap-1 text-[10px] text-emerald-800 font-semibold">
+                                  <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Valid
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-1 text-[10px] text-rose-400 font-semibold" title={row.validationError}>
-                                  <AlertCircle className="w-3 h-3" /> {row.validationError || 'Invalid'}
+                                <span className="inline-flex items-center gap-1 text-[10px] text-rose-800 font-semibold" title={row.validationError}>
+                                  <AlertCircle className="w-3 h-3 text-rose-600" /> {row.validationError || 'Invalid'}
                                 </span>
                               )}
                             </td>
-                            <td className="py-1.5 px-3 font-medium text-white">{row.name || '-'}</td>
-                            <td className="py-1.5 px-3 text-[#faeed4] font-mono">{row.phone || '-'}</td>
-                            <td className="py-1.5 px-3 text-[#faeed4]">{row.place || '-'}</td>
-                            <td className="py-1.5 px-3 text-[#cfb7c8]">{row.referredBy || '-'}</td>
-                            <td className="py-1.5 px-3 text-[#dfb76c]">{row.category || '-'}</td>
+                            <td className="py-1.5 px-3 font-medium text-[#0b241c]">{row.name || '-'}</td>
+                            <td className="py-1.5 px-3 text-[#4b5a54] font-mono">{row.phone || '-'}</td>
+                            <td className="py-1.5 px-3 text-[#4b5a54]">{row.place || '-'}</td>
+                            <td className="py-1.5 px-3 text-[#4b5a54]">{row.referredBy || '-'}</td>
+                            <td className="py-1.5 px-3 text-[#b08738]">{row.category || '-'}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
                   {parsedRows.length > 15 && (
-                    <p className="text-[11px] text-[#cfb7c8] text-center">
+                    <p className="text-[11px] text-[#718079] text-center">
                       Showing first 15 of {parsedRows.length} rows
                     </p>
                   )}
@@ -517,11 +511,11 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
 
         {/* Modal Footer */}
         {!importResult && (
-          <div className="p-4 border-t border-[#392233] flex items-center justify-between bg-[#1d121c]">
+          <div className="p-4 border-t border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-[#cfb7c8] hover:text-white transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-[#718079] hover:text-[#0b241c] transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -529,10 +523,10 @@ export const CustomerImportModal: React.FC<CustomerImportModalProps> = ({
               type="button"
               disabled={validCount === 0 || isSubmitting || isProcessing}
               onClick={handleConfirmImport}
-              className="flex items-center gap-2 py-2 px-5 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 text-[#1c1206] font-bold disabled:opacity-40 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer"
+              className="flex items-center gap-2 py-2 px-5 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] border border-[#dfb76c]/40 disabled:opacity-40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
             >
               <span>{isSubmitting ? 'Importing...' : `Confirm Import (${validCount} records)`}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 text-[#dfb76c]" />
             </button>
           </div>
         )}

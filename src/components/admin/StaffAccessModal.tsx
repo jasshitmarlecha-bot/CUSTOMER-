@@ -12,19 +12,16 @@ import {
   EyeOff,
   Copy,
   Check,
-  Lock,
-  UserCheck,
-  Sparkles,
-  RefreshCw,
-  Phone,
-  Mail,
   Shield,
   Download,
   Upload,
   Printer,
   Tags,
   BarChart3,
-  QrCode
+  QrCode,
+  Sparkles,
+  RefreshCw,
+  Phone
 } from 'lucide-react';
 import { StaffUser, StaffPermissions } from '../../types/index.ts';
 import { getStaffUsers, addStaffUser, updateStaffUser, deleteStaffUser } from '../../api/client.ts';
@@ -88,7 +85,6 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Auto-fill username when name is entered if username is still empty or default
   const handleNameChange = (val: string) => {
     setNewStaffName(val);
     const slug = val.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -98,10 +94,12 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
   };
 
   const handleGeneratePassword = () => {
-    const randomPins = ['Giri@2025', 'Giri@7788', 'GiriGold#1', 'GiriJewel$9', 'GiriStaff24', 'GiriStar*7'];
-    const chosen = randomPins[Math.floor(Math.random() * randomPins.length)];
-    setNewStaffPassword(chosen);
-    setShowNewPassword(true);
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%';
+    let result = '';
+    for (let i = 0; i < 8; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setNewStaffPassword(`Giri@${result.slice(0, 4)}`);
   };
 
   const handleCreateStaff = async (e: React.FormEvent) => {
@@ -110,8 +108,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
       setNotice({ type: 'error', message: 'Please enter staff member name.' });
       return;
     }
-    if (!newStaffPassword.trim() || newStaffPassword.trim().length < 4) {
-      setNotice({ type: 'error', message: 'Please enter a password with at least 4 characters.' });
+    if (!newStaffPassword.trim()) {
+      setNotice({ type: 'error', message: 'Please specify a password for this staff member.' });
       return;
     }
 
@@ -120,26 +118,25 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
     try {
       const created = await addStaffUser({
         name: newStaffName.trim(),
-        usernameOrEmail: newStaffUsername.trim() || newStaffName.toLowerCase().replace(/\s+/g, ''),
+        usernameOrEmail: newStaffUsername.trim() || newStaffName.toLowerCase().replace(/[^a-z0-9]/g, ''),
         password: newStaffPassword.trim(),
         phone: newStaffPhone.trim() || undefined,
-        role: newStaffRole,
-        permissions
+        role: newStaffRole
       });
 
       setNotice({
         type: 'success',
-        message: `Account for ${created.name} created! Password: "${newStaffPassword.trim()}". You can now give this password to them.`
+        message: `Account created for "${created.name}"! Share login "${created.email}" and password "${created.password}" with them.`
       });
 
-      // Reset form
+      // Clear form
       setNewStaffName('');
       setNewStaffUsername('');
       setNewStaffPassword('');
       setNewStaffPhone('');
       await loadStaff();
     } catch (err: any) {
-      setNotice({ type: 'error', message: err.message || 'Failed to create staff account.' });
+      setNotice({ type: 'error', message: err.message || 'Failed to create staff member.' });
     } finally {
       setIsCreatingStaff(false);
     }
@@ -153,15 +150,15 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
   };
 
   const handleCopyCredentials = (user: StaffUser) => {
-    const textToCopy = `GIRI JEWELLERS - Showroom Staff Access\nStaff Name: ${user.name}\nLogin ID / Username: ${user.email}\nPassword: ${user.password || 'Contact Admin'}\nRole: ${user.role === 'admin' ? 'Store Admin' : 'Counter Staff'}`;
-    navigator.clipboard.writeText(textToCopy);
+    const text = `Giri Jewellers Portal Login:\nUsername/Email: ${user.email}\nPassword: ${user.password || 'Contact Admin'}\nRole: ${user.role === 'admin' ? 'Store Admin' : 'Counter Staff'}`;
+    navigator.clipboard.writeText(text);
     setCopiedId(user.id);
     setTimeout(() => setCopiedId(null), 2500);
   };
 
   const handleSaveInlinePassword = async (userId: string) => {
     if (!inlineNewPassword.trim() || inlineNewPassword.trim().length < 4) {
-      setNotice({ type: 'error', message: 'Password must be at least 4 characters.' });
+      setNotice({ type: 'error', message: 'Password must be at least 4 characters long.' });
       return;
     }
     try {
@@ -176,7 +173,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
   };
 
   const handleDeleteStaff = async (user: StaffUser) => {
-    if (user.role === 'admin') {
+    if (user.id === 'user-admin-1') {
       setNotice({ type: 'error', message: 'Primary Admin account cannot be deleted.' });
       return;
     }
@@ -259,84 +256,84 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
     },
     {
       key: 'canImportData',
-      label: 'Import Outside Customer Data',
-      description: 'Can upload spreadsheets (.xlsx / .csv) into the store database',
+      label: 'Import Customer Data',
+      description: 'Can bulk import files into showroom database',
       icon: Upload
     },
     {
       key: 'canPrintData',
-      label: 'Print Customer Data & Rosters',
-      description: 'Can format and trigger printouts of customer records',
+      label: 'Print Customer Rosters',
+      description: 'Can generate print documents and summaries',
       icon: Printer
     },
     {
       key: 'canManageCategories',
       label: 'Manage Jewellery Categories',
-      description: 'Can create, edit, or delete categories',
+      description: 'Can create, edit, and delete category interest tags',
       icon: Tags
     },
     {
       key: 'canRunCleaning',
-      label: 'Data Cleaning & Deduplication',
-      description: 'Can merge duplicates and run phone health checks',
+      label: 'Resolve Duplicates & Hygiene',
+      description: 'Can execute duplicate consolidation and conflict merges',
       icon: Sparkles
     },
     {
       key: 'canViewAnalytics',
-      label: 'Store & Footfall Analytics',
-      description: 'Can view visitor conversion metrics and traffic trends',
+      label: 'View Footfall & Analytics Hub',
+      description: 'Can inspect showroom performance and conversion charts',
       icon: BarChart3
     },
     {
       key: 'canViewCommonQR',
-      label: 'Showroom Counter QR Center',
-      description: 'Can view, resize, print, and download counter QR code',
+      label: 'Access Showroom QR Standee',
+      description: 'Can access and print counter QR standees',
       icon: QrCode
     }
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-[#130c15] border border-[#392233] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-white font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#040e0b]/75 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[#ffffff] border border-[#ede3d3] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden text-[#0b241c] font-sans">
         
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-[#2d1b28] flex items-center justify-between bg-gradient-to-r from-[#180f1a] to-[#130c15]">
+        <div className="p-5 sm:p-6 border-b border-[#ede3d3] flex items-center justify-between bg-[#faf7f0]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-[#dfb76c]">
+            <div className="w-10 h-10 rounded-2xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-black tracking-tight text-white flex items-center gap-2">
+              <h2 className="text-lg font-black tracking-tight text-[#0b241c] flex items-center gap-2">
                 <span>Staff Access & Password Management</span>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#261327] text-[#faeed4] border border-[#482c40]">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
                   Giri Jewellers
                 </span>
               </h2>
-              <p className="text-xs text-[#cfb7c8]">
+              <p className="text-xs text-[#718079]">
                 Add staff members, create passwords to give them, and manage counter access permissions.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-[#cfb7c8] hover:text-white hover:bg-[#261327] rounded-xl transition-colors cursor-pointer"
+            className="p-2 text-[#718079] hover:text-[#0b241c] hover:bg-[#ede3d3] rounded-xl transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-2 px-6 pt-3 border-b border-[#2d1b28] bg-[#100911]">
+        <div className="flex items-center gap-2 px-6 pt-3 border-b border-[#ede3d3] bg-[#ffffff]">
           <button
             type="button"
             onClick={() => setActiveTab('roster')}
             className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${
               activeTab === 'roster'
-                ? 'border-[#dfb76c] text-[#faeed4] bg-[#180f1a]'
-                : 'border-transparent text-[#cfb7c8] hover:text-white'
+                ? 'border-[#0b241c] text-[#0b241c] bg-[#faf7f0]'
+                : 'border-transparent text-[#718079] hover:text-[#0b241c]'
             }`}
           >
-            <Users className="w-4 h-4 text-[#dfb76c]" />
+            <Users className="w-4 h-4 text-[#b08738]" />
             <span>Staff Roster & Passwords ({staffUsers.length})</span>
           </button>
 
@@ -345,11 +342,11 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
             onClick={() => setActiveTab('permissions')}
             className={`px-4 py-2.5 text-xs font-bold rounded-t-xl transition-all border-b-2 flex items-center gap-2 cursor-pointer ${
               activeTab === 'permissions'
-                ? 'border-[#dfb76c] text-[#faeed4] bg-[#180f1a]'
-                : 'border-transparent text-[#cfb7c8] hover:text-white'
+                ? 'border-[#0b241c] text-[#0b241c] bg-[#faf7f0]'
+                : 'border-transparent text-[#718079] hover:text-[#0b241c]'
             }`}
           >
-            <Shield className="w-4 h-4 text-[#dfb76c]" />
+            <Shield className="w-4 h-4 text-[#b08738]" />
             <span>Staff Permissions Matrix</span>
           </button>
         </div>
@@ -357,23 +354,23 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
         {/* Notification Banner */}
         {notice && (
           <div
-            className={`mx-6 mt-4 p-3.5 rounded-2xl border text-xs flex items-center justify-between gap-2 shadow-md ${
+            className={`mx-6 mt-4 p-3.5 rounded-2xl border text-xs flex items-center justify-between gap-2 shadow-xs ${
               notice.type === 'success'
-                ? 'bg-emerald-950/80 border-emerald-500/60 text-emerald-200'
-                : 'bg-rose-950/80 border-rose-500/60 text-rose-200'
+                ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
+                : 'bg-rose-50 border-rose-300 text-rose-800'
             }`}
           >
             <div className="flex items-center gap-2">
               {notice.type === 'success' ? (
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               ) : (
-                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
               )}
-              <span>{notice.message}</span>
+              <span className="font-medium">{notice.message}</span>
             </div>
             <button
               onClick={() => setNotice(null)}
-              className="text-xs hover:text-white opacity-80 cursor-pointer"
+              className="text-xs hover:opacity-100 opacity-70 cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -385,15 +382,15 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           {activeTab === 'roster' ? (
             <div className="space-y-6">
               {/* Card 1: Add New Staff Member Form */}
-              <div className="bg-[#180f1a] border border-[#392233] rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#2d1b28]">
+              <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#ede3d3]">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#261327] border border-[#482c40] flex items-center justify-center text-[#dfb76c]">
+                    <div className="w-7 h-7 rounded-lg bg-[#0b241c] text-[#dfb76c] flex items-center justify-center">
                       <Plus className="w-4 h-4" />
                     </div>
-                    <h3 className="text-sm font-bold text-white">Add Staff Member & Create Password</h3>
+                    <h3 className="text-sm font-bold text-[#0b241c]">Add Staff Member & Create Password</h3>
                   </div>
-                  <span className="text-[11px] text-[#dfb76c] font-medium">
+                  <span className="text-[11px] text-[#b08738] font-semibold">
                     Store Owner / Admin Tool
                   </span>
                 </div>
@@ -402,8 +399,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Staff Name */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#cfb7c8] block">
-                        Staff Member Full Name <span className="text-rose-400">*</span>
+                      <label className="text-xs font-semibold text-[#1c2e26] block">
+                        Staff Member Full Name <span className="text-rose-600">*</span>
                       </label>
                       <input
                         type="text"
@@ -411,13 +408,13 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                         onChange={(e) => handleNameChange(e.target.value)}
                         placeholder="e.g. Anjali Nair, Rahul Krishna"
                         required
-                        className="w-full text-xs px-3.5 py-2.5 bg-[#100911] border border-[#392233] focus:border-[#dfb76c] rounded-xl text-white placeholder:text-purple-400/40 focus:outline-none"
+                        className="w-full text-xs px-3.5 py-2.5 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none font-medium"
                       />
                     </div>
 
                     {/* Login Username */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#cfb7c8] block">
+                      <label className="text-xs font-semibold text-[#1c2e26] block">
                         Login Username or Email
                       </label>
                       <input
@@ -425,22 +422,22 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                         value={newStaffUsername}
                         onChange={(e) => setNewStaffUsername(e.target.value)}
                         placeholder="e.g. anjali or anjali@girijewels.com"
-                        className="w-full text-xs px-3.5 py-2.5 bg-[#100911] border border-[#392233] focus:border-[#dfb76c] rounded-xl text-white placeholder:text-purple-400/40 focus:outline-none"
+                        className="w-full text-xs px-3.5 py-2.5 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none font-medium"
                       />
                     </div>
 
                     {/* Staff Password with generator */}
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <label className="text-xs font-semibold text-[#cfb7c8] block">
-                          Create Staff Password <span className="text-rose-400">*</span>
+                        <label className="text-xs font-semibold text-[#1c2e26] block">
+                          Create Staff Password <span className="text-rose-600">*</span>
                         </label>
                         <button
                           type="button"
                           onClick={handleGeneratePassword}
-                          className="text-[11px] text-[#dfb76c] hover:underline flex items-center gap-1 cursor-pointer"
+                          className="text-[11px] text-[#0b241c] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
                         >
-                          <Sparkles className="w-3 h-3" />
+                          <Sparkles className="w-3 h-3 text-[#b08738]" />
                           <span>Generate Password</span>
                         </button>
                       </div>
@@ -451,30 +448,30 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                           onChange={(e) => setNewStaffPassword(e.target.value)}
                           placeholder="e.g. Giri@2025"
                           required
-                          className="w-full text-xs font-mono px-3.5 py-2.5 pr-10 bg-[#100911] border border-[#392233] focus:border-[#dfb76c] rounded-xl text-white placeholder:text-purple-400/40 focus:outline-none"
+                          className="w-full text-xs font-mono px-3.5 py-2.5 pr-10 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder-[#97a49e] focus:outline-none font-medium"
                         />
                         <button
                           type="button"
                           onClick={() => setShowNewPassword(!showNewPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#cfb7c8] hover:text-white cursor-pointer"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#718079] hover:text-[#0b241c] cursor-pointer"
                         >
                           {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
-                      <span className="text-[10.5px] text-[#cfb7c8] block">
+                      <span className="text-[10.5px] text-[#718079] block">
                         You can show this password to your staff member so they can log in.
                       </span>
                     </div>
 
-                    {/* Staff Role & Phone */}
+                    {/* Staff Role */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-[#cfb7c8] block">
+                      <label className="text-xs font-semibold text-[#1c2e26] block">
                         Staff Role
                       </label>
                       <select
                         value={newStaffRole}
                         onChange={(e) => setNewStaffRole(e.target.value as any)}
-                        className="w-full text-xs px-3.5 py-2.5 bg-[#100911] border border-[#392233] focus:border-[#dfb76c] rounded-xl text-white focus:outline-none cursor-pointer"
+                        className="w-full text-xs px-3.5 py-2.5 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] focus:outline-none cursor-pointer font-medium"
                       >
                         <option value="staff">Counter Staff (Standard)</option>
                         <option value="admin">Store Admin (Full Showroom Control)</option>
@@ -486,9 +483,9 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                     <button
                       type="submit"
                       disabled={isCreatingStaff || !newStaffName.trim() || !newStaffPassword.trim()}
-                      className="px-5 py-2.5 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-95 text-[#1c1206] font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-1.5 disabled:opacity-40"
+                      className="px-5 py-2.5 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5 disabled:opacity-40"
                     >
-                      <Plus className="w-4 h-4 stroke-[2.5]" />
+                      <Plus className="w-4 h-4 text-[#dfb76c]" />
                       <span>{isCreatingStaff ? 'Creating Staff Account...' : 'Create Staff & Password'}</span>
                     </button>
                   </div>
@@ -496,20 +493,20 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
               </div>
 
               {/* Card 2: Current Staff Roster & Passwords Table */}
-              <div className="bg-[#180f1a] border border-[#392233] rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-[#2d1b28]">
+              <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#ede3d3]">
                   <div>
-                    <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                      <Users className="w-4 h-4 text-[#dfb76c]" />
+                    <h3 className="text-sm font-bold text-[#0b241c] flex items-center gap-2">
+                      <Users className="w-4 h-4 text-[#b08738]" />
                       <span>Active Staff Accounts & Passwords</span>
                     </h3>
-                    <p className="text-[11px] text-[#cfb7c8] mt-0.5">
+                    <p className="text-[11px] text-[#718079] mt-0.5">
                       View assigned credentials, reveal passwords to give to staff, or reset credentials.
                     </p>
                   </div>
                   <button
                     onClick={loadStaff}
-                    className="p-1.5 text-[#cfb7c8] hover:text-white bg-[#100911] rounded-lg border border-[#392233] cursor-pointer"
+                    className="p-1.5 text-[#718079] hover:text-[#0b241c] bg-[#faf7f0] rounded-lg border border-[#ede3d3] cursor-pointer"
                     title="Refresh list"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isLoadingStaff ? 'animate-spin' : ''}`} />
@@ -518,7 +515,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
 
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-[#100911] text-[#dfb76c] font-semibold border-b border-[#2d1b28]">
+                    <thead className="bg-[#faf7f0] text-[#718079] font-semibold border-b border-[#ede3d3]">
                       <tr>
                         <th className="py-3 px-3">Staff Name</th>
                         <th className="py-3 px-3">Role</th>
@@ -527,22 +524,24 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                         <th className="py-3 px-3 text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2d1b28]">
+                    <tbody className="divide-y divide-[#ede3d3]">
                       {staffUsers.map((user) => {
                         const isRevealed = Boolean(revealedPasswords[user.id]);
                         const isEditingThisPassword = editingPasswordUserId === user.id;
 
                         return (
-                          <tr key={user.id} className="hover:bg-[#201322] transition-colors">
+                          <tr key={user.id} className="hover:bg-[#faf7f0] transition-colors">
                             {/* Staff Name */}
                             <td className="py-3 px-3">
                               <div className="flex items-center gap-2">
-                                <span className="text-base">{user.avatar || (user.role === 'admin' ? '💎' : '👩‍💼')}</span>
+                                <div className="w-7 h-7 rounded-lg bg-[#0b241c] text-[#dfb76c] flex items-center justify-center font-bold text-[11px]">
+                                  {user.name.slice(0, 1).toUpperCase()}
+                                </div>
                                 <div>
-                                  <span className="font-bold text-white block">{user.name}</span>
+                                  <span className="font-bold text-[#0b241c] block">{user.name}</span>
                                   {user.phone && (
-                                    <span className="text-[10.5px] text-[#cfb7c8] flex items-center gap-1 font-mono">
-                                      <Phone className="w-2.5 h-2.5" />
+                                    <span className="text-[10.5px] text-[#718079] flex items-center gap-1 font-mono">
+                                      <Phone className="w-2.5 h-2.5 text-[#b08738]" />
                                       {user.phone}
                                     </span>
                                   )}
@@ -555,8 +554,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                               <span
                                 className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                                   user.role === 'admin'
-                                    ? 'bg-[#261327] text-[#faeed4] border border-[#482c40]'
-                                    : 'bg-purple-950/80 text-purple-300 border border-purple-800'
+                                    ? 'bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono'
+                                    : 'bg-[#faf7f0] text-[#4b5a54] border border-[#ded7ca]'
                                 }`}
                               >
                                 {user.role === 'admin' ? 'Store Admin' : 'Counter Staff'}
@@ -564,7 +563,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                             </td>
 
                             {/* Login Email / Username */}
-                            <td className="py-3 px-3 font-mono text-[#faeed4]">
+                            <td className="py-3 px-3 font-mono text-[#0b241c]">
                               {user.email}
                             </td>
 
@@ -577,32 +576,32 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                                     value={inlineNewPassword}
                                     onChange={(e) => setInlineNewPassword(e.target.value)}
                                     placeholder="Enter new password"
-                                    className="w-32 px-2 py-1 text-xs bg-[#100911] border border-[#dfb76c] rounded-lg text-white font-mono focus:outline-none"
+                                    className="w-32 px-2 py-1 text-xs bg-white border border-[#0b241c] rounded-lg text-[#0b241c] font-mono focus:outline-none"
                                   />
                                   <button
                                     type="button"
                                     onClick={() => handleSaveInlinePassword(user.id)}
-                                    className="px-2 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[11px] font-bold cursor-pointer"
+                                    className="px-2 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-[11px] font-bold cursor-pointer"
                                   >
                                     Save
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => setEditingPasswordUserId(null)}
-                                    className="px-2 py-1 text-[#cfb7c8] hover:text-white rounded text-[11px] cursor-pointer"
+                                    className="px-2 py-1 text-[#718079] hover:text-[#0b241c] rounded text-[11px] cursor-pointer"
                                   >
                                     Cancel
                                   </button>
                                 </div>
                               ) : (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-mono text-xs text-[#faeed4] bg-[#100911] px-2.5 py-1 rounded-lg border border-[#392233]">
+                                  <span className="font-mono text-xs text-[#0b241c] bg-[#faf7f0] px-2.5 py-1 rounded-lg border border-[#ede3d3]">
                                     {isRevealed ? (user.password || '••••••••') : '••••••••'}
                                   </span>
                                   <button
                                     type="button"
                                     onClick={() => handleTogglePasswordVisibility(user.id)}
-                                    className="p-1 text-[#cfb7c8] hover:text-white cursor-pointer"
+                                    className="p-1 text-[#718079] hover:text-[#0b241c] cursor-pointer"
                                     title={isRevealed ? 'Hide Password' : 'Show Password to give to staff'}
                                   >
                                     {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -614,36 +613,33 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                             {/* Actions */}
                             <td className="py-3 px-3 text-right">
                               <div className="flex items-center justify-end gap-1.5">
-                                {/* Copy Credentials */}
                                 <button
                                   type="button"
                                   onClick={() => handleCopyCredentials(user)}
-                                  className="p-1.5 bg-[#100911] hover:bg-[#261327] border border-[#392233] text-[#dfb76c] hover:text-white rounded-lg transition-colors cursor-pointer"
+                                  className="p-1.5 bg-[#ffffff] hover:bg-[#faf7f0] border border-[#ded7ca] text-[#0b241c] rounded-lg transition-colors cursor-pointer shadow-xs"
                                   title="Copy Login & Password to share with staff"
                                 >
-                                  {copiedId === user.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                                  {copiedId === user.id ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                                 </button>
 
-                                {/* Reset Password */}
                                 <button
                                   type="button"
                                   onClick={() => {
                                     setEditingPasswordUserId(user.id);
                                     setInlineNewPassword(user.password || '');
                                   }}
-                                  className="px-2.5 py-1 bg-[#261327] hover:bg-[#2d1b28] text-[#faeed4] border border-[#482c40] rounded-lg text-[11px] font-semibold transition-colors cursor-pointer"
+                                  className="px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] rounded-lg text-[11px] font-semibold transition-colors cursor-pointer shadow-xs"
                                   title="Change Password"
                                 >
-                                  <Key className="w-3 h-3 inline mr-1 text-[#dfb76c]" />
+                                  <Key className="w-3 h-3 inline mr-1 text-[#b08738]" />
                                   <span>Change</span>
                                 </button>
 
-                                {/* Delete Staff (Protected if admin) */}
                                 {user.role !== 'admin' && (
                                   <button
                                     type="button"
                                     onClick={() => handleDeleteStaff(user)}
-                                    className="p-1.5 text-rose-400 hover:text-rose-200 hover:bg-rose-950/60 rounded-lg transition-colors cursor-pointer"
+                                    className="p-1.5 text-rose-600 hover:text-rose-800 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                                     title="Delete staff member"
                                   >
                                     <Trash2 className="w-3.5 h-3.5" />
@@ -662,10 +658,10 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           ) : (
             /* Tab 2: Permissions Matrix */
             <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#180f1a] p-4 rounded-2xl border border-[#392233]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#faf7f0] p-4 rounded-2xl border border-[#ede3d3]">
                 <div>
-                  <h3 className="text-sm font-bold text-white">Counter Staff Role Permissions</h3>
-                  <p className="text-xs text-[#cfb7c8]">
+                  <h3 className="text-sm font-bold text-[#0b241c]">Counter Staff Role Permissions</h3>
+                  <p className="text-xs text-[#718079]">
                     Control what features your counter staff can access and execute in the showroom suite.
                   </p>
                 </div>
@@ -673,14 +669,14 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSelectAll(true)}
-                    className="px-3 py-1.5 text-xs font-semibold text-[#faeed4] bg-[#261327] hover:bg-[#2d1b28] border border-[#482c40] rounded-xl transition-colors cursor-pointer"
+                    className="px-3 py-1.5 text-xs font-semibold text-[#0b241c] bg-[#ffffff] hover:bg-[#ede3d3] border border-[#ded7ca] rounded-xl transition-colors cursor-pointer"
                   >
                     Select All
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSelectAll(false)}
-                    className="px-3 py-1.5 text-xs font-semibold text-[#cfb7c8] hover:text-white bg-[#100911] border border-[#392233] rounded-xl transition-colors cursor-pointer"
+                    className="px-3 py-1.5 text-xs font-semibold text-[#718079] hover:text-[#0b241c] bg-[#ffffff] border border-[#ded7ca] rounded-xl transition-colors cursor-pointer"
                   >
                     Deselect All
                   </button>
@@ -699,15 +695,15 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                       onClick={() => togglePermission(item.key)}
                       className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start gap-3.5 ${
                         isChecked
-                          ? 'bg-[#261327] border-purple-500/70 shadow-sm'
-                          : 'bg-[#140b15] border-[#392233] hover:border-purple-800 opacity-75'
+                          ? 'bg-[#ffffff] border-[#0b241c] shadow-xs ring-1 ring-[#0b241c]/15'
+                          : 'bg-[#faf7f0] border-[#ede3d3] opacity-75'
                       }`}
                     >
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
                           isChecked
-                            ? 'bg-[#180f1a] text-[#dfb76c] border-[#482c40]'
-                            : 'bg-[#100911] text-[#cfb7c8] border-[#392233]'
+                            ? 'bg-[#0b241c] text-[#dfb76c] border-[#0b241c]'
+                            : 'bg-[#ffffff] text-[#718079] border-[#ded7ca]'
                         }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -715,15 +711,15 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <h4 className="text-xs font-bold text-white truncate">{item.label}</h4>
+                          <h4 className="text-xs font-bold text-[#0b241c] truncate">{item.label}</h4>
                           <input
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => {}}
-                            className="w-4 h-4 rounded text-purple-600 focus:ring-purple-500 bg-[#100911] border-[#392233] cursor-pointer"
+                            className="w-4 h-4 rounded text-[#0b241c] focus:ring-[#0b241c] bg-[#ffffff] border-[#ded7ca] cursor-pointer accent-[#0b241c]"
                           />
                         </div>
-                        <p className="text-[11px] text-[#cfb7c8] mt-0.5 line-clamp-2">
+                        <p className="text-[11px] text-[#718079] mt-0.5 line-clamp-2">
                           {item.description}
                         </p>
                       </div>
@@ -737,9 +733,9 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
                   type="button"
                   onClick={handleSavePermissions}
                   disabled={isSaving}
-                  className="px-6 py-2.5 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-95 text-[#1c1206] font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-6 py-2.5 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
-                  <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
+                  <ShieldCheck className="w-4 h-4 text-[#dfb76c]" />
                   <span>{isSaving ? 'Saving Permissions...' : 'Save Permissions'}</span>
                 </button>
               </div>
@@ -748,8 +744,8 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 sm:p-5 border-t border-[#2d1b28] bg-[#100911] flex items-center justify-between">
-          <p className="text-[11px] text-[#cfb7c8]">
+        <div className="p-4 sm:p-5 border-t border-[#ede3d3] bg-[#faf7f0] flex items-center justify-between">
+          <p className="text-[11px] text-[#718079]">
             {activeTab === 'roster'
               ? 'Give the created login username and password to your staff member to access the showroom portal.'
               : 'Permissions take effect across counter terminals immediately.'}
@@ -757,7 +753,7 @@ export const StaffAccessModal: React.FC<StaffAccessModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 bg-[#261327] hover:bg-[#2d1b28] text-[#faeed4] border border-[#482c40] rounded-xl text-xs font-bold cursor-pointer transition-colors"
+            className="px-4 py-2 bg-[#ffffff] hover:bg-[#ede3d3] text-[#0b241c] border border-[#ded7ca] rounded-xl text-xs font-bold cursor-pointer transition-colors"
           >
             Close
           </button>

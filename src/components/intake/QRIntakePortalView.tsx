@@ -25,7 +25,7 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
 }) => {
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [targetUrl, setTargetUrl] = useState<string>('');
-  const [qrSize, setQrSize] = useState<number>(280); // adjustable in pixels
+  const [qrSize, setQrSize] = useState<number>(260); // adjustable in pixels
   const [copied, setCopied] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -74,7 +74,7 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
 
   return (
     <div className="space-y-6 font-sans">
-      {/* Printable Area - Formatted cleanly for print */}
+      {/* Printable Area - Formatted cleanly for physical print */}
       <style>{`
         @media print {
           body * {
@@ -90,32 +90,33 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
             width: 100%;
             height: 100%;
             background: #ffffff !important;
-            color: #000000 !important;
+            color: #0b241c !important;
             padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            border: none !important;
           }
         }
       `}</style>
 
       {/* Top Banner */}
-      <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-[#dfb76c]">
+            <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <QrCode className="w-5 h-5" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              Showroom Counter QR Code
+            <h1 className="text-xl sm:text-2xl font-black text-[#0b241c] tracking-tight">
+              Showroom Counter QR Standee
             </h1>
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#261327] text-[#faeed4] border border-[#482c40]">
-              Direct Standee
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
+              Live Standee
             </span>
           </div>
-          <p className="text-xs text-[#cfb7c8]">
-            Customers scan with any phone camera to register their walk-in visit, place, and referral details.
+          <p className="text-xs text-[#718079]">
+            Customers scan with any smartphone camera to register their walk-in visit, place, and referral details.
           </p>
         </div>
 
@@ -125,9 +126,9 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
             type="button"
             onClick={handleDownloadQR}
             disabled={!qrDataUrl || isLoading}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#261327] hover:bg-[#2e162f] text-[#faeed4] border border-[#482c40] rounded-xl text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-40"
           >
-            <Download className="w-4 h-4 text-[#dfb76c]" />
+            <Download className="w-4 h-4 text-[#b08738]" />
             <span>Download PNG</span>
           </button>
 
@@ -135,10 +136,10 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
             type="button"
             onClick={handlePrint}
             disabled={!qrDataUrl || isLoading}
-            className="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-95 text-[#1c1206] rounded-xl text-xs font-bold transition-all shadow-lg cursor-pointer disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 px-5 py-2 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] border border-[#dfb76c]/40 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer disabled:opacity-40"
           >
-            <Printer className="w-4 h-4 text-[#1c1206] stroke-[2.5]" />
-            <span>Print QR Code</span>
+            <Printer className="w-4 h-4 text-[#dfb76c]" />
+            <span>Print Counter Stand</span>
           </button>
         </div>
       </div>
@@ -146,38 +147,37 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
       {/* Main QR Display & Size Adjuster Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: QR Code Standee Card (Centered & Sizable) */}
-        <div className="lg:col-span-8 flex flex-col items-center justify-center bg-[#160d16] border border-[#392233] rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-          {/* Subtle Ambient Backlight */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-900/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="lg:col-span-8 flex flex-col items-center justify-center bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-8 sm:p-12 shadow-xs relative overflow-hidden">
+          {/* Subtle Ambient Golden Radial Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#dfb76c]/10 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Printable Stand Card */}
+          {/* Printable Stand Card - Deep Royal Emerald Luxury Stand */}
           <div
             id="printable-qr-stand"
-            className="bg-[#100911] border-2 border-[#482c40] rounded-3xl p-8 shadow-2xl flex flex-col items-center text-center max-w-lg w-full relative z-10 transition-all duration-200"
+            className="bg-gradient-to-b from-[#0b241c] to-[#071c16] border-2 border-[#dfb76c]/50 rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col items-center text-center max-w-md w-full relative z-10 transition-all duration-200"
           >
-            {/* Royal Giri Jewellers Crest Logo without black background */}
-            <div className="mb-3">
-              <img
-                src="/assets/aistudio/giri_jewellers_logo_transparent.png"
-                alt="Giri Jewellers Crest"
-                className="w-16 h-16 sm:w-20 sm:h-20 object-contain mx-auto drop-shadow-[0_0_12px_rgba(245,215,127,0.45)]"
-              />
+            {/* Gold Diamond Crest */}
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#dfb76c] via-[#ecd49d] to-[#b3883b] p-2.5 flex items-center justify-center shadow-lg shadow-[#dfb76c]/20 mb-3">
+              <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[#071c16]" stroke="currentColor" strokeWidth="2">
+                <path d="M6 3h12l4 7-10 11L2 10l4-7z" fill="currentColor" fillOpacity="0.2" />
+                <path d="M2 10h20M12 21L7.5 10 12 3l4.5 7L12 21z" />
+              </svg>
             </div>
 
-            <h2 className="font-cinzel text-xl sm:text-2xl font-black tracking-[0.16em] text-[#fae7ba] uppercase">
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold tracking-[0.2em] text-[#faeed4] uppercase">
               {businessName || 'GIRI JEWELLERS'}
             </h2>
-            <p className="text-[11px] text-[#dfb76c] font-semibold tracking-wider uppercase mt-0.5 mb-5">
+            <p className="text-[11px] text-[#dfb76c] font-semibold tracking-wider uppercase mt-1 mb-5">
               Scan to Register Showroom Walk-in
             </p>
 
             {/* Dynamic Sized QR Code Container */}
             <div
-              className="bg-white p-4 rounded-2xl shadow-xl flex items-center justify-center border-4 border-[#392233]"
+              className="bg-white p-4 rounded-2xl shadow-xl flex items-center justify-center border-4 border-[#dfb76c]/40"
               style={{ width: `${qrSize}px`, height: `${qrSize}px` }}
             >
               {isLoading ? (
-                <div className="text-xs text-purple-900 font-bold animate-pulse">Generating QR...</div>
+                <div className="text-xs text-[#0b241c] font-bold animate-pulse">Generating QR...</div>
               ) : qrDataUrl ? (
                 <img
                   src={qrDataUrl}
@@ -185,7 +185,7 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <div className="text-xs text-purple-950">QR unavailable</div>
+                <div className="text-xs text-[#718079]">QR unavailable</div>
               )}
             </div>
 
@@ -194,7 +194,7 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
               <span className="text-xs font-bold text-white block">
                 Point Phone Camera at QR Code
               </span>
-              <span className="text-[11px] text-[#cfb7c8] block max-w-xs mx-auto">
+              <span className="text-[11px] text-[#cfdfd6] block max-w-xs mx-auto">
                 Instant digital intake for hallmark warranty, billing records, and bespoke assistance.
               </span>
             </div>
@@ -204,17 +204,17 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
         {/* Right Column: Size Adjuster & Controls */}
         <div className="lg:col-span-4 space-y-6">
           {/* Size Adjuster Card */}
-          <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-5">
-            <div className="flex items-center gap-2 pb-3 border-b border-[#392233]">
-              <Sliders className="w-4 h-4 text-[#dfb76c]" />
-              <h3 className="text-sm font-bold text-white">QR Code Size Adjust</h3>
+          <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs space-y-5">
+            <div className="flex items-center gap-2 pb-3 border-b border-[#ede3d3]">
+              <Sliders className="w-4 h-4 text-[#b08738]" />
+              <h3 className="text-sm font-bold text-[#0b241c]">Standee QR Size</h3>
             </div>
 
             {/* Live Size Slider */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-[#cfb7c8]">Display & Print Size:</span>
-                <span className="text-[#faeed4] font-mono font-bold bg-[#100911] px-2.5 py-0.5 rounded border border-[#392233]">
+                <span className="text-[#4b5a54]">Display & Print Size:</span>
+                <span className="text-[#0b241c] font-mono font-bold bg-[#faf7f0] px-2.5 py-0.5 rounded border border-[#ede3d3]">
                   {qrSize} px
                 </span>
               </div>
@@ -225,9 +225,9 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
                 step="10"
                 value={qrSize}
                 onChange={(e) => setQrSize(Number(e.target.value))}
-                className="w-full h-2 bg-[#100911] rounded-lg appearance-none cursor-pointer accent-[#dfb76c]"
+                className="w-full h-2 bg-[#faf7f0] rounded-lg appearance-none cursor-pointer accent-[#0b241c]"
               />
-              <div className="flex justify-between text-[10px] text-[#cfb7c8] font-mono">
+              <div className="flex justify-between text-[10px] text-[#718079] font-mono">
                 <span>160px</span>
                 <span>300px</span>
                 <span>440px</span>
@@ -235,8 +235,8 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
             </div>
 
             {/* Size Preset Buttons */}
-            <div className="space-y-2 pt-2 border-t border-[#392233]">
-              <span className="text-xs font-bold text-white block">Preset Quick Sizes:</span>
+            <div className="space-y-2 pt-2 border-t border-[#ede3d3]">
+              <span className="text-xs font-bold text-[#0b241c] block">Preset Formats:</span>
               <div className="grid grid-cols-2 gap-2">
                 {presets.map((p) => (
                   <button
@@ -245,61 +245,63 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
                     onClick={() => setQrSize(p.size)}
                     className={`px-3 py-2 text-xs font-bold rounded-xl border transition-colors cursor-pointer text-left ${
                       qrSize === p.size
-                        ? 'bg-[#261327] border-[#dfb76c] text-[#faeed4]'
-                        : 'bg-[#100911] border-[#392233] text-[#cfb7c8] hover:text-white'
+                        ? 'bg-[#0b241c] border-[#0b241c] text-[#f7eedf]'
+                        : 'bg-[#ffffff] border-[#ded7ca] text-[#4b5a54] hover:bg-[#faf7f0]'
                     }`}
                   >
                     <span className="block">{p.label}</span>
-                    <span className="text-[10px] font-mono text-[#dfb76c]">{p.size}px</span>
+                    <span className={`text-[10px] font-mono ${qrSize === p.size ? 'text-[#dfb76c]' : 'text-[#718079]'}`}>
+                      {p.size}px
+                    </span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="space-y-2.5 pt-3 border-t border-[#392233]">
+            <div className="space-y-2.5 pt-3 border-t border-[#ede3d3]">
               <button
                 type="button"
                 onClick={handlePrint}
-                className="w-full py-2.5 px-4 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-95 text-[#1c1206] font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                <Printer className="w-4 h-4 stroke-[2.5]" />
-                <span>Print Counter QR Stand</span>
+                <Printer className="w-4 h-4 text-[#dfb76c]" />
+                <span>Print Counter Standee</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleDownloadQR}
-                className="w-full py-2.5 px-4 bg-[#261327] hover:bg-[#2d1b28] text-[#faeed4] border border-[#482c40] font-bold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] font-bold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                <Download className="w-4 h-4 text-[#dfb76c]" />
+                <Download className="w-4 h-4 text-[#b08738]" />
                 <span>Download High-Res PNG</span>
               </button>
             </div>
           </div>
 
           {/* Direct Link Card */}
-          <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-5 shadow-xl space-y-3">
-            <h3 className="text-xs font-bold text-white flex items-center gap-2">
-              <ExternalLink className="w-3.5 h-3.5 text-[#dfb76c]" />
-              <span>Direct Walk-in Intake Link</span>
+          <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-5 shadow-xs space-y-3">
+            <h3 className="text-xs font-bold text-[#0b241c] flex items-center gap-2">
+              <ExternalLink className="w-3.5 h-3.5 text-[#b08738]" />
+              <span>Direct Customer Intake Link</span>
             </h3>
-            <p className="text-[11px] text-[#cfb7c8]">
-              Copy the web address to share via counter tablet or bookmark on store iPad:
+            <p className="text-[11px] text-[#718079]">
+              Share this web address with counter tablets or bookmark on store iPads:
             </p>
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 readOnly
                 value={targetUrl || `${window.location.origin}/?intake=qr`}
-                className="flex-1 text-[11px] font-mono px-3 py-2 bg-[#100911] border border-[#392233] rounded-xl text-[#faeed4] select-all focus:outline-none"
+                className="flex-1 text-[11px] font-mono px-3 py-2 bg-[#faf7f0] border border-[#ede3d3] rounded-xl text-[#0b241c] select-all focus:outline-none"
               />
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="px-3 py-2 bg-[#261327] hover:bg-[#2d1b28] text-[#faeed4] border border-[#482c40] rounded-xl text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shrink-0"
+                className="px-3 py-2 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] border border-[#dfb76c]/40 rounded-xl text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shrink-0"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#dfb76c]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
@@ -307,10 +309,10 @@ export const QRIntakePortalView: React.FC<QRIntakePortalViewProps> = ({
               href={targetUrl || `${window.location.origin}/?intake=qr`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs text-[#dfb76c] hover:underline pt-1"
+              className="inline-flex items-center gap-1.5 text-xs text-[#0b241c] font-semibold hover:underline pt-1"
             >
               <span>Test Walk-in Customer Form in new tab</span>
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="w-3 h-3 text-[#b08738]" />
             </a>
           </div>
         </div>

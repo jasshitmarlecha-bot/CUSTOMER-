@@ -83,7 +83,7 @@ export const CustomerListView: React.FC<CustomerListViewProps> = ({
     isOpen: false,
     title: '',
     description: '',
-    onConfirm: async () => {}
+    onConfirm: async () => { }
   });
 
   // Admin permission override modal

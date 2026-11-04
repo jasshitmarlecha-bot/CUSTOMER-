@@ -103,89 +103,105 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
 
     const worksheet = XLSX.utils.json_to_sheet(templateData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Customers');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Giri_Customers');
 
-    if (format === 'xlsx') {
-      XLSX.writeFile(workbook, 'giri_jewels_import_template.xlsx');
+    if (format === 'csv') {
+      XLSX.writeFile(workbook, 'Giri_Jewellers_Customer_Template.csv', { bookType: 'csv' });
     } else {
-      XLSX.writeFile(workbook, 'giri_jewels_import_template.csv', { bookType: 'csv' });
+      XLSX.writeFile(workbook, 'Giri_Jewellers_Customer_Template.xlsx', { bookType: 'xlsx' });
     }
   };
 
   const processRawData = (rows: any[]) => {
-    const parsed: ParsedCustomerRow[] = [];
-    const seenPhonesInBatch = new Set<string>();
+    setErrorNotice(null);
+    const existingPhones = new Map<string, string>();
+    existingCustomers.forEach(c => {
+      if (c.phone) {
+        const clean = c.phone.replace(/\D/g, '').slice(-10);
+        if (clean) existingPhones.set(clean, c.name);
+      }
+    });
 
-    for (const r of rows) {
-      const keys = Object.keys(r);
-      const findKey = (candidates: string[]) => {
-        const found = keys.find(k => candidates.includes(k.trim().toLowerCase()));
-        return found ? String(r[found] || '').trim() : '';
-      };
+    const fileSeenPhones = new Set<string>();
 
-      const name = findKey(['name', 'customer name', 'full name', 'client']);
-      const phone = findKey(['phone', 'mobile', 'phone number', 'contact', 'telephone', 'mobile number']);
-      const place = findKey(['place', 'town', 'city', 'location', 'district', 'native place', 'native']);
-      const referredBy = findKey(['referred by', 'referredby', 'referrer', 'reference', 'ref by', 'ref']);
-      const email = findKey(['email', 'email address', 'mail']);
-      const category = findKey(['category', 'category name', 'type', 'group']);
-      const address = findKey(['address', 'street', 'locality']);
-      const rawStatus = findKey(['status', 'state']).toLowerCase();
+    const processed: ParsedCustomerRow[] = rows.map((row) => {
+      // Find name field
+      const nameKey = Object.keys(row).find(k =>
+        /name|customer|client|full\s*name/i.test(k.trim())
+      );
+      const rawName = nameKey ? String(row[nameKey] || '').trim() : '';
 
-      let status: 'active' | 'lead' | 'inactive' = 'active';
-      if (rawStatus === 'lead') status = 'lead';
-      else if (rawStatus === 'inactive') status = 'inactive';
+      // Find phone field
+      const phoneKey = Object.keys(row).find(k =>
+        /phone|mobile|contact|cell|number|tel/i.test(k.trim())
+      );
+      const rawPhone = phoneKey ? String(row[phoneKey] || '').trim() : '';
 
-      const isValid = Boolean(name && phone && phone.replace(/\D/g, '').length >= 7);
-      let validationError: string | undefined;
-      if (!name) validationError = 'Missing name';
-      else if (!phone) validationError = 'Missing phone number';
-      else if (phone.replace(/\D/g, '').length < 7) validationError = 'Phone number too short';
+      // Place / city
+      const placeKey = Object.keys(row).find(k =>
+        /place|location|city|town|native|area|address/i.test(k.trim())
+      );
+      const rawPlace = placeKey ? String(row[placeKey] || '').trim() : '';
 
-      const cleanPhone = phone ? phone.replace(/\D/g, '').slice(-10) : '';
-      const cleanEmail = email ? email.trim().toLowerCase() : '';
+      // Referred By
+      const refKey = Object.keys(row).find(k =>
+        /refer|referred\s*by|source|agent|staff/i.test(k.trim())
+      );
+      const rawReferredBy = refKey ? String(row[refKey] || '').trim() : '';
 
-      // Check duplicates
+      // Category / Tag
+      const catKey = Object.keys(row).find(k =>
+        /cat|category|tag|interest|type/i.test(k.trim())
+      );
+      const rawCategory = catKey ? String(row[catKey] || '').trim() : '';
+
+      // Email
+      const emailKey = Object.keys(row).find(k =>
+        /email|mail/i.test(k.trim())
+      );
+      const rawEmail = emailKey ? String(row[emailKey] || '').trim() : '';
+
+      const cleanDigits = rawPhone.replace(/\D/g, '').slice(-10);
+      let isValid = true;
+      let validationError = '';
+
+      if (!rawName) {
+        isValid = false;
+        validationError = 'Missing name';
+      } else if (!rawPhone || cleanDigits.length < 7) {
+        isValid = false;
+        validationError = 'Invalid phone';
+      }
+
       let duplicateType: 'none' | 'database' | 'file' = 'none';
-      let duplicateMatchName: string | undefined;
+      let duplicateMatchName = '';
 
-      if (cleanPhone && cleanPhone.length >= 7 && seenPhonesInBatch.has(cleanPhone)) {
-        duplicateType = 'file';
-        duplicateMatchName = 'Repeated row in this file';
-      } else if (existingCustomers && existingCustomers.length > 0) {
-        const match = existingCustomers.find(c => {
-          const cPhone = c.phone ? c.phone.replace(/\D/g, '').slice(-10) : '';
-          if (cleanPhone && cleanPhone.length >= 7 && cPhone === cleanPhone) return true;
-          if (cleanEmail && cleanEmail.includes('@') && c.email?.trim().toLowerCase() === cleanEmail) return true;
-          return false;
-        });
-        if (match) {
+      if (cleanDigits) {
+        if (existingPhones.has(cleanDigits)) {
           duplicateType = 'database';
-          duplicateMatchName = `Already in DB (${match.name})`;
+          duplicateMatchName = existingPhones.get(cleanDigits) || 'Existing Customer';
+        } else if (fileSeenPhones.has(cleanDigits)) {
+          duplicateType = 'file';
         }
+        fileSeenPhones.add(cleanDigits);
       }
 
-      if (cleanPhone && cleanPhone.length >= 7) {
-        seenPhonesInBatch.add(cleanPhone);
-      }
-
-      parsed.push({
-        name,
-        phone,
-        place: place || undefined,
-        referredBy: referredBy || undefined,
-        email: email || undefined,
-        category: category || undefined,
-        address: address || undefined,
-        status,
+      return {
+        name: rawName || 'Unknown Customer',
+        phone: rawPhone,
+        place: rawPlace,
+        referredBy: rawReferredBy,
+        email: rawEmail,
+        category: rawCategory,
+        status: 'active',
         isValid,
         validationError,
         duplicateType,
         duplicateMatchName
-      });
-    }
+      };
+    });
 
-    setParsedRows(parsed);
+    setParsedRows(processed);
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -280,23 +296,22 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
   const validCount = parsedRows.filter(r => r.isValid).length;
   const invalidCount = parsedRows.length - validCount;
   const dbDuplicatesCount = parsedRows.filter(r => r.duplicateType === 'database').length;
-  const fileDuplicatesCount = parsedRows.filter(r => r.duplicateType === 'file').length;
 
   return (
     <div className="space-y-6 font-sans">
       {/* Title & Status Banner */}
-      <div className="bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-[#cfb7c8]">
+            <div className="w-9 h-9 rounded-xl bg-[#0b241c] text-[#dfb76c] flex items-center justify-center shadow-xs">
               <Upload className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-black text-white tracking-tight">Import Customer Data</h1>
-            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#261327] text-[#faeed4] border border-[#482c40]">
+            <h1 className="text-xl sm:text-2xl font-black text-[#0b241c] tracking-tight">Import Customer Data</h1>
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
               Excel & CSV
             </span>
           </div>
-          <p className="text-xs text-[#cfb7c8]">
+          <p className="text-xs text-[#718079]">
             Bulk upload customer records with automatic deduplication, place recognition, and referral tracking.
           </p>
         </div>
@@ -304,16 +319,16 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={() => handleDownloadTemplate('xlsx')}
-            className="px-3.5 py-2 bg-[#261327] hover:bg-[#281829] text-[#faeed4] border border-[#482c40] text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-3.5 py-2 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-[#b08738]" />
             <span>Sample Excel (.xlsx)</span>
           </button>
           <button
             onClick={() => handleDownloadTemplate('csv')}
-            className="px-3.5 py-2 bg-[#1d121c] hover:bg-[#261327] text-[#faeed4] border border-[#482c40] text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-3.5 py-2 bg-[#ffffff] hover:bg-[#faf7f0] text-[#0b241c] border border-[#ded7ca] text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-[#b08738]" />
             <span>Sample CSV</span>
           </button>
         </div>
@@ -321,25 +336,25 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
 
       {/* Successful Import Result Banner */}
       {importResult && (
-        <div className="p-5 bg-gradient-to-r from-emerald-950/90 via-[#160d16] to-[#160d16] border border-emerald-500/50 rounded-2xl shadow-xl space-y-3">
+        <div className="p-5 bg-emerald-50 border border-emerald-300 rounded-2xl shadow-xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/40">
+              <div className="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center border border-emerald-300">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white">Import Complete!</h3>
-                <p className="text-xs text-emerald-300">
+                <h3 className="text-sm font-bold text-emerald-900">Import Complete!</h3>
+                <p className="text-xs text-emerald-800">
                   {importResult.importedCount} new customers added • {importResult.updatedCount || 0} existing updated • {importResult.skippedCount || 0} duplicates skipped.
                 </p>
               </div>
             </div>
             <button
               onClick={onNavigateToDirectory}
-              className="px-4 py-2 bg-white text-purple-950 text-xs font-black rounded-xl shadow-md hover:bg-purple-50 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 bg-[#0b241c] hover:bg-[#12362b] text-[#f7eedf] text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer border border-[#dfb76c]/40"
             >
               <span>View Customer Directory</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 text-[#dfb76c]" />
             </button>
           </div>
         </div>
@@ -348,13 +363,13 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
       {/* Main Workspace Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Specifications & Deduplication Strategy */}
-        <div className="lg:col-span-5 bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-4">
+        <div className="lg:col-span-5 bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs space-y-4">
           <div className="space-y-1">
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
-              <CopyCheck className="w-4 h-4 text-[#dfb76c]" />
+            <h2 className="text-sm font-bold text-[#0b241c] flex items-center gap-2">
+              <CopyCheck className="w-4 h-4 text-[#b08738]" />
               <span>Deduplication Strategy</span>
             </h2>
-            <p className="text-xs text-[#cfb7c8]">
+            <p className="text-xs text-[#718079]">
               Choose how the system handles rows matching existing customer phone numbers.
             </p>
           </div>
@@ -365,8 +380,8 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
               onClick={() => setDeduplicateStrategy('skip')}
               className={`p-3.5 rounded-xl border flex items-start gap-3 cursor-pointer transition-colors ${
                 deduplicateStrategy === 'skip'
-                  ? 'bg-[#261327] border-purple-500 text-white'
-                  : 'bg-[#100911] border-[#392233] text-[#cfb7c8] hover:text-white'
+                  ? 'bg-[#faf7f0] border-[#0b241c] text-[#0b241c]'
+                  : 'bg-[#ffffff] border-[#ede3d3] text-[#718079] hover:bg-[#faf7f0]'
               }`}
             >
               <input
@@ -374,11 +389,11 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
                 name="strategy"
                 checked={deduplicateStrategy === 'skip'}
                 onChange={() => setDeduplicateStrategy('skip')}
-                className="mt-1"
+                className="mt-1 accent-[#0b241c]"
               />
               <div className="space-y-0.5">
-                <span className="text-xs font-bold text-white block">Skip Duplicates (Recommended)</span>
-                <span className="text-[11px] text-[#dfb76c] block">
+                <span className="text-xs font-bold text-[#0b241c] block">Skip Duplicates (Recommended)</span>
+                <span className="text-[11px] text-[#718079] block">
                   Only imports fresh customer contacts. Existing numbers are preserved without duplication.
                 </span>
               </div>
@@ -388,8 +403,8 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
               onClick={() => setDeduplicateStrategy('update')}
               className={`p-3.5 rounded-xl border flex items-start gap-3 cursor-pointer transition-colors ${
                 deduplicateStrategy === 'update'
-                  ? 'bg-[#261327] border-purple-500 text-white'
-                  : 'bg-[#100911] border-[#392233] text-[#cfb7c8] hover:text-white'
+                  ? 'bg-[#faf7f0] border-[#0b241c] text-[#0b241c]'
+                  : 'bg-[#ffffff] border-[#ede3d3] text-[#718079] hover:bg-[#faf7f0]'
               }`}
             >
               <input
@@ -397,11 +412,11 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
                 name="strategy"
                 checked={deduplicateStrategy === 'update'}
                 onChange={() => setDeduplicateStrategy('update')}
-                className="mt-1"
+                className="mt-1 accent-[#0b241c]"
               />
               <div className="space-y-0.5">
-                <span className="text-xs font-bold text-white block">Update / Enrich Existing</span>
-                <span className="text-[11px] text-[#dfb76c] block">
+                <span className="text-xs font-bold text-[#0b241c] block">Update / Enrich Existing</span>
+                <span className="text-[11px] text-[#718079] block">
                   If phone matches an existing customer, enriches their place, referral, and notes.
                 </span>
               </div>
@@ -409,34 +424,34 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
           </div>
 
           {/* Expected Columns Table */}
-          <div className="pt-2 border-t border-[#392233] space-y-2">
-            <span className="text-xs font-bold text-white block">Recognized Columns</span>
-            <div className="border border-[#392233] rounded-xl overflow-hidden bg-[#100911]">
+          <div className="pt-2 border-t border-[#ede3d3] space-y-2">
+            <span className="text-xs font-bold text-[#0b241c] block">Recognized Columns</span>
+            <div className="border border-[#ede3d3] rounded-xl overflow-hidden bg-[#faf7f0]">
               <table className="w-full text-left text-xs">
-                <tbody className="divide-y divide-purple-950/80 text-[#faeed4]">
+                <tbody className="divide-y divide-[#ede3d3] text-[#4b5a54]">
                   <tr>
-                    <td className="py-2 px-3 font-mono text-[#cfb7c8] font-bold">Name</td>
-                    <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
+                    <td className="py-2 px-3 font-mono text-[#0b241c] font-bold">Name</td>
+                    <td className="py-2 px-3 text-rose-600 font-semibold">Required</td>
                     <td className="py-2 px-3">Priya Sharma</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-mono text-[#cfb7c8] font-bold">Phone</td>
-                    <td className="py-2 px-3 text-rose-400 font-semibold">Required</td>
+                    <td className="py-2 px-3 font-mono text-[#0b241c] font-bold">Phone</td>
+                    <td className="py-2 px-3 text-rose-600 font-semibold">Required</td>
                     <td className="py-2 px-3">9845012345</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-mono text-[#cfb7c8] font-bold">Place</td>
-                    <td className="py-2 px-3 text-[#dfb76c]">Optional</td>
+                    <td className="py-2 px-3 font-mono text-[#0b241c] font-bold">Place</td>
+                    <td className="py-2 px-3 text-[#b08738]">Optional</td>
                     <td className="py-2 px-3">Trivandrum</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-mono text-[#cfb7c8] font-bold">Referred By</td>
-                    <td className="py-2 px-3 text-[#dfb76c]">Optional</td>
+                    <td className="py-2 px-3 font-mono text-[#0b241c] font-bold">Referred By</td>
+                    <td className="py-2 px-3 text-[#b08738]">Optional</td>
                     <td className="py-2 px-3">Dr. Rajesh</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-3 font-mono text-[#faeed4]">Category</td>
-                    <td className="py-2 px-3 text-[#dfb76c]">Optional</td>
+                    <td className="py-2 px-3 font-mono text-[#0b241c] font-bold">Category</td>
+                    <td className="py-2 px-3 text-[#b08738]">Optional</td>
                     <td className="py-2 px-3">VIP Customer</td>
                   </tr>
                 </tbody>
@@ -446,16 +461,16 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
         </div>
 
         {/* Right Column: Upload / Paste Area */}
-        <div className="lg:col-span-7 bg-[#160d16] border border-[#392233] rounded-3xl p-6 shadow-xl space-y-4">
+        <div className="lg:col-span-7 bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs space-y-4">
           {/* Mode Switcher */}
-          <div className="flex items-center gap-2 border-b border-[#392233] pb-3">
+          <div className="flex items-center gap-2 border-b border-[#ede3d3] pb-3">
             <button
               type="button"
               onClick={() => setImportMode('upload')}
               className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
                 importMode === 'upload'
-                  ? 'bg-purple-600 text-white shadow-md'
-                  : 'text-[#cfb7c8] hover:text-white bg-[#100911]'
+                  ? 'bg-[#0b241c] text-[#f7eedf]'
+                  : 'text-[#718079] hover:text-[#0b241c] bg-[#faf7f0]'
               }`}
             >
               Upload Spreadsheet File (.xlsx / .csv)
@@ -465,8 +480,8 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
               onClick={() => setImportMode('paste')}
               className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
                 importMode === 'paste'
-                  ? 'bg-purple-600 text-white shadow-md'
-                  : 'text-[#cfb7c8] hover:text-white bg-[#100911]'
+                  ? 'bg-[#0b241c] text-[#f7eedf]'
+                  : 'text-[#718079] hover:text-[#0b241c] bg-[#faf7f0]'
               }`}
             >
               Paste Table Rows Directly
@@ -476,7 +491,7 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
           {importMode === 'upload' ? (
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-[#392233] hover:border-purple-500 rounded-3xl p-8 text-center cursor-pointer transition-colors bg-[#100911]/80 hover:bg-[#100911]"
+              className="border-2 border-dashed border-[#ded7ca] hover:border-[#0b241c] rounded-3xl p-8 text-center cursor-pointer transition-colors bg-[#faf7f0]/60 hover:bg-[#faf7f0]"
             >
               <input
                 ref={fileInputRef}
@@ -485,38 +500,38 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
                 onChange={handleFileUpload}
                 className="hidden"
               />
-              <Upload className="w-10 h-10 text-[#dfb76c] mx-auto mb-2" />
-              <p className="text-sm font-bold text-white">
+              <Upload className="w-10 h-10 text-[#b08738] mx-auto mb-2" />
+              <p className="text-sm font-bold text-[#0b241c]">
                 {file ? file.name : 'Click to select Excel (.xlsx) or CSV file'}
               </p>
-              <p className="text-xs text-[#cfb7c8] mt-1">
+              <p className="text-xs text-[#718079] mt-1">
                 Drag and drop files here to parse customer records
               </p>
             </div>
           ) : (
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-[#cfb7c8] font-medium">Paste copied rows directly from spreadsheet:</span>
-                <span className="text-[11px] text-[#dfb76c]">Tab-separated / Excel grid format</span>
+                <span className="text-[#4b5a54] font-medium">Paste copied rows directly from spreadsheet:</span>
+                <span className="text-[11px] text-[#b08738] font-mono">Tab-separated / Excel grid format</span>
               </div>
               <textarea
                 rows={6}
                 value={pasteData}
                 onChange={(e) => setPasteData(e.target.value)}
                 placeholder="Paste rows copied from Excel (Name, Phone, Place, Referred By)..."
-                className="w-full text-xs font-mono p-3 bg-[#100911] border border-[#392233] focus:border-[#dfb76c] rounded-xl text-white placeholder:text-purple-400/50 focus:outline-none focus:ring-1 focus:ring-[#dfb76c]"
+                className="w-full text-xs font-mono p-3 bg-[#faf7f0] border border-[#ded7ca] focus:border-[#0b241c] rounded-xl text-[#0b241c] placeholder:text-[#97a49e] focus:outline-none font-medium"
               />
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <p className="text-[11px] text-[#cfb7c8]">
+                <p className="text-[11px] text-[#718079]">
                   Click to parse columns, detect duplicates, and preview records before saving.
                 </p>
                 <button
                   type="button"
                   onClick={handleProcessPasted}
                   disabled={!pasteData.trim() || isProcessing}
-                  className="px-4 py-2 bg-gradient-to-r from-[#fae2ab] to-[#f0cc85] hover:brightness-105 active:scale-95 text-[#1c1206] text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-40 shrink-0"
+                  className="px-4 py-2 bg-[#0b241c] hover:bg-[#12362b] active:scale-95 text-[#f7eedf] border border-[#dfb76c]/40 text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-40 shrink-0"
                 >
-                  <FileSpreadsheet className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-[#dfb76c]" />
                   <span>Parse Pasted Rows</span>
                 </button>
               </div>
@@ -524,8 +539,8 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
           )}
 
           {errorNotice && (
-            <div className="p-3 bg-rose-950/80 border border-rose-800 rounded-xl text-xs text-rose-200 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
               <span>{errorNotice}</span>
             </div>
           )}
@@ -533,25 +548,25 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
           {/* Parsed Preview Table */}
           {parsedRows.length > 0 && (
             <div className="space-y-3 pt-2">
-              <div className="flex flex-wrap items-center justify-between text-xs border-b border-[#392233] pb-2 gap-2">
-                <span className="font-bold text-white">Parsed Preview ({parsedRows.length} total rows)</span>
+              <div className="flex flex-wrap items-center justify-between text-xs border-b border-[#ede3d3] pb-2 gap-2">
+                <span className="font-bold text-[#0b241c]">Parsed Preview ({parsedRows.length} total rows)</span>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-emerald-400 font-semibold">{validCount} valid</span>
+                  <span className="text-emerald-700 font-semibold">{validCount} valid</span>
                   {dbDuplicatesCount > 0 && (
-                    <span className="text-amber-300 font-semibold bg-amber-950/80 px-2 py-0.5 rounded border border-amber-800">
+                    <span className="text-amber-800 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-300">
                       {dbDuplicatesCount} in DB
                     </span>
                   )}
                   {invalidCount > 0 && (
-                    <span className="text-rose-400 font-semibold">{invalidCount} invalid</span>
+                    <span className="text-rose-700 font-semibold">{invalidCount} invalid</span>
                   )}
                 </div>
               </div>
 
-              <div className="border border-[#392233] rounded-xl overflow-x-auto max-h-64 bg-[#100911]">
+              <div className="border border-[#ede3d3] rounded-xl overflow-x-auto max-h-64 bg-white">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="bg-[#100911] border-b border-[#392233] text-[#cfb7c8]">
+                    <tr className="bg-[#faf7f0] border-b border-[#ede3d3] text-[#718079]">
                       <th className="py-2.5 px-3">Validation</th>
                       <th className="py-2.5 px-3">Name</th>
                       <th className="py-2.5 px-3">Phone</th>
@@ -560,30 +575,30 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
                       <th className="py-2.5 px-3">Category</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-purple-950/80">
+                  <tbody className="divide-y divide-[#ede3d3]">
                     {parsedRows.slice(0, 15).map((row, idx) => (
-                      <tr key={idx} className={row.isValid ? 'hover:bg-[#261327]' : 'bg-rose-950/20'}>
+                      <tr key={idx} className={row.isValid ? 'hover:bg-[#faf7f0]' : 'bg-rose-50/50'}>
                         <td className="py-2 px-3">
                           {row.duplicateType === 'database' ? (
-                            <span className="inline-flex items-center gap-1 text-[10px] text-amber-300 font-semibold px-2 py-0.5 rounded bg-amber-950 border border-amber-800" title={row.duplicateMatchName}>
-                              <AlertTriangle className="w-3 h-3" />
+                            <span className="inline-flex items-center gap-1 text-[10px] text-amber-800 font-semibold px-2 py-0.5 rounded bg-amber-50 border border-amber-300" title={row.duplicateMatchName}>
+                              <AlertTriangle className="w-3 h-3 text-amber-600" />
                               <span>In DB</span>
                             </span>
                           ) : row.isValid ? (
-                            <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-semibold">
-                              <CheckCircle2 className="w-3 h-3" /> Fresh
+                            <span className="inline-flex items-center gap-1 text-[10px] text-emerald-800 font-semibold">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Fresh
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-[10px] text-rose-400 font-semibold">
-                              <AlertCircle className="w-3 h-3" /> Invalid
+                            <span className="inline-flex items-center gap-1 text-[10px] text-rose-800 font-semibold">
+                              <AlertCircle className="w-3 h-3 text-rose-600" /> Invalid
                             </span>
                           )}
                         </td>
-                        <td className="py-2 px-3 font-semibold text-white">{row.name || '-'}</td>
-                        <td className="py-2 px-3 text-[#faeed4] font-mono">{row.phone || '-'}</td>
-                        <td className="py-2 px-3 text-[#cfb7c8]">{row.place || '-'}</td>
-                        <td className="py-2 px-3 text-[#cfb7c8]">{row.referredBy || '-'}</td>
-                        <td className="py-2 px-3 text-[#dfb76c]">{row.category || '-'}</td>
+                        <td className="py-2 px-3 font-semibold text-[#0b241c]">{row.name || '-'}</td>
+                        <td className="py-2 px-3 text-[#4b5a54] font-mono">{row.phone || '-'}</td>
+                        <td className="py-2 px-3 text-[#4b5a54]">{row.place || '-'}</td>
+                        <td className="py-2 px-3 text-[#4b5a54]">{row.referredBy || '-'}</td>
+                        <td className="py-2 px-3 text-[#b08738]">{row.category || '-'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -599,7 +614,7 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
                     setFile(null);
                     setPasteData('');
                   }}
-                  className="text-xs text-[#dfb76c] hover:text-white cursor-pointer"
+                  className="text-xs text-[#718079] hover:text-[#0b241c] cursor-pointer"
                 >
                   Clear Preview
                 </button>
@@ -607,14 +622,14 @@ export const CustomerImportView: React.FC<CustomerImportViewProps> = ({
                   type="button"
                   disabled={validCount === 0 || isSubmitting || isProcessing}
                   onClick={handleConfirmImport}
-                  className="flex items-center gap-2 py-2.5 px-6 bg-purple-600 hover:bg-purple-500 disabled:opacity-40 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer active:scale-98"
+                  className="flex items-center gap-2 py-2.5 px-6 bg-[#0b241c] hover:bg-[#12362b] disabled:opacity-40 text-[#f7eedf] border border-[#dfb76c]/40 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer active:scale-98"
                 >
                   <span>
                     {isSubmitting
                       ? 'Importing...'
                       : `Confirm Import (${validCount} records)`}
                   </span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#dfb76c]" />
                 </button>
               </div>
             </div>

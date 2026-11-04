@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Users, QrCode, TrendingUp, PieChart, ShieldCheck, Calendar, RefreshCw, Smartphone, Clock } from 'lucide-react';
+import { Users, QrCode, TrendingUp, RefreshCw, Clock } from 'lucide-react';
 import { Customer, Category, QRAnalyticsData } from '../../types/index.ts';
 import { getQRAnalytics } from '../../api/client.ts';
 
@@ -47,61 +47,61 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   const conversionRate = qrAnalytics?.scanToRegRate || (totalScans > 0 ? Math.round((qrIntakeCount / totalScans) * 100) : 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-xl font-bold text-[#0b241c] tracking-tight flex items-center gap-2">
             <span>Store & Footfall Analytics</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-amber-300 border border-slate-700">
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#f4ece1] text-[#785b1f] border border-[#dfb76c]/40 font-mono">
               Live Intel
             </span>
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#718079] mt-1">
             Counter QR scan-to-fill conversion rates, category preferences, and store intake channels.
           </p>
         </div>
         <button
           onClick={loadAnalytics}
           disabled={isLoading}
-          className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors"
+          className="p-2 text-[#718079] hover:text-[#0b241c] rounded-xl bg-[#faf7f0] border border-[#ede3d3] transition-colors cursor-pointer"
           title="Refresh analytics"
         >
-          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-amber-400' : ''}`} />
+          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#0b241c]' : ''}`} />
         </button>
       </div>
 
       {/* Primary KPI Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Showroom Profiles</div>
-          <div className="mt-2 text-3xl font-black text-white">{totalCustomers}</div>
-          <div className="mt-2 text-xs text-slate-400 flex items-center justify-between">
+        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-2xl p-5 shadow-xs">
+          <div className="text-xs font-semibold text-[#718079] uppercase tracking-wider">Total Showroom Profiles</div>
+          <div className="mt-2 text-3xl font-black text-[#0b241c]">{totalCustomers}</div>
+          <div className="mt-2 text-xs text-[#718079] flex items-center justify-between">
             <span>Manual: {manualCount}</span>
             <span>QR: {qrIntakeCount}</span>
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Counter QR Scans</div>
-          <div className="mt-2 text-3xl font-black text-indigo-400">{totalScans}</div>
-          <div className="mt-2 text-xs text-slate-400">
+        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-2xl p-5 shadow-xs">
+          <div className="text-xs font-semibold text-[#718079] uppercase tracking-wider">Counter QR Scans</div>
+          <div className="mt-2 text-3xl font-black text-[#0b241c]">{totalScans}</div>
+          <div className="mt-2 text-xs text-[#718079]">
             {qrAnalytics?.uniqueVisitors || totalScans} unique devices
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Scan Completion Rate</div>
-          <div className="mt-2 text-3xl font-black text-emerald-400">{conversionRate}%</div>
-          <div className="mt-2 text-xs text-slate-400">
+        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-2xl p-5 shadow-xs">
+          <div className="text-xs font-semibold text-[#718079] uppercase tracking-wider">Scan Completion Rate</div>
+          <div className="mt-2 text-3xl font-black text-emerald-700">{conversionRate}%</div>
+          <div className="mt-2 text-xs text-emerald-700 font-medium">
             Scanned to saved registration
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Avg Fill Duration</div>
-          <div className="mt-2 text-3xl font-black text-amber-400">{qrAnalytics?.avgTimeSeconds || 42}s</div>
-          <div className="mt-2 text-xs text-slate-400">
+        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-2xl p-5 shadow-xs">
+          <div className="text-xs font-semibold text-[#718079] uppercase tracking-wider">Avg Fill Duration</div>
+          <div className="mt-2 text-3xl font-black text-[#b08738]">{qrAnalytics?.avgTimeSeconds || 42}s</div>
+          <div className="mt-2 text-xs text-[#718079]">
             Fast 3-field customer intake
           </div>
         </div>
@@ -110,10 +110,10 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
       {/* Two Column Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Category Breakdown */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-md space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-white tracking-tight">Customer Category Distribution</h2>
-            <span className="text-xs text-slate-400">{categories.length} Categories</span>
+        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[#ede3d3] pb-3">
+            <h2 className="text-sm font-bold text-[#0b241c] tracking-tight">Customer Category Distribution</h2>
+            <span className="text-xs text-[#718079] font-mono">{categories.length} Categories</span>
           </div>
 
           <div className="space-y-3">
@@ -123,15 +123,15 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
                 <div key={cat.id} className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: cat.color || '#f59e0b' }} />
-                      <span className="font-semibold text-white">{cat.name}</span>
+                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: cat.color || '#dfb76c' }} />
+                      <span className="font-semibold text-[#0b241c]">{cat.name}</span>
                     </div>
-                    <span className="text-slate-400">{cat.count} customers ({pct}%)</span>
+                    <span className="text-[#718079]">{cat.count} customers ({pct}%)</span>
                   </div>
-                  <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                  <div className="w-full bg-[#faf7f0] rounded-full h-2 overflow-hidden border border-[#ede3d3]">
                     <div
-                      className="h-full rounded-full transition-all duration-500"
-                      style={{ width: `${pct}%`, backgroundColor: cat.color || '#f59e0b' }}
+                      className="h-full rounded-full transition-all duration-500 bg-[#0b241c]"
+                      style={{ width: `${pct}%` }}
                     />
                   </div>
                 </div>
@@ -141,40 +141,42 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
         </div>
 
         {/* Channel Intake Funnel */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-md space-y-4">
-          <h2 className="text-sm font-bold text-white tracking-tight">Intake Channel Comparison</h2>
+        <div className="bg-[#ffffff] border border-[#ede3d3] rounded-3xl p-6 shadow-xs space-y-4">
+          <div className="border-b border-[#ede3d3] pb-3">
+            <h2 className="text-sm font-bold text-[#0b241c] tracking-tight">Intake Channel Comparison</h2>
+          </div>
 
-          <div className="space-y-4 pt-2">
+          <div className="space-y-4 pt-1">
             {/* Counter QR Standee */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="p-4 rounded-2xl bg-[#faf7f0] border border-[#ede3d3] space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold text-white">
-                  <QrCode className="w-4 h-4 text-indigo-400" />
+                <div className="flex items-center gap-2 text-xs font-bold text-[#0b241c]">
+                  <QrCode className="w-4 h-4 text-[#b08738]" />
                   <span>Digital Counter QR Standee</span>
                 </div>
-                <span className="text-xs font-bold text-indigo-400">{qrPercentage}% of Total</span>
+                <span className="text-xs font-bold text-[#b08738]">{qrPercentage}% of Total</span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-[#718079]">
                 Customers scan standee on showroom counter and fill without staff typing.
               </p>
-              <div className="text-xs text-slate-300 font-semibold pt-1">
+              <div className="text-xs text-[#0b241c] font-semibold pt-1">
                 {qrIntakeCount} registrations recorded
               </div>
             </div>
 
             {/* Manual Counter Entry */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="p-4 rounded-2xl bg-[#faf7f0] border border-[#ede3d3] space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold text-white">
-                  <Users className="w-4 h-4 text-amber-400" />
+                <div className="flex items-center gap-2 text-xs font-bold text-[#0b241c]">
+                  <Users className="w-4 h-4 text-[#b08738]" />
                   <span>Manual Counter Staff Entry</span>
                 </div>
-                <span className="text-xs font-bold text-amber-400">{manualPercentage}% of Total</span>
+                <span className="text-xs font-bold text-[#b08738]">{manualPercentage}% of Total</span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-[#718079]">
                 Showroom sales staff manually enter visitor contact details upon purchase or inquiry.
               </p>
-              <div className="text-xs text-slate-300 font-semibold pt-1">
+              <div className="text-xs text-[#0b241c] font-semibold pt-1">
                 {manualCount} registrations recorded
               </div>
             </div>
