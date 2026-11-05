@@ -193,6 +193,33 @@ export default function App() {
     }
   };
 
+  // Global Keyboard Shortcuts for Navigation
+  useEffect(() => {
+    const handleGlobalKeys = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) || target?.isContentEditable) {
+        return;
+      }
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      if (e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        handleNavigateTab('dashboard');
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        handleNavigateTab('customers');
+      } else if (e.key === 'q' || e.key === 'Q') {
+        e.preventDefault();
+        handleNavigateTab('qr_common');
+      } else if (e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        handleNavigateTab('analytics');
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeys);
+    return () => window.removeEventListener('keydown', handleGlobalKeys);
+  }, []);
+
   // Auth Handlers
   const handleLoginSubmit = async (email: string, password?: string) => {
     return loginUser(email, password);
@@ -367,6 +394,8 @@ export default function App() {
           businessName={businessName}
           onToggleMobileMenu={() => setIsMobileDrawerOpen(prev => !prev)}
           activeTab={activeTab}
+          customers={customers}
+          onSelectCustomer={handleEditCustomer}
         />
 
         {/* Dynamic Content Views */}

@@ -11,7 +11,10 @@ import {
   Lock,
   Upload,
   CopyCheck,
-  X
+  X,
+  ChevronRight,
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 import { StaffUser } from '../../types/index.ts';
 
@@ -49,6 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     canViewCommonQR: true
   };
 
+  // Logically grouped navigation hierarchy matching all user features
   const menuSections = [
     {
       title: 'Store Operations',
@@ -56,6 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {
           id: 'dashboard',
           label: 'Store Dashboard',
+          description: 'Key metrics, walk-ins, and health',
           icon: LayoutDashboard,
           badge: null,
           badgeType: 'home',
@@ -64,22 +69,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {
           id: 'customers',
           label: 'Customer Directory',
+          description: 'Customer records & WhatsApp outreach',
           icon: Users,
-          badge: customerCount > 0 ? customerCount : null,
+          badge: customerCount > 0 ? `${customerCount}` : null,
           badgeType: 'count',
           isPermitted: permissions.canViewCustomers
         },
         {
           id: 'import',
           label: 'Import Customer Data',
+          description: 'Bulk upload Excel / CSV files',
           icon: Upload,
-          badge: 'Excel/CSV',
+          badge: 'Excel',
           badgeType: 'import',
           isPermitted: permissions.canImportData
         },
         {
           id: 'duplicates',
           label: 'Duplicate Manager',
+          description: 'Deduplication & phone hygiene',
           icon: CopyCheck,
           badge: null,
           badgeType: 'clean',
@@ -88,6 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {
           id: 'qr_common',
           label: 'Showroom QR Center',
+          description: 'Counter standees & customer self-intake',
           icon: QrCode,
           badge: 'Live',
           badgeType: 'live',
@@ -100,7 +109,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         {
           id: 'analytics',
-          label: 'Performance & Footfall Hub',
+          label: 'Performance & Footfall',
+          description: 'Footfall trends & conversion hub',
           icon: BarChart3,
           badge: null,
           badgeType: 'default',
@@ -114,6 +124,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {
           id: 'categories',
           label: 'Jewellery Categories',
+          description: '22K Gold, Solitaire Diamonds & more',
           icon: Tags,
           badge: null,
           badgeType: 'default',
@@ -122,6 +133,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {
           id: 'settings',
           label: 'Settings & Backups',
+          description: 'Showroom identity, BIS & backups',
           icon: Settings,
           badge: null,
           badgeType: 'default',
@@ -150,16 +162,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <div className="flex flex-col h-full overflow-y-auto relative select-none">
       {/* Decorative Gold Silk Wave at top-right */}
       <svg
-        className="absolute top-0 right-0 pointer-events-none opacity-30"
+        className="absolute top-0 right-0 pointer-events-none opacity-25"
         width="110"
         height="110"
         viewBox="0 0 110 110"
         fill="none"
       >
-        <path
-          d="M0,0 C50,15 90,50 110,110 L110,0 Z"
-          fill="url(#goldSilkTopGrad)"
-        />
+        <path d="M0,0 C50,15 90,50 110,110 L110,0 Z" fill="url(#goldSilkTopGrad)" />
         <defs>
           <linearGradient id="goldSilkTopGrad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#dfb76c" />
@@ -173,6 +182,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <button
           onClick={() => handleItemClick('dashboard')}
           className="flex flex-col items-center w-full text-center group cursor-pointer focus:outline-none"
+          title="Go to Store Dashboard"
         >
           {/* Faceted Brilliant-Cut Diamond Icon */}
           <div className="mb-2 p-1 relative">
@@ -219,15 +229,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={handleQuickAddClick}
-            className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#fae7c2] via-[#eecd93] to-[#dfb76c] hover:brightness-105 active:scale-[0.98] text-[#2c0819] font-bold text-xs shadow-[0_4px_16px_rgba(223,183,108,0.22)] border border-[#f5dfb3] transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#fae7c2] via-[#eecd93] to-[#dfb76c] hover:brightness-105 active:scale-[0.98] text-[#2c0819] font-bold text-xs shadow-[0_4px_16px_rgba(223,183,108,0.22)] border border-[#f5dfb3] transition-all cursor-pointer group"
+            title="Register a new walk-in customer (Shortcut: N)"
           >
-            <UserPlus className="w-4 h-4 text-[#2c0819] stroke-[2.4]" />
+            <UserPlus className="w-4 h-4 text-[#2c0819] stroke-[2.4] group-hover:scale-110 transition-transform" />
             <span>Quick Walk-In Entry</span>
           </button>
         </div>
       )}
 
-      {/* Menu Sections */}
+      {/* Menu Sections with High-Contrast Active State & Smooth Hover */}
       <div className="p-3 space-y-4 overflow-y-auto flex-1 z-10">
         {menuSections.map((section, sIdx) => (
           <div key={sIdx} className="space-y-1">
@@ -252,17 +263,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     disabled={!isPermitted}
                     type="button"
                     onClick={() => handleItemClick(item.id)}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                    className={`w-full relative flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer group ${
                       !isPermitted
                         ? 'opacity-40 cursor-not-allowed text-[#684654]'
                         : isActive
-                        ? 'bg-gradient-to-r from-[#e7b897] via-[#dfa782] to-[#d69871] text-[#2c0819] font-bold shadow-[0_3px_12px_rgba(223,167,130,0.3)] border-none'
-                        : 'text-[#e8d2dc] hover:text-white hover:bg-[#ffffff]/10'
+                        ? 'bg-gradient-to-r from-[#e7b897] via-[#dfa782] to-[#d69871] text-[#2c0819] font-bold shadow-[0_3px_12px_rgba(223,167,130,0.35)] translate-x-0.5'
+                        : 'text-[#e8d2dc] hover:text-white hover:bg-[#ffffff]/12 hover:translate-x-1'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5">
+                    {/* Active Accent Left Glowing Indicator */}
+                    {isActive && (
+                      <span className="absolute left-1.5 top-2.5 bottom-2.5 w-1 rounded-full bg-[#2c0819]" />
+                    )}
+
+                    <div className="flex items-center gap-2.5 min-w-0">
                       <Icon
-                        className={`w-4 h-4 shrink-0 ${
+                        className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-105 ${
                           isActive
                             ? 'text-[#2c0819] stroke-[2.4]'
                             : isPermitted
@@ -270,10 +286,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             : 'text-[#684654]'
                         }`}
                       />
-                      <span className="truncate">{item.label}</span>
+                      <span className="truncate text-left">{item.label}</span>
                     </div>
 
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
                       {!isPermitted && <Lock className="w-3 h-3 text-[#684654]" />}
 
                       {item.badge !== null && isPermitted && (
@@ -299,22 +315,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         ))}
 
-        {/* Staff Access Control shortcut */}
+        {/* Security & Access Section */}
         {currentUser.role === 'admin' && onOpenStaffAccessModal && (
-          <div className="pt-2">
+          <div className="space-y-1 pt-1">
+            <div className="px-3 pt-1">
+              <p className="text-[10px] font-bold text-[#e2b79e]/80 uppercase tracking-wider">
+                Security & Access
+              </p>
+            </div>
             <button
               type="button"
               onClick={() => {
                 onOpenStaffAccessModal();
                 if (onCloseMobile) onCloseMobile();
               }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold text-[#faead1] bg-[#32081e] hover:bg-[#430c2a] border border-[#dfb76c]/30 transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold text-[#faead1] bg-[#32081e] hover:bg-[#430c2a] hover:translate-x-1 border border-[#dfb76c]/30 transition-all cursor-pointer shadow-xs group"
+              title="Manage staff users, passwords, and permissions"
             >
-              <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-[#dfb76c]" />
-                <span>Staff Access Control</span>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <ShieldCheck className="w-4 h-4 text-[#dfb76c] shrink-0 group-hover:scale-105 transition-transform" />
+                <span className="truncate">Staff Access Control</span>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#480d2a] text-[#fce7d2] border border-[#dfb76c]/40">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#480d2a] text-[#fce7d2] border border-[#dfb76c]/40 shrink-0">
                 Manage
               </span>
             </button>
@@ -322,17 +344,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      {/* Decorative Gold Silk Curve at bottom-left */}
+      {/* Decorative Gold Silk Curve at bottom */}
       <div className="mt-auto p-4 relative overflow-hidden pointer-events-none select-none">
         <svg
-          className="w-full h-12 text-[#dfb76c]/30"
-          viewBox="0 0 200 60"
+          className="w-full h-10 text-[#dfb76c]/25"
+          viewBox="0 0 200 50"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.2"
         >
-          <path d="M0 45 C 50 10, 150 60, 200 20" />
-          <path d="M0 55 C 60 20, 140 50, 200 30" opacity="0.6" />
+          <path d="M0 35 C 50 10, 150 50, 200 15" />
+          <path d="M0 45 C 60 15, 140 40, 200 25" opacity="0.6" />
         </svg>
       </div>
     </div>
