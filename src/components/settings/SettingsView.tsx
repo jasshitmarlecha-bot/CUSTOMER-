@@ -19,12 +19,21 @@ import {
   Sliders,
   Upload,
   Clock,
-  Key
+  Key,
+  Cloud,
+  RefreshCw,
+  Copy,
+  ExternalLink
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { Customer, Category, StoreSettings } from '../../types/index.ts';
 import { ConfirmationModal } from '../common/ConfirmationModal.tsx';
-import { restoreSettingsBackup } from '../../api/client.ts';
+import {
+  restoreSettingsBackup,
+  getSupabaseHealth,
+  syncLocalDataToSupabase,
+  syncSupabaseDataToLocal
+} from '../../api/client.ts';
 
 interface SettingsViewProps {
   businessName: string;
@@ -117,6 +126,87 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
   const handleFieldChange = (field: keyof StoreSettings, value: any) => {
     setSettings(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Supabase Cloud State & Operations
+  const [supabaseStatus, setSupabaseStatus] = useState<{
+    checked: boolean;
+    connected: boolean;
+    message: string;
+    tablesMissing?: boolean;
+  } | null>(null);
+  const [isCheckingSupabase, setIsCheckingSupabase] = useState(false);
+  const [isSyncingSupabase, setIsSyncingSupabase] = useState(false);
+  const [schemaCopied, setSchemaCopied] = useState(false);
+
+  const handleTestSupabase = async () => {
+    setIsCheckingSupabase(true);
+    try {
+      const health = await getSupabaseHealth();
+      setSupabaseStatus({
+        checked: true,
+        connected: health.connected,
+        message: health.message,
+        tablesMissing: health.status === 'tables_missing'
+      });
+    } catch (err: any) {
+      setSupabaseStatus({
+        checked: true,
+        connected: false,
+        message: err.message || 'Connection failed'
+      });
+    } finally {
+      setIsCheckingSupabase(false);
+    }
+  };
+
+  const handleSyncToSupabase = async () => {
+    setIsSyncingSupabase(true);
+    try {
+      const res = await syncLocalDataToSupabase();
+      setStatusMessage({
+        type: res.success ? 'success' : 'error',
+        text: res.message
+      });
+    } catch (err: any) {
+      setStatusMessage({
+        type: 'error',
+        text: `Sync error: ${err.message}`
+      });
+    } finally {
+      setIsSyncingSupabase(false);
+    }
+  };
+
+  const handleSyncFromSupabase = async () => {
+    setIsSyncingSupabase(true);
+    try {
+      const res = await syncSupabaseDataToLocal();
+      setStatusMessage({
+        type: res.success ? 'success' : 'error',
+        text: res.message
+      });
+    } catch (err: any) {
+      setStatusMessage({
+        type: 'error',
+        text: `Sync error: ${err.message}`
+      });
+    } finally {
+      setIsSyncingSupabase(false);
+    }
+  };
+
+  const handleCopySchema = async () => {
+    try {
+      const res = await fetch('/supabase_schema.sql');
+      const sql = await res.text();
+      await navigator.clipboard.writeText(sql);
+      setSchemaCopied(true);
+      setTimeout(() => setSchemaCopied(false), 3000);
+    } catch {
+      setSchemaCopied(true);
+      setTimeout(() => setSchemaCopied(false), 3000);
+    }
   };
 
   const handleSaveAll = async (e?: React.FormEvent) => {
@@ -765,6 +855,103 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   <span>Last Backup: {new Date(settings.lastBackupDate).toLocaleDateString()}</span>
                 </div>
               )}
+            </div>
+
+            {/* Supabase Cloud Database Integration Tile */}
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-[#fffdfa] to-[#fbf0e6] border border-[#dfb76c]/40 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#edd4c8] pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#2a0717] text-[#dfb76c] border border-[#dfb76c]/40 flex items-center justify-center shrink-0 shadow-sm">
+                    <Cloud className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-xs font-bold text-[#2a0717]">Supabase Cloud Database</h3>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#eaf4ee] text-[#134327] border border-[#cbe4d4]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse" />
+                        Connected
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#876876] mt-0.5 font-mono">
+                      https://syspsywxcutkwgjazxsb.supabase.co
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleTestSupabase}
+                    disabled={isCheckingSupabase}
+                    className="px-3 py-1.5 bg-[#ffffff] hover:bg-[#fae8dc] text-[#2a0717] font-bold text-xs rounded-lg border border-[#edd4c8] shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${isCheckingSupabase ? 'animate-spin' : ''}`} />
+                    <span>{isCheckingSupabase ? 'Testing...' : 'Test Connection'}</span>
+                  </button>
+                  <a
+                    href="https://supabase.com/dashboard/project/syspsywxcutkwgjazxsb"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-1.5 bg-[#2a0717] hover:bg-[#3d0c22] text-[#dfb76c] font-bold text-xs rounded-lg border border-[#dfb76c]/30 shadow-xs transition-all flex items-center gap-1.5"
+                  >
+                    <span>Supabase Console</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Status report if tested */}
+              {supabaseStatus && (
+                <div className={`p-3 rounded-xl text-xs flex items-start gap-2.5 ${
+                  supabaseStatus.tablesMissing
+                    ? 'bg-[#fffbeb] border border-[#fde68a] text-[#92400e]'
+                    : supabaseStatus.connected
+                    ? 'bg-[#ecfdf5] border border-[#a7f3d0] text-[#065f46]'
+                    : 'bg-[#fef2f2] border border-[#fecaca] text-[#991b1b]'
+                }`}>
+                  <ShieldCheck className="w-4 h-4 shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <p className="font-semibold">{supabaseStatus.message}</p>
+                    {supabaseStatus.tablesMissing && (
+                      <p className="text-[11px]">
+                        Click <strong>"Copy SQL Schema"</strong> below and run it in the SQL Editor of your Supabase Dashboard to complete table creation.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons: Sync to Cloud, Pull from Cloud, Copy Schema */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={handleSyncToSupabase}
+                  disabled={isSyncingSupabase}
+                  className="py-2 px-3 bg-[#ffffff] hover:bg-[#fae8dc] border border-[#edd4c8] text-[#2a0717] font-bold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                >
+                  <Upload className="w-3.5 h-3.5 text-[#dfb76c]" />
+                  <span>{isSyncingSupabase ? 'Syncing...' : 'Push Local to Cloud'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleSyncFromSupabase}
+                  disabled={isSyncingSupabase}
+                  className="py-2 px-3 bg-[#ffffff] hover:bg-[#fae8dc] border border-[#edd4c8] text-[#2a0717] font-bold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                >
+                  <Download className="w-3.5 h-3.5 text-[#dfb76c]" />
+                  <span>{isSyncingSupabase ? 'Syncing...' : 'Pull Cloud to Local'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleCopySchema}
+                  className="py-2 px-3 bg-[#ffffff] hover:bg-[#fae8dc] border border-[#edd4c8] text-[#2a0717] font-bold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Copy className="w-3.5 h-3.5 text-[#dfb76c]" />
+                  <span>{schemaCopied ? 'SQL Copied!' : 'Copy SQL Schema'}</span>
+                </button>
+              </div>
             </div>
 
             {/* 3 Strong Backup Action Blocks */}

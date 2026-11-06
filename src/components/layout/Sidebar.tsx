@@ -263,13 +263,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     disabled={!isPermitted}
                     type="button"
                     onClick={() => handleItemClick(item.id)}
-                    className={`w-full relative flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer group ${
-                      !isPermitted
+                    className={`w-full relative flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer group ${!isPermitted
                         ? 'opacity-40 cursor-not-allowed text-[#684654]'
                         : isActive
-                        ? 'bg-gradient-to-r from-[#e7b897] via-[#dfa782] to-[#d69871] text-[#2c0819] font-bold shadow-[0_3px_12px_rgba(223,167,130,0.35)] translate-x-0.5'
-                        : 'text-[#e8d2dc] hover:text-white hover:bg-[#ffffff]/12 hover:translate-x-1'
-                    }`}
+                          ? 'bg-gradient-to-r from-[#e7b897] via-[#dfa782] to-[#d69871] text-[#2c0819] font-bold shadow-[0_3px_12px_rgba(223,167,130,0.35)] translate-x-0.5'
+                          : 'text-[#e8d2dc] hover:text-white hover:bg-[#ffffff]/12 hover:translate-x-1'
+                      }`}
                   >
                     {/* Active Accent Left Glowing Indicator */}
                     {isActive && (
@@ -278,13 +277,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                     <div className="flex items-center gap-2.5 min-w-0">
                       <Icon
-                        className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-105 ${
-                          isActive
+                        className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-105 ${isActive
                             ? 'text-[#2c0819] stroke-[2.4]'
                             : isPermitted
-                            ? 'text-[#d9b1c2]'
-                            : 'text-[#684654]'
-                        }`}
+                              ? 'text-[#d9b1c2]'
+                              : 'text-[#684654]'
+                          }`}
                       />
                       <span className="truncate text-left">{item.label}</span>
                     </div>
@@ -294,15 +292,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                       {item.badge !== null && isPermitted && (
                         <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
-                            isActive
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${isActive
                               ? 'bg-[#2c0819]/20 text-[#2c0819]'
                               : item.badgeType === 'live'
-                              ? 'bg-[#521130] text-[#fca5a5] border border-[#9f1239]'
-                              : item.badgeType === 'import'
-                              ? 'bg-[#480d2a] text-[#fce7d2] border border-[#dfb76c]/40'
-                              : 'bg-[#450b27] text-[#faead1] border border-[#dfb76c]/30'
-                          }`}
+                                ? 'bg-[#521130] text-[#fca5a5] border border-[#9f1239]'
+                                : item.badgeType === 'import'
+                                  ? 'bg-[#480d2a] text-[#fce7d2] border border-[#dfb76c]/40'
+                                  : 'bg-[#450b27] text-[#faead1] border border-[#dfb76c]/30'
+                            }`}
                         >
                           {item.badge}
                         </span>
@@ -369,22 +366,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Mobile Left-to-Right Slide-Over Drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${
-          isMobileOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${isMobileOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
+          }`}
       >
         <div
           onClick={onCloseMobile}
-          className={`fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300 ${
-            isMobileOpen ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300 ${isMobileOpen ? 'opacity-100' : 'opacity-0'
+            }`}
           aria-hidden="true"
         />
 
         <aside
-          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-gradient-to-b from-[#2a0719] via-[#380b22] to-[#1e0412] border-r border-[#dfb76c]/30 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
-            isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+          className={`fixed inset-y-0 left-0 w-72 sm:w-80 bg-gradient-to-b from-[#2a0719] via-[#380b22] to-[#1e0412] border-r border-[#dfb76c]/30 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
         >
           {renderSidebarContent(true)}
         </aside>

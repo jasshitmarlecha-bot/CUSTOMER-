@@ -1,5 +1,17 @@
 import QRCode from 'qrcode';
 import { clientDb } from '../db/clientDb.ts';
+import {
+  checkSupabaseConnection,
+  fetchSupabaseCustomers,
+  upsertSupabaseCustomer,
+  deleteSupabaseCustomer,
+  fetchSupabaseCategories,
+  upsertSupabaseCategory,
+  fetchSupabaseSettings,
+  saveSupabaseSettings,
+  SUPABASE_URL,
+  type SupabaseHealth
+} from '../db/supabase.ts';
 import type { Customer, Category, StaffUser, StaffPermissions, QRAnalyticsData, DataQualitySummary, DuplicateGroup, StoreSettings } from '../types/index.ts';
 
 const TOKEN_KEY = 'custpro_staff_token';
@@ -179,17 +191,23 @@ export async function createCustomer(customer: Partial<Customer> & { allowDuplic
     scanId: customerData.scanId,
     createdBy: customerData.createdBy
   });
+  // Replicate to Supabase Cloud in background
+  upsertSupabaseCustomer(newCustomer).catch(() => {});
   return newCustomer;
 }
 
 export async function updateCustomer(id: string, updates: Partial<Customer>): Promise<Customer> {
   const result = clientDb.updateCustomer(id, updates);
   if (!result) throw new Error(`Customer ${id} not found`);
+  // Replicate update to Supabase Cloud in background
+  upsertSupabaseCustomer(result).catch(() => {});
   return result;
 }
 
 export async function deleteCustomer(id: string): Promise<void> {
   clientDb.deleteCustomer(id);
+  // Replicate deletion to Supabase Cloud in background
+  deleteSupabaseCustomer(id).catch(() => {});
 }
 
 export async function clearAllCustomers(): Promise<void> {
@@ -357,7 +375,10 @@ export async function getSettings(): Promise<StoreSettings> {
 }
 
 export async function updateSettings(settings: Partial<StoreSettings>): Promise<StoreSettings> {
-  return Promise.resolve(clientDb.updateSettings(settings));
+  const result = clientDb.updateSettings(settings);
+  // Replicate settings to Supabase Cloud in background
+  saveSupabaseSettings(result).catch(() => {});
+  return Promise.resolve(result);
 }
 
 export async function restoreSettingsBackup(backupData: any): Promise<{
@@ -368,3 +389,79 @@ export async function restoreSettingsBackup(backupData: any): Promise<{
 }> {
   return Promise.resolve(clientDb.restoreDatabase(backupData));
 }
+
+// --- Supabase Cloud Sync Operations ---
+export async function getSupabaseHealth(): Promise<SupabaseHealth> {
+  return checkSupabaseConnection();
+}
+
+export async function syncLocalDataToSupabase(): Promise<{
+  success: boolean;
+  customerCount: number;
+  categoryCount: number;
+  settingsSaved: boolean;
+  message: string;
+}> {
+  const customers = clientDb.getCustomers();
+  const categories = clientDb.getCategories();
+  const settings = clientDb.getSettings();
+
+  let custSuccess = 0;
+  for (const c of customers) {
+    const ok = await upsertSupabaseCustomer(c);
+    if (ok) custSuccess++;
+  }
+
+  let catSuccess = 0;
+  for (const cat of categories) {
+    const ok = await upsertSupabaseCategory(cat);
+    if (ok) catSuccess++;
+  }
+
+  const settingsSaved = await saveSupabaseSettings(settings);
+
+  return {
+    success: custSuccess > 0 || catSuccess > 0 || settingsSaved,
+    customerCount: custSuccess,
+    categoryCount: catSuccess,
+    settingsSaved,
+    message: `Synchronized ${custSuccess}/${customers.length} customer(s), ${catSuccess}/${categories.length} category(ies), and showroom settings to Supabase.`
+  };
+}
+
+export async function syncSupabaseDataToLocal(): Promise<{
+  success: boolean;
+  customerCount: number;
+  categoryCount: number;
+  message: string;
+}> {
+  const cloudCustomers = await fetchSupabaseCustomers();
+  const cloudCategories = await fetchSupabaseCategories();
+  const cloudSettings = await fetchSupabaseSettings();
+
+  let custCount = 0;
+  if (cloudCustomers && cloudCustomers.length > 0) {
+    const importResult = clientDb.bulkImportCustomers(cloudCustomers, { deduplicateStrategy: 'update' });
+    custCount = importResult.importedCount + importResult.updatedCount;
+  }
+
+  let catCount = 0;
+  if (cloudCategories && cloudCategories.length > 0) {
+    for (const cat of cloudCategories) {
+      clientDb.addCategory(cat.name, cat.color, cat.description);
+      catCount++;
+    }
+  }
+
+  if (cloudSettings) {
+    clientDb.updateSettings(cloudSettings);
+  }
+
+  return {
+    success: (cloudCustomers !== null) || (cloudCategories !== null),
+    customerCount: custCount,
+    categoryCount: catCount,
+    message: `Downloaded and updated ${custCount} customer record(s) and categories from Supabase cloud.`
+  };
+}
+
