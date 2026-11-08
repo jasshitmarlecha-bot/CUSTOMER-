@@ -179,13 +179,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* 1. Hero Command Banner */}
       <div className="glass-panel rounded-3xl p-6 sm:p-7 relative overflow-hidden border border-orange-500/20 shadow-2xl">
         {/* Right side luxury velvet & diamond ring visual */}
-        <div className="hidden md:block absolute top-0 right-0 h-full w-[46%] lg:w-[48%] pointer-events-none select-none overflow-hidden">
+        <div className="absolute top-0 right-0 h-full w-[45%] sm:w-[46%] lg:w-[48%] pointer-events-none select-none overflow-hidden opacity-50 sm:opacity-90">
           <img
             src="/assets/aistudio/burgundy_silk_ring.png"
             alt="Diamond Ring on Velvet Silk"
-            className="h-full w-full object-cover object-right opacity-90"
+            className="h-full w-full object-cover object-right"
           />
-          <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#121216] via-[#121216]/80 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-20 sm:w-28 bg-gradient-to-r from-[#121216] via-[#121216]/80 to-transparent pointer-events-none" />
         </div>
 
         {/* Left side Content */}

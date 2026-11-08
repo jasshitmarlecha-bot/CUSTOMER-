@@ -347,7 +347,7 @@ export default function App() {
   const permissions = currentUser.role === 'admin' ? DEFAULT_ADMIN_PERMISSIONS : (currentUser.permissions || DEFAULT_ADMIN_PERMISSIONS);
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-neutral-100 flex flex-col lg:flex-row font-sans selection:bg-orange-500 selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-transparent text-neutral-100 flex flex-col lg:flex-row font-sans selection:bg-orange-500 selection:text-white relative z-10 overflow-x-hidden">
       {/* Three.js 3D Particle Wave Background with Floating Diamonds & Silk Glow */}
       <ThreeParticleBackground />
 
@@ -556,8 +556,8 @@ export default function App() {
           type="button"
           onClick={() => handleNavigateTab('dashboard')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${activeTab === 'dashboard'
-              ? 'text-orange-400 font-bold'
-              : 'text-neutral-400 hover:text-neutral-200'
+            ? 'text-orange-400 font-bold'
+            : 'text-neutral-400 hover:text-neutral-200'
             }`}
         >
           <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
@@ -571,8 +571,8 @@ export default function App() {
           type="button"
           onClick={() => handleNavigateTab('customers')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all relative cursor-pointer ${activeTab === 'customers'
-              ? 'text-orange-400 font-bold'
-              : 'text-neutral-400 hover:text-neutral-200'
+            ? 'text-orange-400 font-bold'
+            : 'text-neutral-400 hover:text-neutral-200'
             }`}
         >
           <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
@@ -604,8 +604,8 @@ export default function App() {
           type="button"
           onClick={() => handleNavigateTab('qr_common')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${activeTab.startsWith('qr') || activeTab === 'intake'
-              ? 'text-orange-400 font-bold'
-              : 'text-neutral-400 hover:text-neutral-200'
+            ? 'text-orange-400 font-bold'
+            : 'text-neutral-400 hover:text-neutral-200'
             }`}
         >
           <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>

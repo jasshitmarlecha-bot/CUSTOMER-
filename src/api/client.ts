@@ -194,7 +194,7 @@ export async function createCustomer(customer: Partial<Customer> & { allowDuplic
     createdBy: customerData.createdBy
   });
   // Replicate to Supabase Cloud in background
-  upsertSupabaseCustomer(newCustomer).catch(() => {});
+  upsertSupabaseCustomer(newCustomer).catch(() => { });
   return newCustomer;
 }
 
@@ -202,14 +202,14 @@ export async function updateCustomer(id: string, updates: Partial<Customer>): Pr
   const result = clientDb.updateCustomer(id, updates);
   if (!result) throw new Error(`Customer ${id} not found`);
   // Replicate update to Supabase Cloud in background
-  upsertSupabaseCustomer(result).catch(() => {});
+  upsertSupabaseCustomer(result).catch(() => { });
   return result;
 }
 
 export async function deleteCustomer(id: string): Promise<void> {
   clientDb.deleteCustomer(id);
   // Replicate deletion to Supabase Cloud in background
-  deleteSupabaseCustomer(id).catch(() => {});
+  deleteSupabaseCustomer(id).catch(() => { });
 }
 
 export async function clearAllCustomers(): Promise<void> {
@@ -379,7 +379,7 @@ export async function getSettings(): Promise<StoreSettings> {
 export async function updateSettings(settings: Partial<StoreSettings>): Promise<StoreSettings> {
   const result = clientDb.updateSettings(settings);
   // Replicate settings to Supabase Cloud in background
-  saveSupabaseSettings(result).catch(() => {});
+  saveSupabaseSettings(result).catch(() => { });
   return Promise.resolve(result);
 }
 

@@ -114,6 +114,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     onConfirm: () => { }
   });
 
+
   useEffect(() => {
     if (storeSettings) {
       setSettings(prev => ({
@@ -473,8 +474,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {statusMessage && (
         <div
           className={`p-3.5 rounded-xl border text-xs flex items-center gap-2.5 shadow-md ${statusMessage.type === 'success'
-              ? 'bg-[#fae8dc] border-purple-500/70 text-[#2a0717]'
-              : 'bg-rose-950/80 border-rose-500/70 text-rose-200'
+            ? 'bg-[#fae8dc] border-purple-500/70 text-[#2a0717]'
+            : 'bg-rose-950/80 border-rose-500/70 text-rose-200'
             }`}
         >
           {statusMessage.type === 'success' ? (
@@ -491,8 +492,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <button
           onClick={() => setActiveTab('identity')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${activeTab === 'identity'
-              ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
-              : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
+            ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
+            : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
             }`}
         >
           <Building className="w-3.5 h-3.5" />
@@ -502,8 +503,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <button
           onClick={() => setActiveTab('intake')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${activeTab === 'intake'
-              ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
-              : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
+            ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
+            : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
             }`}
         >
           <Sliders className="w-3.5 h-3.5" />
@@ -513,8 +514,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <button
           onClick={() => setActiveTab('backup')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${activeTab === 'backup'
-              ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
-              : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
+            ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
+            : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
             }`}
         >
           <Database className="w-3.5 h-3.5" />
@@ -524,8 +525,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <button
           onClick={() => setActiveTab('security')}
           className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${activeTab === 'security'
-              ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
-              : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
+            ? 'bg-[#3d0c22] text-[#ffffff] shadow-xs font-bold'
+            : 'text-[#876876] hover:text-[#2a0717] hover:bg-[#fae8dc]'
             }`}
         >
           <Lock className="w-3.5 h-3.5" />
@@ -898,10 +899,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               {/* Status report if tested */}
               {supabaseStatus && (
                 <div className={`p-3 rounded-xl text-xs flex items-start gap-2.5 ${supabaseStatus.tablesMissing
-                    ? 'bg-[#fffbeb] border border-[#fde68a] text-[#92400e]'
-                    : supabaseStatus.connected
-                      ? 'bg-[#ecfdf5] border border-[#a7f3d0] text-[#065f46]'
-                      : 'bg-[#fef2f2] border border-[#fecaca] text-[#991b1b]'
+                  ? 'bg-[#fffbeb] border border-[#fde68a] text-[#92400e]'
+                  : supabaseStatus.connected
+                    ? 'bg-[#ecfdf5] border border-[#a7f3d0] text-[#065f46]'
+                    : 'bg-[#fef2f2] border border-[#fecaca] text-[#991b1b]'
                   }`}>
                   <ShieldCheck className="w-4 h-4 shrink-0 mt-0.5" />
                   <div className="space-y-1">
