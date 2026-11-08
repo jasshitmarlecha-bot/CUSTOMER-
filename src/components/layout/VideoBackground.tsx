@@ -35,8 +35,14 @@ export const VideoBackground: React.FC = () => {
         <source src="/assets/gold_metallic_scroll_background.mp4" type="video/mp4" />
       </video>
 
-      {/* Gentle transparent dark overlay ensuring the gold metallic waves remain vividly visible while text stays crisp */}
-      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+      {/* Warm Luxury Orange/Amber Tint Overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle at 60% 40%, rgba(217, 119, 6, 0.12) 0%, rgba(66, 26, 8, 0.25) 60%, rgba(42, 14, 4, 0.55) 100%)'
+        }}
+      />
     </div>
   );
 };

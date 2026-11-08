@@ -347,7 +347,7 @@ export default function App() {
   const permissions = currentUser.role === 'admin' ? DEFAULT_ADMIN_PERMISSIONS : (currentUser.permissions || DEFAULT_ADMIN_PERMISSIONS);
 
   return (
-    <div className="min-h-screen bg-transparent text-neutral-100 flex flex-col lg:flex-row font-sans selection:bg-orange-500 selection:text-white relative z-10 overflow-x-hidden">
+    <div className="min-h-screen bg-transparent text-[#381504] flex flex-col lg:flex-row font-sans selection:bg-[#fbd5c0] selection:text-[#381504] relative z-10 overflow-x-hidden">
       {/* Luxury Gold Metallic Scrolling Video Background */}
       <VideoBackground />
 
@@ -549,18 +549,18 @@ export default function App() {
       {/* Mobile & Tablet Bottom Navigation Bar (1-Thumb Ergonomic Quick Access) */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass-panel bg-neutral-950/90 backdrop-blur-2xl border-t border-orange-500/20 shadow-[0_-4px_25px_rgba(0,0,0,0.7)] px-2 py-1.5 flex items-center justify-around"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[rgba(255,248,242,0.92)] backdrop-blur-2xl border-t border-[#ebd5c4] shadow-[0_-4px_25px_rgba(61,24,8,0.12)] px-2 py-1.5 flex items-center justify-around"
       >
         {/* 1. Dashboard */}
         <button
           type="button"
           onClick={() => handleNavigateTab('dashboard')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${activeTab === 'dashboard'
-            ? 'text-orange-400 font-bold'
-            : 'text-neutral-400 hover:text-neutral-200'
+            ? 'text-[#9a3809] font-bold'
+            : 'text-[#8a5236] hover:text-[#381504]'
             }`}
         >
-          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
+          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-[#fdeee4] text-[#9a3809] border border-[#f5c7a5]' : ''}`}>
             <Store className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">Dashboard</span>
@@ -571,14 +571,14 @@ export default function App() {
           type="button"
           onClick={() => handleNavigateTab('customers')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all relative cursor-pointer ${activeTab === 'customers'
-            ? 'text-orange-400 font-bold'
-            : 'text-neutral-400 hover:text-neutral-200'
+            ? 'text-[#9a3809] font-bold'
+            : 'text-[#8a5236] hover:text-[#381504]'
             }`}
         >
-          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
+          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-[#fdeee4] text-[#9a3809] border border-[#f5c7a5]' : ''}`}>
             <Users className="w-5 h-5" />
             {customers.length > 0 && (
-              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-orange-500 text-white text-[9px] font-black rounded-full shadow-xs">
+              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-[#c2531a] text-white text-[9px] font-black rounded-full shadow-xs">
                 {customers.length}
               </span>
             )}
@@ -591,7 +591,7 @@ export default function App() {
           <button
             type="button"
             onClick={handleOpenAddCustomer}
-            className="glow-btn flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl text-white font-bold shadow-lg shadow-orange-500/40 border border-orange-400/50 active:scale-95 transition-transform cursor-pointer"
+            className="glow-btn flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl text-white font-bold shadow-lg shadow-orange-700/30 border border-orange-300/40 active:scale-95 transition-transform cursor-pointer"
             title="Add Walk-In Customer"
           >
             <UserPlus className="w-5 h-5 stroke-[2.5]" />
@@ -604,11 +604,11 @@ export default function App() {
           type="button"
           onClick={() => handleNavigateTab('qr_common')}
           className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${activeTab.startsWith('qr') || activeTab === 'intake'
-            ? 'text-orange-400 font-bold'
-            : 'text-neutral-400 hover:text-neutral-200'
+            ? 'text-[#9a3809] font-bold'
+            : 'text-[#8a5236] hover:text-[#381504]'
             }`}
         >
-          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
+          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-[#fdeee4] text-[#9a3809] border border-[#f5c7a5]' : ''}`}>
             <QrCode className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">QR Center</span>
@@ -618,11 +618,11 @@ export default function App() {
         <button
           type="button"
           onClick={() => setIsMobileDrawerOpen(prev => !prev)}
-          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${isMobileDrawerOpen ? 'text-orange-400 font-bold' : 'text-neutral-400 hover:text-neutral-200'
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${isMobileDrawerOpen ? 'text-[#9a3809] font-bold' : 'text-[#8a5236] hover:text-[#381504]'
             }`}
           title="Open Operations Menu"
         >
-          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
+          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-[#fdeee4] text-[#9a3809] border border-[#f5c7a5]' : ''}`}>
             <Menu className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">Menu</span>
