@@ -17,7 +17,9 @@ import type { Customer, Category, StaffUser, StaffPermissions, QRAnalyticsData, 
 const TOKEN_KEY = 'custpro_staff_token';
 
 export function getStoredToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY) || 'token-admin-giri';
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token || token === 'logged_out') return 'token-admin-giri';
+  return token;
 }
 
 export function setStoredToken(token: string): void {

@@ -14,6 +14,7 @@ import { SettingsView } from './components/settings/SettingsView.tsx';
 import { CustomerModal } from './components/customers/CustomerModal.tsx';
 import { AuthPortal } from './components/auth/AuthPortal.tsx';
 import { StaffAccessModal } from './components/admin/StaffAccessModal.tsx';
+import { ThreeParticleBackground } from './components/layout/ThreeParticleBackground.tsx';
 import {
   getCurrentUser,
   loginUser,
@@ -89,16 +90,7 @@ export default function App() {
   // Check if visitor is scanning the QR code at the counter
   const isDirectQRScan = typeof window !== 'undefined' && window.location.search.includes('intake=qr');
 
-  // Authentication State: Require staff/admin password login to access database
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    try {
-      const stored = localStorage.getItem('custpro_staff_token');
-      return Boolean(stored && stored !== 'logged_out');
-    } catch {
-      return false;
-    }
-  });
-
+  // Direct showroom access without login screen for both store admin and staff
   const [activeTab, setActiveTab] = useState<string>(() => getTabFromHash());
   const [currentUser, setCurrentUser] = useState<StaffUser>({
     id: 'user-admin-1',
@@ -110,7 +102,7 @@ export default function App() {
     permissions: DEFAULT_ADMIN_PERMISSIONS
   });
 
-  const [staffPermissions, setStaffPermissions] = useState<StaffPermissions>(DEFAULT_STAFF_PERMISSIONS);
+  const [staffPermissions, setStaffPermissions] = useState<StaffPermissions>(DEFAULT_ADMIN_PERMISSIONS);
   const [businessName, setBusinessName] = useState<string>('GIRI JEWELLERS');
   const [storeSettings, setStoreSettings] = useState<StoreSettings | undefined>();
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -124,12 +116,12 @@ export default function App() {
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (!isDirectQRScan && isAuthenticated) {
+    if (!isDirectQRScan) {
       loadInitialData();
     } else {
       setIsLoading(false);
     }
-  }, [isDirectQRScan, isAuthenticated]);
+  }, [isDirectQRScan]);
 
   const loadInitialData = async () => {
     setIsLoading(true);
@@ -235,12 +227,7 @@ export default function App() {
 
   const handleLogout = () => {
     logoutUser();
-    try {
-      localStorage.setItem('custpro_staff_token', 'logged_out');
-    } catch {
-      // ignore
-    }
-    setIsAuthenticated(false);
+    window.location.reload();
   };
 
   const handleSaveStaffPermissions = async (perms: StaffPermissions) => {
@@ -351,26 +338,19 @@ export default function App() {
     await loadInitialData();
   };
 
-  // 1. Direct Walk-in QR scan on customer's phone (No authentication required for public customers)
+  // Direct Walk-in QR scan on customer's phone (No authentication required for public customers)
   if (isDirectQRScan) {
     return <PublicIntakeForm businessName={businessName} />;
   }
 
-  // 2. Management System Login Portal (Password protected entrance & reset flow)
-  if (!isAuthenticated) {
-    return (
-      <AuthPortal
-        onLoginSubmit={handleLoginSubmit}
-        onLoginSuccess={handleLoginSuccess}
-        businessName={businessName}
-      />
-    );
-  }
-
-  const permissions = currentUser.role === 'admin' ? DEFAULT_ADMIN_PERMISSIONS : (currentUser.permissions || staffPermissions);
+  // Open direct showroom access for both store admin and staff (no login barrier)
+  const permissions = currentUser.role === 'admin' ? DEFAULT_ADMIN_PERMISSIONS : (currentUser.permissions || DEFAULT_ADMIN_PERMISSIONS);
 
   return (
-    <div className="min-h-screen bg-[#fbf7f4] text-[#2a0717] flex flex-col lg:flex-row font-sans selection:bg-[#dfb76c]/40 selection:text-[#2a0717]">
+    <div className="min-h-screen bg-[#09090b] text-neutral-100 flex flex-col lg:flex-row font-sans selection:bg-orange-500 selection:text-white relative overflow-x-hidden">
+      {/* Three.js 3D Particle Wave Background with Floating Diamonds & Silk Glow */}
+      <ThreeParticleBackground />
+
       {/* Left Navigation Sidebar */}
       <Sidebar
         activeTab={activeTab}
@@ -384,7 +364,7 @@ export default function App() {
       />
 
       {/* Right Column: Top Navbar & Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 relative z-10">
         <Navbar
           currentUser={currentUser}
           onLogout={handleLogout}
@@ -429,9 +409,9 @@ export default function App() {
                 businessName={businessName}
               />
             ) : (
-              <div className="bg-[#fffcf7] border border-[#ede3d3] rounded-2xl p-8 text-center space-y-3 shadow-xs">
-                <p className="text-[#b08738] font-bold">Access Restricted</p>
-                <p className="text-xs text-[#718079]">You do not have permission to view the Customer Directory. Please request access from the Store Admin.</p>
+              <div className="glass-panel border border-orange-500/20 rounded-2xl p-8 text-center space-y-3 shadow-xl">
+                <p className="text-amber-400 font-bold">Access Restricted</p>
+                <p className="text-xs text-neutral-400">You do not have permission to view the Customer Directory. Please request access from the Store Admin.</p>
               </div>
             )
           )}
@@ -569,19 +549,18 @@ export default function App() {
       {/* Mobile & Tablet Bottom Navigation Bar (1-Thumb Ergonomic Quick Access) */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#ffffff]/95 backdrop-blur-md border-t border-[#ebdcd3] shadow-[0_-4px_20px_rgba(42,7,23,0.08)] px-2 py-1.5 flex items-center justify-around"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass-panel bg-neutral-950/90 backdrop-blur-2xl border-t border-orange-500/20 shadow-[0_-4px_25px_rgba(0,0,0,0.7)] px-2 py-1.5 flex items-center justify-around"
       >
         {/* 1. Dashboard */}
         <button
           type="button"
           onClick={() => handleNavigateTab('dashboard')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
-            activeTab === 'dashboard'
-              ? 'text-[#3d0c22] font-bold'
-              : 'text-[#876876] hover:text-[#3d0c22]'
-          }`}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${activeTab === 'dashboard'
+              ? 'text-orange-400 font-bold'
+              : 'text-neutral-400 hover:text-neutral-200'
+            }`}
         >
-          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
+          <div className={`p-1 rounded-lg ${activeTab === 'dashboard' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
             <Store className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">Dashboard</span>
@@ -591,16 +570,15 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleNavigateTab('customers')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all relative cursor-pointer ${
-            activeTab === 'customers'
-              ? 'text-[#3d0c22] font-bold'
-              : 'text-[#876876] hover:text-[#3d0c22]'
-          }`}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all relative cursor-pointer ${activeTab === 'customers'
+              ? 'text-orange-400 font-bold'
+              : 'text-neutral-400 hover:text-neutral-200'
+            }`}
         >
-          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
+          <div className={`p-1 rounded-lg relative ${activeTab === 'customers' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
             <Users className="w-5 h-5" />
             {customers.length > 0 && (
-              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-[#dfb76c] text-[#2a0717] text-[9px] font-black rounded-full shadow-xs">
+              <span className="absolute -top-1 -right-2 px-1.5 py-0.2 bg-orange-500 text-white text-[9px] font-black rounded-full shadow-xs">
                 {customers.length}
               </span>
             )}
@@ -613,7 +591,7 @@ export default function App() {
           <button
             type="button"
             onClick={handleOpenAddCustomer}
-            className="flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl bg-gradient-to-br from-[#4d102e] via-[#3d0c22] to-[#250514] text-[#ffffff] font-bold shadow-lg shadow-[#3d0c22]/40 border-2 border-[#ffffff] active:scale-95 transition-transform cursor-pointer"
+            className="glow-btn flex flex-col items-center justify-center -translate-y-3 px-3.5 py-2 rounded-2xl text-white font-bold shadow-lg shadow-orange-500/40 border border-orange-400/50 active:scale-95 transition-transform cursor-pointer"
             title="Add Walk-In Customer"
           >
             <UserPlus className="w-5 h-5 stroke-[2.5]" />
@@ -625,13 +603,12 @@ export default function App() {
         <button
           type="button"
           onClick={() => handleNavigateTab('qr_common')}
-          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
-            activeTab.startsWith('qr') || activeTab === 'intake'
-              ? 'text-[#3d0c22] font-bold'
-              : 'text-[#876876] hover:text-[#3d0c22]'
-          }`}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${activeTab.startsWith('qr') || activeTab === 'intake'
+              ? 'text-orange-400 font-bold'
+              : 'text-neutral-400 hover:text-neutral-200'
+            }`}
         >
-          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
+          <div className={`p-1 rounded-lg ${activeTab.startsWith('qr') || activeTab === 'intake' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
             <QrCode className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">QR Center</span>
@@ -641,12 +618,11 @@ export default function App() {
         <button
           type="button"
           onClick={() => setIsMobileDrawerOpen(prev => !prev)}
-          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${
-            isMobileDrawerOpen ? 'text-[#3d0c22] font-bold' : 'text-[#876876] hover:text-[#3d0c22]'
-          }`}
+          className={`flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-xl transition-all cursor-pointer ${isMobileDrawerOpen ? 'text-orange-400 font-bold' : 'text-neutral-400 hover:text-neutral-200'
+            }`}
           title="Open Operations Menu"
         >
-          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-[#fae8dc] text-[#3d0c22]' : ''}`}>
+          <div className={`p-1 rounded-lg ${isMobileDrawerOpen ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : ''}`}>
             <Menu className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5">Menu</span>

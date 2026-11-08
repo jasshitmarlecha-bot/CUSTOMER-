@@ -279,3 +279,4 @@ export async function saveSupabaseSettings(settings: StoreSettings): Promise<boo
     return false;
   }
 }
+

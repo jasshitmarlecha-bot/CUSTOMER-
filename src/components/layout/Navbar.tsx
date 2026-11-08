@@ -9,19 +9,10 @@ import {
   QrCode,
   UserPlus,
   Upload,
-  User,
-  X,
-  ExternalLink,
   Store,
   Users,
-  CopyCheck,
-  BarChart3,
-  Tags,
-  Settings,
   ChevronRight,
-  Phone,
-  MapPin,
-  Sparkles
+  Gem
 } from 'lucide-react';
 import { StaffUser, Customer } from '../../types/index.ts';
 
@@ -139,95 +130,88 @@ export const Navbar: React.FC<NavbarProps> = ({
       case 'customers':
         return { section: 'Store Operations', page: 'Customer Directory', icon: Users, parentTab: 'customers' };
       case 'import':
-        return { section: 'Store Operations', page: 'Import Customer Data', icon: Upload, parentTab: 'import' };
+        return { section: 'Store Operations', page: 'Import Data', icon: Upload, parentTab: 'import' };
       case 'duplicates':
-        return { section: 'Store Operations', page: 'Duplicate Manager', icon: CopyCheck, parentTab: 'duplicates' };
+        return { section: 'Store Operations', page: 'Duplicate Manager', icon: ShieldCheck, parentTab: 'duplicates' };
       case 'qr_common':
       case 'intake':
-      case 'qr_print':
       case 'qr_activity':
-        return { section: 'Store Operations', page: 'Showroom QR Standee', icon: QrCode, parentTab: 'qr_common' };
+      case 'qr_analytics':
+      case 'qr_print':
+        return { section: 'Store Operations', page: 'Showroom QR Center', icon: QrCode, parentTab: 'qr_common' };
       case 'analytics':
       case 'cleaning':
-        return { section: 'Store Analytics', page: 'Footfall & Performance', icon: BarChart3, parentTab: 'analytics' };
+        return { section: 'Store Analytics', page: 'Performance & Footfall Hub', icon: Store, parentTab: 'analytics' };
       case 'categories':
-        return { section: 'Showroom Setup', page: 'Jewellery Categories', icon: Tags, parentTab: 'categories' };
+        return { section: 'Showroom Setup', page: 'Jewellery Categories', icon: Gem, parentTab: 'categories' };
       case 'settings':
-        return { section: 'Showroom Setup', page: 'Settings & Backups', icon: Settings, parentTab: 'settings' };
-      case 'dashboard':
+        return { section: 'Showroom Setup', page: 'Settings & Backups', icon: ShieldCheck, parentTab: 'settings' };
       default:
-        return { section: 'Store Operations', page: 'Store Dashboard', icon: Store, parentTab: 'dashboard' };
+        return { section: 'Store Operations', page: 'Dashboard', icon: Store, parentTab: 'dashboard' };
     }
   };
 
   const breadcrumb = getBreadcrumb(activeTab);
-
-  // User display name & initials (defaults to Jatin / JD from design mockup)
-  const displayName = currentUser.name && currentUser.name !== 'Giri Admin' ? currentUser.name : 'Jatin';
+  const displayName = currentUser?.name || 'Store Manager';
   const displayFirstName = displayName.split(' ')[0];
   const initials = displayName
     .split(' ')
-    .map((n) => n[0])
-    .join('')
+    .map((w) => w[0])
     .slice(0, 2)
-    .toUpperCase() || 'JD';
+    .join('')
+    .toUpperCase();
 
   return (
-    <header className="bg-[#fcf8f4]/95 backdrop-blur-md border-b border-[#ebdcd3] sticky top-0 z-30 shadow-xs select-none">
-      <div className="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-        {/* Left Side: Mobile Menu Button + Clickable Breadcrumbs Wayfinding */}
+    <header className="glass-panel border-x-0 border-t-0 rounded-none bg-neutral-950/75 backdrop-blur-2xl border-b border-orange-500/15 sticky top-0 z-30 transition-all select-none">
+      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-3.5 gap-3">
+        {/* Left Side: Mobile Menu Button & Breadcrumb Trail */}
         <div className="flex items-center gap-3 min-w-0">
-          {onToggleMobileMenu && (
-            <button
-              type="button"
-              onClick={onToggleMobileMenu}
-              className="lg:hidden p-2 rounded-full bg-[#ffffff] text-[#2a0717] hover:bg-[#faede6] border border-[#ebdcd3] flex items-center gap-1.5 cursor-pointer shadow-xs transition-all shrink-0 active:scale-95"
-              title="Open Navigation Menu"
-              aria-label="Toggle navigation"
-            >
-              <Menu className="w-5 h-5 text-[#3d0c22]" />
-            </button>
-          )}
-
-          {/* Mobile visible logo */}
+          {/* Mobile Menu Hamburger */}
           <button
-            onClick={() => onNavigateTab('dashboard')}
-            className="lg:hidden flex items-center gap-2 text-left focus:outline-none cursor-pointer truncate"
+            type="button"
+            onClick={onToggleMobileMenu}
+            className="lg:hidden p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors cursor-pointer border border-neutral-800 shrink-0"
+            aria-label="Open mobile navigation menu"
           >
-            <div className="w-6 h-6 shrink-0 text-[#dfb76c]">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M6 3h12l4 6-10 12L2 9z" />
-                <path d="M11 3v18" />
-                <path d="M2 9h20" />
-              </svg>
+            <Menu className="w-5 h-5" />
+          </button>
+
+          {/* Mobile Brand Name */}
+          <button
+            type="button"
+            onClick={() => onNavigateTab('dashboard')}
+            className="lg:hidden flex items-center space-x-2 text-left truncate cursor-pointer"
+          >
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shrink-0 shadow-xs">
+              <Gem className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-cinzel text-xs font-black tracking-wider text-[#2a0717] uppercase truncate">
+            <span className="font-bold text-xs tracking-wider gold-gradient-text uppercase truncate">
               {businessName || 'GIRI JEWELLERS'}
             </span>
           </button>
 
           {/* Desktop Interactive Breadcrumb Trail */}
-          <div className="hidden lg:flex items-center gap-2 text-xs font-medium text-[#876876]">
+          <div className="hidden lg:flex items-center gap-2 text-xs font-medium text-neutral-400">
             <button
               type="button"
               onClick={() => onNavigateTab('dashboard')}
-              className="flex items-center gap-1.5 hover:text-[#2a0717] transition-colors cursor-pointer group"
+              className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer group"
               title="Return to Store Dashboard"
             >
-              <Store className="w-3.5 h-3.5 text-[#3d0c22] group-hover:scale-110 transition-transform" />
-              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-[#2a0717]">
+              <Store className="w-3.5 h-3.5 text-orange-400 group-hover:scale-110 transition-transform" />
+              <span className="font-bold tracking-wider gold-gradient-text uppercase text-[11px]">
                 {businessName}
               </span>
             </button>
 
-            <ChevronRight className="w-3.5 h-3.5 text-[#cfb6c2]" />
-            <span className="text-[#8a6877] text-[11px] font-medium">{breadcrumb.section}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-neutral-600" />
+            <span className="text-neutral-400 text-[11px] font-medium">{breadcrumb.section}</span>
 
-            <ChevronRight className="w-3.5 h-3.5 text-[#cfb6c2]" />
+            <ChevronRight className="w-3.5 h-3.5 text-neutral-600" />
             <button
               type="button"
               onClick={() => onNavigateTab(breadcrumb.parentTab)}
-              className="text-[#2a0717] font-bold text-xs hover:underline transition-all cursor-pointer flex items-center gap-1"
+              className="text-neutral-200 font-bold text-xs hover:text-orange-400 transition-colors cursor-pointer flex items-center gap-1"
             >
               <span>{breadcrumb.page}</span>
             </button>
@@ -237,7 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Center: Global Instant Search with Keyboard Shortcut & Live Dropdown Preview */}
         <div className="relative flex-1 max-w-sm xl:max-w-md hidden md:block" ref={searchContainerRef}>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#876876]">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
               <Search className="w-4 h-4" />
             </div>
             <input
@@ -248,10 +232,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onFocus={() => setIsSearchFocused(true)}
               onKeyDown={handleSearchKeyDown}
               placeholder="Search customers, phones, places..."
-              className="w-full pl-9 pr-14 py-2 text-xs bg-[#ffffff] border border-[#ede0d6] hover:border-[#dfb76c]/60 focus:border-[#3d0c22] rounded-full text-[#2a0717] placeholder-[#a48897] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#3d0c22]/15 transition-all font-medium"
+              className="w-full pl-9 pr-14 py-2 text-xs bg-neutral-900/80 border border-neutral-700/60 hover:border-orange-500/40 focus:border-orange-500 rounded-xl text-neutral-100 placeholder-neutral-500 shadow-inner focus:outline-none focus:ring-1 focus:ring-orange-500/30 transition-all font-medium"
             />
             <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
-              <kbd className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-semibold text-[#876876] bg-[#fbf5f0] border border-[#ebdcd3] rounded-md shadow-2xs">
+              <kbd className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-semibold text-neutral-400 bg-neutral-800 border border-neutral-700 rounded-md">
                 ⌘ K
               </kbd>
             </div>
@@ -259,18 +243,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Instant Search Dropdown Preview */}
           {isSearchFocused && searchValue.trim().length > 0 && (
-            <div className="absolute left-0 right-0 mt-2 bg-[#ffffff] border border-[#ede0d6] rounded-2xl shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-              <div className="flex items-center justify-between px-3 py-1.5 border-b border-[#f5ebe4] text-[11px] text-[#876876]">
+            <div className="absolute left-0 right-0 mt-2 glass-panel border border-orange-500/25 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-center justify-between px-3 py-1.5 border-b border-neutral-800 text-[11px] text-neutral-400">
                 <span>
                   {searchResults.length > 0
                     ? `Found ${searchResults.length} matching result(s)`
                     : 'No customer records match this search'}
                 </span>
-                <span className="font-mono text-[10px]">Press Enter for Directory</span>
+                <span className="font-mono text-[10px] text-neutral-500">Press Enter for Directory</span>
               </div>
 
               {searchResults.length > 0 && (
-                <div className="divide-y divide-[#f5ebe4] max-h-64 overflow-y-auto">
+                <div className="divide-y divide-neutral-800 max-h-64 overflow-y-auto">
                   {searchResults.map((cust) => (
                     <div
                       key={cust.id}
@@ -282,14 +266,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                           onNavigateTab('customers');
                         }
                       }}
-                      className="p-2.5 hover:bg-[#fcf8f6] rounded-xl cursor-pointer transition-colors flex items-center justify-between gap-3 group"
+                      className="p-2.5 hover:bg-neutral-800/50 rounded-xl cursor-pointer transition-colors flex items-center justify-between gap-3 group"
                     >
                       <div className="min-w-0">
-                        <p className="text-xs font-bold text-[#2a0717] group-hover:text-[#3d0c22] transition-colors truncate">
+                        <p className="text-xs font-bold text-neutral-200 group-hover:text-orange-400 transition-colors truncate">
                           {cust.name}
                         </p>
-                        <div className="flex items-center gap-2 text-[11px] text-[#876876] mt-0.5">
-                          <span className="font-mono text-[#3d0c22] font-semibold">{cust.phone}</span>
+                        <div className="flex items-center gap-2 text-[11px] text-neutral-400 mt-0.5">
+                          <span className="font-mono text-orange-400 font-semibold">{cust.phone}</span>
                           {(cust.place || cust.city) && (
                             <span className="truncate">• {cust.place || cust.city}</span>
                           )}
@@ -297,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       </div>
 
                       {cust.categoryName && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#fae8dc] text-[#3d0c22] shrink-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 shrink-0">
                           {cust.categoryName}
                         </span>
                       )}
@@ -306,14 +290,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
               )}
 
-              <div className="pt-2 border-t border-[#f5ebe4] px-2 text-center">
+              <div className="pt-2 border-t border-neutral-800 px-2 text-center">
                 <button
                   type="button"
                   onClick={() => {
                     setIsSearchFocused(false);
                     onNavigateTab('customers');
                   }}
-                  className="text-xs font-bold text-[#3d0c22] hover:underline cursor-pointer"
+                  className="text-xs font-bold text-orange-400 hover:underline cursor-pointer"
                 >
                   View all results in Customer Directory →
                 </button>
@@ -328,13 +312,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTab('qr_common')}
-            className={`hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${activeTab === 'qr_common' || activeTab.startsWith('qr_')
-                ? 'bg-[#3d0c22] text-[#ffffff] border border-[#dfb76c]/40 font-bold shadow-xs'
-                : 'text-[#2a0717] bg-[#ffffff] hover:bg-[#faede6] border border-[#ebdcd3]'
+            className={`hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${activeTab === 'qr_common' || activeTab.startsWith('qr_')
+                ? 'bg-orange-500/15 text-orange-400 border border-orange-500/30 font-semibold shadow-[0_0_12px_rgba(249,115,22,0.15)]'
+                : 'text-neutral-300 bg-neutral-900/60 hover:bg-neutral-800 border border-neutral-800 hover:text-white'
               }`}
             title="Open Showroom QR Center"
           >
-            <QrCode className={`w-3.5 h-3.5 ${activeTab === 'qr_common' || activeTab.startsWith('qr_') ? 'text-[#dfb76c]' : 'text-[#3d0c22]'}`} />
+            <QrCode className="w-3.5 h-3.5 text-orange-400" />
             <span>QR Center</span>
           </button>
 
@@ -343,13 +327,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => onNavigateTab('import')}
-              className={`hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${activeTab === 'import'
-                  ? 'bg-[#3d0c22] text-[#ffffff] border border-[#dfb76c]/40 font-bold shadow-xs'
-                  : 'text-[#2a0717] bg-[#ffffff] hover:bg-[#faede6] border border-[#ebdcd3]'
+              className={`hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${activeTab === 'import'
+                  ? 'bg-orange-500/15 text-orange-400 border border-orange-500/30 font-semibold shadow-[0_0_12px_rgba(249,115,22,0.15)]'
+                  : 'text-neutral-300 bg-neutral-900/60 hover:bg-neutral-800 border border-neutral-800 hover:text-white'
                 }`}
               title="Import outside customer data (Excel & CSV)"
             >
-              <Upload className={`w-3.5 h-3.5 ${activeTab === 'import' ? 'text-[#dfb76c]' : 'text-[#3d0c22]'}`} />
+              <Upload className="w-3.5 h-3.5 text-amber-400" />
               <span>Import</span>
             </button>
           )}
@@ -359,10 +343,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={onOpenAddCustomer}
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold text-[#ffffff] bg-[#3d0c22] hover:bg-[#521130] active:scale-95 border border-[#5c1334] shadow-md shadow-[#3d0c22]/20 transition-all cursor-pointer"
+              className="glow-btn inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-medium text-white shadow-lg shadow-orange-500/20 active:scale-95 transition-all cursor-pointer"
               title="Register a new walk-in customer (Keyboard shortcut: N)"
             >
-              <UserPlus className="w-3.5 h-3.5 text-[#dfb76c] stroke-[2.4]" />
+              <UserPlus className="w-3.5 h-3.5 stroke-[2.2]" />
               <span>Add Walk-In</span>
             </button>
           )}
@@ -372,35 +356,35 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => setShowNotificationMenu((prev) => !prev)}
-              className="relative p-2 rounded-full bg-[#ffffff] hover:bg-[#faede6] border border-[#ebdcd3] text-[#2a0717] transition-all cursor-pointer shadow-xs active:scale-95"
+              className="relative p-2 rounded-xl bg-neutral-900/60 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
               title="Showroom Notifications & Alerts"
               aria-label="Notifications"
             >
-              <Bell className="w-4 h-4 text-[#2a0717]" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#ffffff] shadow-xs">
+              <Bell className="w-4 h-4 text-neutral-300" />
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-orange-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-neutral-950 shadow-xs">
                 2
               </span>
             </button>
 
             {/* Notification Dropdown */}
             {showNotificationMenu && (
-              <div className="absolute right-0 mt-2 w-72 bg-[#ffffff] border border-[#ede0d6] rounded-2xl shadow-xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center justify-between pb-2 border-b border-[#ebdcd3] px-1">
-                  <span className="text-xs font-bold text-[#2a0717]">Showroom Alerts</span>
-                  <span className="text-[10px] font-semibold text-[#dfb76c] bg-[#3d0c22] px-2 py-0.5 rounded-full">
+              <div className="absolute right-0 mt-2 w-72 glass-panel border border-orange-500/25 rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-neutral-100">
+                <div className="flex items-center justify-between pb-2 border-b border-neutral-800 px-1">
+                  <span className="text-xs font-bold text-neutral-200">Showroom Alerts</span>
+                  <span className="text-[10px] font-semibold text-orange-400 bg-orange-500/15 border border-orange-500/30 px-2 py-0.5 rounded-full">
                     2 New
                   </span>
                 </div>
-                <div className="divide-y divide-[#f5ebe4] mt-1 text-xs">
+                <div className="divide-y divide-neutral-800 mt-1 text-xs">
                   <div
                     onClick={() => {
                       onNavigateTab('duplicates');
                       setShowNotificationMenu(false);
                     }}
-                    className="py-2.5 px-2 hover:bg-[#fcf8f6] rounded-xl cursor-pointer transition-colors"
+                    className="py-2.5 px-2 hover:bg-neutral-800/50 rounded-xl cursor-pointer transition-colors"
                   >
-                    <p className="font-bold text-[#2a0717] leading-tight">Data Hygiene Alert</p>
-                    <p className="text-[11px] text-[#876876] mt-0.5">
+                    <p className="font-bold text-neutral-200 leading-tight">Data Hygiene Alert</p>
+                    <p className="text-[11px] text-neutral-400 mt-0.5">
                       Duplicate phone records detected. Click to resolve in Duplicate Manager.
                     </p>
                   </div>
@@ -409,10 +393,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onNavigateTab('qr_common');
                       setShowNotificationMenu(false);
                     }}
-                    className="py-2.5 px-2 hover:bg-[#fcf8f6] rounded-xl cursor-pointer transition-colors"
+                    className="py-2.5 px-2 hover:bg-neutral-800/50 rounded-xl cursor-pointer transition-colors"
                   >
-                    <p className="font-bold text-[#2a0717] leading-tight">Showroom QR Active</p>
-                    <p className="text-[11px] text-[#876876] mt-0.5">
+                    <p className="font-bold text-neutral-200 leading-tight">Showroom QR Active</p>
+                    <p className="text-[11px] text-neutral-400 mt-0.5">
                       Counter QR Standee ready for self-service walk-in registration.
                     </p>
                   </div>
@@ -426,26 +410,26 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => setShowProfileMenu((prev) => !prev)}
-              className="flex items-center gap-2 pl-1 pr-2.5 py-1 rounded-full bg-[#ffffff] hover:bg-[#faede6] border border-[#ebdcd3] transition-all cursor-pointer shadow-xs group active:scale-95"
+              className="flex items-center gap-2 pl-1.5 pr-2.5 py-1.5 rounded-xl bg-neutral-900/60 hover:bg-neutral-800 border border-neutral-800 transition-all cursor-pointer shadow-xs group active:scale-95"
               aria-label="User Profile Menu"
             >
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#3d0c22] to-[#250514] text-[#faead1] font-bold text-[11px] flex items-center justify-center shadow-xs">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 text-white font-bold text-[11px] flex items-center justify-center shadow-xs">
                 {initials}
               </div>
 
-              <span className="text-xs font-bold text-[#2a0717] tracking-tight hidden sm:inline">
+              <span className="text-xs font-semibold text-neutral-200 tracking-tight hidden sm:inline">
                 Hello, {displayFirstName}
               </span>
 
-              <ChevronDown className="w-3.5 h-3.5 text-[#876876] group-hover:text-[#2a0717] transition-colors" />
+              <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-colors" />
             </button>
 
             {/* Profile Dropdown Menu */}
             {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-[#ffffff] border border-[#ede0d6] rounded-2xl shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs">
-                <div className="p-2.5 pb-2 border-b border-[#f5ebe4]">
-                  <p className="font-bold text-[#2a0717] truncate">{displayName}</p>
-                  <p className="text-[11px] text-[#876876] capitalize font-medium">
+              <div className="absolute right-0 mt-2 w-56 glass-panel border border-orange-500/25 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150 text-xs text-neutral-200">
+                <div className="p-2.5 pb-2 border-b border-neutral-800">
+                  <p className="font-bold text-neutral-100 truncate">{displayName}</p>
+                  <p className="text-[11px] text-neutral-400 capitalize font-medium">
                     {currentUser.role === 'admin' ? 'Store Administrator' : 'Counter Staff'}
                   </p>
                 </div>
@@ -458,9 +442,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                         setShowProfileMenu(false);
                         onOpenStaffAccessModal();
                       }}
-                      className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-[#2a0717] hover:bg-[#faede6] font-medium transition-colors cursor-pointer text-left"
+                      className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-neutral-300 hover:text-white hover:bg-neutral-800/60 font-medium transition-colors cursor-pointer text-left"
                     >
-                      <ShieldCheck className="w-4 h-4 text-[#3d0c22]" />
+                      <ShieldCheck className="w-4 h-4 text-amber-400" />
                       <span>Staff Access Control</span>
                     </button>
                   )}
@@ -471,9 +455,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setShowProfileMenu(false);
                       onNavigateTab('qr_common');
                     }}
-                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-[#2a0717] hover:bg-[#faede6] font-medium transition-colors cursor-pointer text-left"
+                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-neutral-300 hover:text-white hover:bg-neutral-800/60 font-medium transition-colors cursor-pointer text-left"
                   >
-                    <QrCode className="w-4 h-4 text-[#3d0c22]" />
+                    <QrCode className="w-4 h-4 text-orange-400" />
                     <span>Showroom QR Standee</span>
                   </button>
 
@@ -483,24 +467,24 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setShowProfileMenu(false);
                       onNavigateTab('settings');
                     }}
-                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-[#2a0717] hover:bg-[#faede6] font-medium transition-colors cursor-pointer text-left"
+                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-neutral-300 hover:text-white hover:bg-neutral-800/60 font-medium transition-colors cursor-pointer text-left"
                   >
-                    <Settings className="w-4 h-4 text-[#3d0c22]" />
+                    <ShieldCheck className="w-4 h-4 text-neutral-400" />
                     <span>Store Settings</span>
                   </button>
                 </div>
 
-                <div className="pt-1 border-t border-[#f5ebe4]">
+                <div className="pt-1 border-t border-neutral-800">
                   <button
                     type="button"
                     onClick={() => {
                       setShowProfileMenu(false);
-                      onLogout();
+                      window.location.reload();
                     }}
-                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-rose-700 hover:bg-rose-50 font-semibold transition-colors cursor-pointer text-left"
+                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-neutral-300 hover:text-white hover:bg-neutral-800/60 font-medium transition-colors cursor-pointer text-left"
                   >
-                    <LogOut className="w-4 h-4" />
-                    <span>Log Out</span>
+                    <Store className="w-4 h-4 text-orange-400" />
+                    <span>Reload Store Data</span>
                   </button>
                 </div>
               </div>

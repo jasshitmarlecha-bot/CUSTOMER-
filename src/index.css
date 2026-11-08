@@ -2,25 +2,19 @@
 
 @layer base {
   :root {
-    --bg-main: #f5efe6;
-    --bg-surface: #ffffff;
-    --bg-surface-elevated: #fffcf7;
-    --border-subtle: #ede3d3;
-    --border-strong: #dfd3bd;
-    --text-primary: #19241f;
-    --text-secondary: #576560;
-    --text-muted: #83918b;
-    --emerald-dark: #071c16;
-    --emerald-primary: #0b271f;
-    --emerald-light: #164234;
-    --gold-primary: #dfb76c;
-    --gold-accent: #c59b48;
-    --gold-light: #fae7c2;
+    --bg-main: #09090b;
+    --card-bg: rgba(24, 24, 27, 0.65);
+    --border-glass: rgba(255, 150, 50, 0.15);
+    --accent-orange: #f97316;
+    --accent-gold: #fbbf24;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
   }
 
   body {
-    background-color: #f5efe6;
-    color: #19241f;
+    background-color: #09090b;
+    color: #f4f4f5;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -35,26 +29,59 @@
   font-family: 'Cormorant Garamond', serif;
 }
 
-/* Luxury custom scrollbars */
+/* Glassmorphism Panels matching the Gen-Z Luxury Suite */
+.glass-panel {
+  background: rgba(18, 18, 22, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 165, 0, 0.14);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.42);
+}
+
+.glass-sidebar {
+  background: rgba(12, 12, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 165, 0, 0.12);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-btn {
+  background: linear-gradient(135deg, #ea580c 0%, #d97706 100%);
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.4);
+  transition: all 0.3s ease;
+}
+
+.glow-btn:hover {
+  box-shadow: 0 0 30px rgba(234, 88, 12, 0.7);
+  transform: translateY(-1px);
+}
+
+/* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0e8dc;
+  background: #09090b;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d9cdbe;
+  background: rgba(249, 115, 22, 0.3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #c5b6a3;
+  background: rgba(249, 115, 22, 0.6);
 }
 
 ::selection {
-  background-color: rgba(223, 183, 108, 0.35);
-  color: #0b241c;
+  background-color: #f97316;
+  color: #ffffff;
 }
