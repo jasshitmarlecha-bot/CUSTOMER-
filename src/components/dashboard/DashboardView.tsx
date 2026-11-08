@@ -409,8 +409,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <button
                 onClick={() => setSourceFilter('all')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'all'
-                    ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
-                    : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
+                  ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
+                  : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
                   }`}
               >
                 All ({totalCustomers})
@@ -419,8 +419,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <button
                 onClick={() => setSourceFilter('today')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'today'
-                    ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
-                    : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
+                  ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
+                  : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
                   }`}
               >
                 Today ({todayCustomers.length})
@@ -429,8 +429,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <button
                 onClick={() => setSourceFilter('walkin_qr')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'walkin_qr'
-                    ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
-                    : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
+                  ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
+                  : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
                   }`}
               >
                 QR ({qrIntakeCount})
@@ -439,8 +439,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <button
                 onClick={() => setSourceFilter('import')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'import'
-                    ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
-                    : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
+                  ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-500/25'
+                  : 'bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300 border border-neutral-700/60 font-medium'
                   }`}
               >
                 Imported ({importIntakeCount})

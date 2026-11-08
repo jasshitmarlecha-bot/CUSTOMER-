@@ -14,7 +14,7 @@ import { SettingsView } from './components/settings/SettingsView.tsx';
 import { CustomerModal } from './components/customers/CustomerModal.tsx';
 import { AuthPortal } from './components/auth/AuthPortal.tsx';
 import { StaffAccessModal } from './components/admin/StaffAccessModal.tsx';
-import { ThreeParticleBackground } from './components/layout/ThreeParticleBackground.tsx';
+import { VideoBackground } from './components/layout/VideoBackground.tsx';
 import {
   getCurrentUser,
   loginUser,
@@ -348,8 +348,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent text-neutral-100 flex flex-col lg:flex-row font-sans selection:bg-orange-500 selection:text-white relative z-10 overflow-x-hidden">
-      {/* Three.js 3D Particle Wave Background with Floating Diamonds & Silk Glow */}
-      <ThreeParticleBackground />
+      {/* Luxury Gold Metallic Scrolling Video Background */}
+      <VideoBackground />
 
       {/* Left Navigation Sidebar */}
       <Sidebar
