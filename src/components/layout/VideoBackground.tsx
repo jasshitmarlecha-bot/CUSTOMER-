@@ -30,6 +30,7 @@ export const VideoBackground: React.FC = () => {
         muted
         playsInline
         preload="auto"
+        poster="/assets/gold_luxury_ambient.jpg"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
       >
         <source src="/assets/gold_metallic_scroll_background.mp4" type="video/mp4" />

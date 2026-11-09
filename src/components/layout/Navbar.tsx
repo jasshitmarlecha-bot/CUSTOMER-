@@ -32,6 +32,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentUser,
+  onLogout,
   onOpenStaffAccessModal,
   onOpenAddCustomer,
   onNavigateTab,
@@ -304,11 +305,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTab('qr_common')}
-            className={`hidden xl:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${
-              activeTab === 'qr_common' || activeTab.startsWith('qr_')
+            className={`hidden xl:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${activeTab === 'qr_common' || activeTab.startsWith('qr_')
                 ? 'bg-[#381504] text-white border border-[#381504]'
                 : 'text-[#381504] bg-white/90 hover:bg-[#faeee4] border border-[#ebd5c4]'
-            }`}
+              }`}
             title="Open Showroom QR Center"
           >
             <QrCode className="w-3.5 h-3.5 text-[#b34710]" />
@@ -320,11 +320,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={() => onNavigateTab('import')}
-              className={`hidden xl:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${
-                activeTab === 'import'
+              className={`hidden xl:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-xs ${activeTab === 'import'
                   ? 'bg-[#381504] text-white border border-[#381504]'
                   : 'text-[#381504] bg-white/90 hover:bg-[#faeee4] border border-[#ebd5c4]'
-              }`}
+                }`}
               title="Import outside customer data (Excel & CSV)"
             >
               <Upload className="w-3.5 h-3.5 text-[#b34710]" />

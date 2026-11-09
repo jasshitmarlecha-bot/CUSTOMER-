@@ -428,44 +428,40 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
               <button
                 onClick={() => setSourceFilter('all')}
-                className={`px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${
-                  sourceFilter === 'all'
+                className={`px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'all'
                     ? 'bg-[#8f3308] text-white font-bold shadow-xs'
                     : 'bg-white hover:bg-[#faeee4] text-[#703816] border border-[#ebd5c4] font-semibold'
-                }`}
+                  }`}
               >
                 All ({totalCustomers})
               </button>
 
               <button
                 onClick={() => setSourceFilter('today')}
-                className={`px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${
-                  sourceFilter === 'today'
+                className={`px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'today'
                     ? 'bg-[#8f3308] text-white font-bold shadow-xs'
                     : 'bg-white hover:bg-[#faeee4] text-[#703816] border border-[#ebd5c4] font-semibold'
-                }`}
+                  }`}
               >
                 Today ({todayCustomers.length})
               </button>
 
               <button
                 onClick={() => setSourceFilter('walkin_qr')}
-                className={`px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${
-                  sourceFilter === 'walkin_qr'
+                className={`px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'walkin_qr'
                     ? 'bg-[#8f3308] text-white font-bold shadow-xs'
                     : 'bg-white hover:bg-[#faeee4] text-[#703816] border border-[#ebd5c4] font-semibold'
-                }`}
+                  }`}
               >
                 QR ({qrIntakeCount})
               </button>
 
               <button
                 onClick={() => setSourceFilter('import')}
-                className={`px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${
-                  sourceFilter === 'import'
+                className={`px-3.5 py-1.5 rounded-full text-xs transition-all cursor-pointer shrink-0 ${sourceFilter === 'import'
                     ? 'bg-[#8f3308] text-white font-bold shadow-xs'
                     : 'bg-white hover:bg-[#faeee4] text-[#703816] border border-[#ebd5c4] font-semibold'
-                }`}
+                  }`}
               >
                 Imported ({importIntakeCount})
               </button>

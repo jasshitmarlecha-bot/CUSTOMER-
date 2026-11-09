@@ -254,23 +254,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       disabled={!isPermitted}
                       type="button"
                       onClick={() => handleItemClick(item.id)}
-                      className={`w-full relative flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer group ${
-                        !isPermitted
+                      className={`w-full relative flex items-center justify-between px-3.5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer group ${!isPermitted
                           ? 'opacity-35 cursor-not-allowed text-[#8a5236]'
                           : isActive
                             ? 'bg-gradient-to-r from-[#fadcc5] via-[#f7cfb0] to-[#f4c29c] text-[#381504] font-bold shadow-[0_2px_10px_rgba(247,207,176,0.4)] translate-x-0.5'
                             : 'text-[#fce7db] hover:text-white hover:bg-white/10 hover:translate-x-1'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <Icon
-                          className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-105 ${
-                            isActive
+                          className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-105 ${isActive
                               ? 'text-[#381504] stroke-[2.4]'
                               : isPermitted
                                 ? 'text-[#fce7db]'
                                 : 'text-[#8a5236]'
-                          }`}
+                            }`}
                         />
                         <span className="truncate text-left">{item.label}</span>
                       </div>
@@ -280,15 +278,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                         {item.badge !== null && isPermitted && (
                           <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${
-                              isActive
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${isActive
                                 ? 'bg-[#381504]/20 text-[#381504]'
                                 : item.badgeType === 'live'
                                   ? 'bg-[#6e2c0e] text-[#fce7db] border border-[#d97706]/40'
                                   : item.badgeType === 'import'
                                     ? 'bg-[#6e2c0e] text-[#fce7db] border border-[#d97706]/40'
                                     : 'bg-[#6e2c0e] text-[#fce7db] border border-[#d97706]/40'
-                            }`}
+                              }`}
                           >
                             {item.badge}
                           </span>
@@ -356,22 +353,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Mobile Left-to-Right Slide-Over Drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${
-          isMobileOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${isMobileOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
+          }`}
       >
         <div
           onClick={onCloseMobile}
-          className={`fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300 ${
-            isMobileOpen ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300 ${isMobileOpen ? 'opacity-100' : 'opacity-0'
+            }`}
           aria-hidden="true"
         />
 
         <aside
-          className={`fixed inset-y-0 left-0 w-72 sm:w-80 glass-sidebar shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
-            isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+          className={`fixed inset-y-0 left-0 w-72 sm:w-80 glass-sidebar shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
         >
           {renderSidebarContent(true)}
         </aside>

@@ -219,7 +219,6 @@ export default function App() {
 
   const handleLoginSuccess = async (user: StaffUser) => {
     setCurrentUser(user);
-    setIsAuthenticated(true);
     const perms = await getStaffPermissions().catch(() => DEFAULT_STAFF_PERMISSIONS);
     setStaffPermissions(perms);
     loadInitialData();
